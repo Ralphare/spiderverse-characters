@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miles Morales - Spider-Man</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to character profile page */
+        .character-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .character-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .character-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .character-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .character-universe {
+            display: inline-block;
+            background: rgba(227, 30, 36, 0.9);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+        
+        .character-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+        
+        .character-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(227, 30, 36, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #e31e24;
+            border-color: #e31e24;
+            transform: translateX(-5px);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .character-image-section {
+            display: none;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #e31e24;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #1e3a8a;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '🕷️';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .movie-timeline {
+            display: grid;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .movie-entry {
+            background: linear-gradient(135deg, #e31e24 0%, #1e3a8a 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #000;
+        }
+        
+        .movie-entry:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+        }
+        
+        .movie-entry h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 2px;
+        }
+        
+        .movie-entry .year {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .movie-entry p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+            line-height: 1.7;
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #1e3a8a 0%, #000000 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(227, 30, 36, 0.3);
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+            border-color: #e31e24;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #e31e24;
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
+            margin: 0;
+        }
+        
+        .power-item.unique {
+            border-color: #ffd700;
+            background: linear-gradient(135deg, #e31e24 0%, #000000 100%);
+        }
+        
+        .power-item.unique h4 {
+            color: #ffd700;
+        }
+        
+        .allies-grid,
+        .villains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .character-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-5px);
+            border-color: #e31e24;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .character-card h4 {
+            font-size: 1.3rem;
+            color: #0f1729;
+            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+        
+        .character-card .actor {
+            color: #e31e24;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .character-card p {
+            font-size: 1rem;
+            color: #6c757d;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .villain-card-profile {
+            background: linear-gradient(135deg, #000000 0%, #1e3a8a 100%);
+            color: white;
+        }
+        
+        .villain-card-profile h4 {
+            color: #e31e24;
+        }
+        
+        .villain-card-profile .actor {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .villain-card-profile p {
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .functions-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .function-badge {
+            background: linear-gradient(135deg, #e31e24 0%, #1e3a8a 100%);
+            padding: 1.2rem;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .function-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .character-hero {
+                height: 300px;
+            }
+            
+            .character-name {
+                font-size: 50px;
+            }
+            
+            .character-alias {
+                font-size: 1.4rem;
+            }
+            
+            .character-universe {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .character-hero {
+                height: 250px;
+            }
+            
+            .character-name {
+                font-size: 36px;
+            }
+            
+            .character-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid,
+            .allies-grid,
+            .villains-grid,
+            .functions-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#versions" class="back-button">
+        <span>←</span>
+        <span>Back to Spider-Verse</span>
+    </a>
+
+    <!-- Character Hero Section -->
+    <section class="character-hero">
+        <img src="https://wallpapers.com/images/featured/miles-morales-bhbtlxz0ovcy8z8c.jpg" alt="Miles Morales Spider-Man" class="character-hero-image">
+        <div class="character-hero-content">
+            <div class="character-universe">ULTIMATE UNIVERSE • SPIDER-VERSE</div>
+            <h1 class="character-name">MILES MORALES</h1>
+            <p class="character-alias">The Next Generation Spider-Man</p>
+        </div>
+    </section>
+
+    <!-- Character Profile -->
+    <div class="profile-container">
+        <!-- Character Image -->
+        <div class="character-image-section">
+            <div class="character-image">
+                <img src="https://www.hollywoodreporter.com/wp-content/uploads/2020/11/Spider-Man-Miles-Morales-Publicity-H-2020-1604629969.png?w=1296&h=730&crop=1" alt="Miles Morales Spider-Man">
+            </div>
+        </div>
+
+        <!-- Universe/World Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🌍</span>
+                Universe & Origins
+            </h2>
+            <p><strong>Universe:</strong> Ultimate Universe (Earth-1610) / Spider-Verse</p>
+            <p><strong>Real Name:</strong> Miles Gonzalo Morales</p>
+            <p><strong>Heritage:</strong> Afro-Latino (African-American and Puerto Rican)</p>
+            <p><strong>Location:</strong> Brooklyn, New York City</p>
+            <p><strong>First Appearance:</strong> Ultimate Fallout #4 (2011) - Comics</p>
+            <p><strong>Portrayed by:</strong> Shameik Moore (Spider-Verse films)</p>
+            <p>Miles Morales represents the next generation of Spider-Man, bringing fresh perspective and diversity to the iconic role. Originally from the Ultimate Universe in Marvel Comics, Miles gained his powers after the death of his universe's Peter Parker. His story has since expanded across multiple universes, most notably in the critically acclaimed animated Spider-Verse films, making him one of the most beloved modern superheroes.</p>
+        </section>
+
+        <!-- Story/Background Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📖</span>
+                Story & Background
+            </h2>
+            <p>Miles Morales was a regular Brooklyn teenager attending Brooklyn Visions Academy when his life changed forever. During a visit to his Uncle Aaron's apartment, Miles was bitten by a genetically-engineered spider (created by Oscorp and irradiated with energy from the Multiverse in the animated version).</p>
+            
+            <p>Shortly after gaining his powers, Miles witnessed the death of his universe's Peter Parker in battle. Inspired by Peter's sacrifice and grappling with guilt over not being able to help, Miles decided to take up the mantle of Spider-Man—though he initially struggled with self-doubt and the weight of living up to Peter Parker's legacy.</p>
+            
+            <p>Miles' journey is complicated by his relationship with his Uncle Aaron, who is revealed to be the Prowler, a criminal working for the Kingpin. This personal connection to the villain world adds emotional depth to Miles' struggle between his family loyalty and his responsibility as a hero.</p>
+            
+            <p>What makes Miles unique is that he doesn't try to replace Peter Parker—instead, he forges his own path as Spider-Man, bringing his own style, personality, and unique powers to the role. His story is about discovering that anyone can wear the mask and be a hero.</p>
+
+            <div class="movie-timeline">
+                <div class="movie-entry">
+                    <h3>Spider-Man: Into the Spider-Verse (2018)</h3>
+                    <p class="year">Directed by Bob Persichetti, Peter Ramsey, Rodney Rothman</p>
+                    <p>Miles is bitten by a radioactive spider and gains powers just before witnessing Peter Parker's death at the hands of Kingpin. When Kingpin's super-collider opens portals to other dimensions, Miles meets alternate Spider-People including an older, jaded Peter B. Parker, Spider-Gwen, Spider-Man Noir, Peni Parker, and Spider-Ham. Under Peter B.'s mentorship, Miles learns to embrace his powers and proves that anyone can wear the mask, ultimately stopping Kingpin and saving the multiverse.</p>
+                </div>
+
+                <div class="movie-entry">
+                    <h3>Spider-Man: Across the Spider-Verse (2023)</h3>
+                    <p class="year">Directed by Joaquim Dos Santos, Kemp Powers, Justin K. Thompson</p>
+                    <p>Now an experienced Spider-Man, Miles reunites with Gwen Stacy and discovers the Spider-Society, a multiversal organization of Spider-People led by Miguel O'Hara (Spider-Man 2099). When Miles learns his father is destined to die as a "canon event" necessary to maintain reality, he refuses to accept fate and becomes hunted by the entire Spider-Society. The film explores Miles' determination to forge his own path and save those he loves, even if it means going against every Spider-Person in the multiverse.</p>
+                </div>
+
+                <div class="movie-entry">
+                    <h3>Comics: Ultimate Universe & Beyond</h3>
+                    <p class="year">Marvel Comics (2011-Present)</p>
+                    <p>In the comics, Miles becomes Spider-Man after Peter Parker's death in the Ultimate Universe. He works alongside various heroes including the mainstream Marvel Universe's Peter Parker (after the universes merged). Miles has been a member of the Champions, the Avengers, and continues to protect Brooklyn while carving out his own legacy as Spider-Man. His story explores themes of legacy, identity, and what it means to be a hero in the modern world.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Functions/Roles Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🦸</span>
+                Functions & Roles
+            </h2>
+            <div class="functions-list">
+                <div class="function-badge">Superhero</div>
+                <div class="function-badge">Spider-Verse Protector</div>
+                <div class="function-badge">Brooklyn's Spider-Man</div>
+                <div class="function-badge">Student</div>
+                <div class="function-badge">Next Generation Hero</div>
+                <div class="function-badge">Multiversal Defender</div>
+            </div>
+            <p style="margin-top: 1.5rem;">As Spider-Man, Miles Morales serves as the primary protector of Brooklyn and a key figure in the Spider-Verse. He represents the next generation of heroes, proving that Spider-Man can be anyone regardless of their background. In the multiverse, Miles has become a crucial player in protecting reality itself, often making difficult choices that other Spider-People won't. His unique perspective and unwillingness to accept predetermined fate make him a revolutionary figure among Spider-Heroes.</p>
+        </section>
+
+        <!-- Powers Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Superpowers & Abilities
+            </h2>
+            <p style="margin-bottom: 1rem;"><strong>Miles possesses all the standard Spider-powers, plus two unique abilities that set him apart:</strong></p>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>🧗 Wall-Crawling</h4>
+                    <p>The ability to adhere to and scale any surface, allowing him to climb buildings and stick to walls and ceilings with ease.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕸️ Web-Shooting</h4>
+                    <p>Uses mechanical web-shooters to fire strong, versatile webbing for swinging, combat, and capturing enemies. Miles developed his own web formula.</p>
+                </div>
+                <div class="power-item unique">
+                    <h4>👻 Invisibility (Camouflage)</h4>
+                    <p><strong>UNIQUE POWER:</strong> Miles can bend light around himself to become completely invisible, including his clothing. This stealth ability gives him tactical advantages no other Spider-Person possesses.</p>
+                </div>
+                <div class="power-item unique">
+                    <h4>⚡ Venom Strike (Bio-Electric Blast)</h4>
+                    <p><strong>UNIQUE POWER:</strong> Miles can generate and discharge powerful bio-electric energy through touch, delivering devastating "venom strikes" that can paralyze enemies, overload electronics, and blast opponents away.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕷️ Spider-Sense</h4>
+                    <p>Precognitive danger warning that alerts Miles to threats before they occur, though he initially struggled to understand and control this ability.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💪 Superhuman Strength</h4>
+                    <p>Enhanced strength allowing him to lift several tons, overpower opponents, and perform incredible physical feats.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🤸 Enhanced Agility</h4>
+                    <p>Superhuman agility, reflexes, and acrobatic abilities. Miles incorporates his own unique, improvisational style influenced by his personality and creativity.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🎨 Creative Intellect</h4>
+                    <p>Intelligent and creative thinker with skills in science and art. Miles brings fresh, innovative approaches to problems that other Spider-People might not consider.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notable Allies Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🤝</span>
+                Notable Allies
+            </h2>
+            <div class="allies-grid">
+                <div class="character-card">
+                    <h4>Peter B. Parker</h4>
+                    <p class="actor">Voiced by Jake Johnson (Spider-Verse films)</p>
+                    <p>An older, more jaded Spider-Man from another dimension who becomes Miles' mentor and friend. Their relationship evolves from reluctant teacher-student to genuine friendship, with Peter helping Miles discover his potential.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Spider-Gwen (Gwen Stacy)</h4>
+                    <p class="actor">Voiced by Hailee Steinfeld (Spider-Verse films)</p>
+                    <p>Spider-Woman from another dimension and Miles' close friend and potential love interest. Gwen understands the loneliness of being Spider-Person and shares a special connection with Miles.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Peter Parker (Original)</h4>
+                    <p class="actor">Voiced by Chris Pine (Spider-Verse films)</p>
+                    <p>Miles' universe's original Spider-Man whose death inspires Miles to become a hero. In the comics, Miles works alongside the Earth-616 Peter Parker as fellow Spider-Men.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Jefferson Davis</h4>
+                    <p class="actor">Voiced by Brian Tyree Henry (Spider-Verse films)</p>
+                    <p>Miles' father, a NYPD police officer who initially distrusts vigilantes like Spider-Man, not knowing his son is under the mask. Their relationship is central to Miles' emotional journey.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Rio Morales</h4>
+                    <p class="actor">Voiced by Luna Lauren Vélez (Spider-Verse films)</p>
+                    <p>Miles' mother, a hospital nurse who provides emotional support and wisdom. She's fiercely protective of her son and represents the family grounding Miles needs.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Ganke Lee</h4>
+                    <p class="actor">Comics & Video Games</p>
+                    <p>Miles' best friend and roommate who discovers his secret identity early on. Ganke provides tech support, friendship, and helps Miles balance his dual life (similar to Ned Leeds in MCU).</p>
+                </div>
+                <div class="character-card">
+                    <h4>The Spider-Army</h4>
+                    <p class="actor">Various Spider-People across the multiverse</p>
+                    <p>Including Spider-Man Noir, Peni Parker, Spider-Ham, Spider-Punk, Spider-Woman (Jessica Drew), Pavitr Prabhakar, and countless other Spider-People Miles has fought alongside across dimensions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Villains Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">💀</span>
+                Main Villains
+            </h2>
+            <div class="villains-grid">
+                <div class="character-card villain-card-profile">
+                    <h4>Kingpin</h4>
+                    <p class="actor">Wilson Fisk - Voiced by Liev Schreiber (Spider-Verse films)</p>
+                    <p>The crime lord of New York who builds a super-collider to access other dimensions in an attempt to bring back his deceased wife and son. His actions threaten the entire multiverse and lead to Peter Parker's death, making him Miles' first major villain.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>The Prowler</h4>
+                    <p class="actor">Aaron Davis - Voiced by Mahershala Ali (Spider-Verse films)</p>
+                    <p>Miles' uncle who works as an enforcer for Kingpin. The revelation that Uncle Aaron is the Prowler devastates Miles, forcing him to confront the complex reality that people he loves can make terrible choices. Aaron's redemption before his death deeply impacts Miles.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>The Spot</h4>
+                    <p class="actor">Dr. Jonathan Ohnn - Voiced by Jason Schwartzman (Across the Spider-Verse)</p>
+                    <p>A scientist transformed into a being covered with interdimensional portals. Initially seeming like a joke villain, the Spot becomes an existential threat to Miles and the entire multiverse, blaming Spider-Man for his transformation.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Green Goblin</h4>
+                    <p class="actor">Norman Osborn - Various interpretations</p>
+                    <p>In various storylines, the Green Goblin has been one of Miles' major adversaries, particularly in his early days as Spider-Man when he fought Norman Osborn in the Ultimate Universe.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Miguel O'Hara / Spider-Man 2099</h4>
+                    <p class="actor">Voiced by Oscar Isaac (Across the Spider-Verse)</p>
+                    <p>Leader of the Spider-Society who becomes an antagonist to Miles when he refuses to accept the concept of "canon events." Though not evil, Miguel's rigid adherence to fate puts him at odds with Miles' determination to save his father.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Various Ultimate Universe Villains</h4>
+                    <p class="actor">Comics</p>
+                    <p>Including Venom, Mysterio, the Ringer, and other threats Miles has faced while protecting Brooklyn and establishing himself as Spider-Man.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What Makes Miles Unique Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⭐</span>
+                What Makes Miles Unique
+            </h2>
+            <p>Miles Morales brings several groundbreaking elements to the Spider-Man legacy:</p>
+            <ul>
+                <li><strong>Representation:</strong> As an Afro-Latino Spider-Man, Miles represents millions of fans who can see themselves in the iconic hero</li>
+                <li><strong>Unique Powers:</strong> His invisibility and venom strike abilities set him apart from every other Spider-Person</li>
+                <li><strong>Fresh Perspective:</strong> Miles approaches being Spider-Man with his own style, incorporating his interests in art, music, and street culture</li>
+                <li><strong>Family Dynamics:</strong> Both his parents are alive and active in his story, creating different emotional stakes than Peter Parker's typical narrative</li>
+                <li><strong>Legacy Hero Done Right:</strong> Rather than replacing Peter Parker, Miles stands alongside him as his own unique Spider-Man</li>
+                <li><strong>Multiversal Significance:</strong> Miles is often portrayed as a "Nexus Being" of the Spider-Verse, crucial to the stability of the multiverse</li>
+                <li><strong>Modern Hero:</strong> Miles embodies contemporary youth culture, bringing authenticity and relatability to a new generation</li>
+                <li><strong>Rejecting Fate:</strong> Unlike many Spider-People who accept tragedy as inevitable, Miles fights against predetermined destiny</li>
+            </ul>
+        </section>
+
+        <!-- Cultural Impact Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🏆</span>
+                Cultural Impact & Legacy
+            </h2>
+            <p>Miles Morales has become one of the most significant superhero characters of the 21st century. Created by writer Brian Michael Bendis and artist Sara Pichelli in 2011, Miles was initially met with controversy but quickly won over fans with his compelling story and genuine characterization.</p>
+            
+            <p><strong>Spider-Man: Into the Spider-Verse</strong> (2018) became a cultural phenomenon, winning the Academy Award for Best Animated Feature and revolutionizing superhero animation with its groundbreaking visual style. The film's success proved that Miles could carry his own franchise and introduced him to mainstream audiences worldwide.</p>
+            
+            <p>The phrase "Anyone can wear the mask" has become synonymous with Miles' story, representing the idea that heroism isn't limited by race, background, or circumstances. This message has resonated deeply, making Miles an inspirational figure for diverse audiences.</p>
+            
+            <p><strong>Spider-Man: Across the Spider-Verse</strong> (2023) expanded Miles' story and became both a critical and commercial success, further cementing his place as a cornerstone character in the Spider-Man mythos. The film's exploration of destiny, choice, and identity elevated superhero storytelling to new heights.</p>
+            
+            <p>Miles has also starred in popular video games, including the acclaimed <em>Spider-Man: Miles Morales</em> for PlayStation, bringing his unique abilities and story to interactive media. His presence in comics continues to grow, and he has become a member of both the Avengers and the Champions.</p>
+            
+            <p>More than a decade after his creation, Miles Morales has proven he's not just "another Spider-Man" but a vital, irreplaceable part of the Spider-Man legacy and the broader superhero landscape.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#versions" class="btn btn-primary">← Return to Spider-Verse</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Miles Morales</h4>
+                    <p>Miles Morales is the groundbreaking Afro-Latino Spider-Man who proved that anyone can wear the mask. A hero for a new generation.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Details</h4>
+                    <p><strong>Voice Actor:</strong> Shameik Moore</p>
+                    <p><strong>Created by:</strong> Brian Michael Bendis & Sara Pichelli</p>
+                    <p><strong>First Appearance:</strong> 2011 (Comics)</p>
+                    <p><strong>Universe:</strong> Ultimate / Spider-Verse</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Man Fan Hub. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment and Sony Pictures.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        <a href="spiderversions.html" 
+   style="color:#00aaff; 
+          display:block; 
+          margin-top:40px; 
+          text-align:center; 
+          font-size:18px; 
+          text-decoration:none;">
+  ← Back to Spider-Man Versions
+  </a>
+
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+

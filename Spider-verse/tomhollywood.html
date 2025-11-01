@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peter Parker - MCU Spider-Man</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to character profile page */
+        .character-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .character-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .character-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .character-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .character-universe {
+            display: inline-block;
+            background: rgba(227, 30, 36, 0.9);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+        
+        .character-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+        
+        .character-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(227, 30, 36, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #e31e24;
+            border-color: #e31e24;
+            transform: translateX(-5px);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .character-image-section {
+            display: none;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #e31e24;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #1e3a8a;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '🕷️';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .movie-timeline {
+            display: grid;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .movie-entry {
+            background: linear-gradient(135deg, #e31e24 0%, #1e3a8a 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #000;
+        }
+        
+        .movie-entry:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+        }
+        
+        .movie-entry h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 2px;
+        }
+        
+        .movie-entry .year {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .movie-entry p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+            line-height: 1.7;
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #1e3a8a 0%, #000000 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(227, 30, 36, 0.3);
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+            border-color: #e31e24;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #e31e24;
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
+            margin: 0;
+        }
+        
+        .allies-grid,
+        .villains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .character-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-5px);
+            border-color: #e31e24;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .character-card h4 {
+            font-size: 1.3rem;
+            color: #0f1729;
+            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+        
+        .character-card .actor {
+            color: #e31e24;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .character-card p {
+            font-size: 1rem;
+            color: #6c757d;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .villain-card-profile {
+            background: linear-gradient(135deg, #000000 0%, #1e3a8a 100%);
+            color: white;
+        }
+        
+        .villain-card-profile h4 {
+            color: #e31e24;
+        }
+        
+        .villain-card-profile .actor {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .villain-card-profile p {
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .functions-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .function-badge {
+            background: linear-gradient(135deg, #e31e24 0%, #1e3a8a 100%);
+            padding: 1.2rem;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .function-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .character-hero {
+                height: 300px;
+            }
+            
+            .character-name {
+                font-size: 50px;
+            }
+            
+            .character-alias {
+                font-size: 1.4rem;
+            }
+            
+            .character-universe {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .character-hero {
+                height: 250px;
+            }
+            
+            .character-name {
+                font-size: 36px;
+            }
+            
+            .character-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid,
+            .allies-grid,
+            .villains-grid,
+            .functions-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#versions" class="back-button">
+        <span>←</span>
+        <span>Back to Spider-Verse</span>
+    </a>
+
+    <!-- Character Hero Section -->
+    <section class="character-hero">
+        <img src="https://images.filmibeat.com/img/2017/04/how-tom-holland-s-spiderman-suit-is-the-coolest-of-all-according-to-eric-carroll-04-1491308398.jpg" alt="Tom Holland Spider-Man" class="character-hero-image">
+        <div class="character-hero-content">
+            <div class="character-universe">MARVEL CINEMATIC UNIVERSE • 2016-PRESENT</div>
+            <h1 class="character-name">PETER PARKER</h1>
+            <p class="character-alias">Tom Holland's Spider-Man</p>
+        </div>
+    </section>
+
+    <!-- Character Profile -->
+    <div class="profile-container">
+        <!-- Character Image -->
+        <div class="character-image-section">
+            <div class="character-image">
+                <img src="https://via.placeholder.com/500x600/e31e24/ffffff?text=Tom+Holland+Spider-Man" alt="Tom Holland Spider-Man">
+            </div>
+        </div>
+
+        <!-- Universe/World Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🌍</span>
+                Universe & Origins
+            </h2>
+            <p><strong>Universe:</strong> Marvel Cinematic Universe (MCU)</p>
+            <p><strong>Portrayed by:</strong> Tom Holland</p>
+            <p><strong>Directors:</strong> Jon Watts (Spider-Man trilogy), Russo Brothers (Avengers films)</p>
+            <p><strong>First Appearance:</strong> Captain America: Civil War (2016)</p>
+            <p><strong>Solo Films:</strong> Spider-Man: Homecoming (2017), Spider-Man: Far From Home (2019), Spider-Man: No Way Home (2021)</p>
+            <p><strong>Location:</strong> Queens, New York City</p>
+            <p>Tom Holland's Spider-Man is the first version fully integrated into the Marvel Cinematic Universe, sharing the screen with Iron Man, Captain America, Doctor Strange, and the entire roster of Marvel heroes. This younger, more inexperienced Peter Parker brings youthful energy, humor, and heart to the MCU, showcasing his growth from a neighborhood hero into one of the universe's most important defenders.</p>
+        </section>
+
+        <!-- Story/Background Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📖</span>
+                Story & Background
+            </h2>
+            <p>Peter Parker was a 15-year-old science prodigy living in Queens with his Aunt May when he was bitten by a radioactive spider, gaining incredible powers. For six months, Peter operated as a small-time hero, stopping bike thieves and helping locals while recording his adventures.</p>
+            
+            <p>Everything changed when Tony Stark (Iron Man) recruited Peter to help fight Captain America's team during the Sokovia Accords conflict. Impressed by Peter's abilities and character, Tony became his mentor, providing him with an advanced suit and guidance—while also trying to keep him safe and out of major danger.</p>
+            
+            <p>Peter's journey is defined by his desire to prove himself worthy of being an Avenger while learning what it truly means to be a hero. His relationship with Tony Stark becomes a father-son dynamic that shapes his development, and Tony's eventual death profoundly impacts Peter's path forward.</p>
+
+            <div class="movie-timeline">
+                <div class="movie-entry">
+                    <h3>Captain America: Civil War (2016)</h3>
+                    <p class="year">Directed by Anthony & Joe Russo</p>
+                    <p>Peter makes his MCU debut when Tony Stark recruits him to join Team Iron Man in the conflict over the Sokovia Accords. Though inexperienced, Peter holds his own against seasoned heroes like Captain America, Falcon, and Winter Soldier, showcasing his impressive abilities and endearing enthusiasm.</p>
+                </div>
+
+                <div class="movie-entry">
+                    <h3>Spider-Man: Homecoming (2017)</h3>
+                    <p class="year">Directed by Jon Watts</p>
+                    <p>Eager to prove himself after the events of Civil War, Peter juggles high school life with his desire to be an Avenger. He faces the Vulture (Adrian Toomes), who is selling dangerous alien weapons. When Tony takes away his suit, Peter must prove he's a hero with or without the technology, ultimately learning that being Spider-Man is about the person underneath the mask, not the suit.</p>
+                </div>
+
+                <div class="movie-entry">
+                    <h3>Avengers: Infinity War (2018)</h3>
+                    <p class="year">Directed by Anthony & Joe Russo</p>
+                    <p>Peter joins Tony Stark and Doctor Strange in space to fight Thanos. On the planet Titan, Peter helps battle Thanos but is unable to prevent the Mad Titan from obtaining all the Infinity Stones. Peter is among the victims of Thanos' snap, disintegrating in Tony's arms in one of the MCU's most emotional moments.</p>
+                </div>
+
+                <div class="movie-entry">
+                    <h3>Avengers: Endgame (2019)</h3>
+                    <p class="year">Directed by Anthony & Joe Russo</p>
+                    <p>Peter is brought back five years later and joins the final battle against Thanos. He shares an emotional reunion with Tony and plays a crucial role in the climactic fight. Tony's sacrifice to defeat Thanos and save the universe leaves Peter devastated, losing his mentor and father figure.</p>
+                </div>
+
+                <div class="movie-entry">
+                    <h3>Spider-Man: Far From Home (2019)</h3>
+                    <p class="year">Directed by Jon Watts</p>
+                    <p>While on a school trip to Europe, Peter struggles with Tony's death and the pressure of living up to his legacy. He faces Mysterio (Quentin Beck), a master of illusions who manipulates Peter's trust and frames him as a villain. Peter must overcome his self-doubt and step up as a hero, ultimately defeating Mysterio but having his identity exposed to the world in the process.</p>
+                </div>
+
+                <div class="movie-entry">
+                    <h3>Spider-Man: No Way Home (2021)</h3>
+                    <p class="year">Directed by Jon Watts</p>
+                    <p>After his identity is revealed, Peter asks Doctor Strange to make everyone forget he's Spider-Man. When the spell goes wrong, villains from across the multiverse arrive, including Doctor Octopus, Green Goblin, Electro, Sandman, and Lizard. Peter is joined by alternate versions of himself (Tobey Maguire and Andrew Garfield's Spider-Men). After Aunt May's death, Peter makes the ultimate sacrifice, asking Strange to make everyone forget Peter Parker entirely, losing his relationships with MJ and Ned to save the multiverse.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Functions/Roles Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🦸</span>
+                Functions & Roles
+            </h2>
+            <div class="functions-list">
+                <div class="function-badge">Superhero</div>
+                <div class="function-badge">Avenger</div>
+                <div class="function-badge">Friendly Neighborhood Spider-Man</div>
+                <div class="function-badge">High School Student</div>
+                <div class="function-badge">Protector of Queens</div>
+                <div class="function-badge">Multiversal Hero</div>
+            </div>
+            <p style="margin-top: 1.5rem;">As the MCU's Spider-Man, Peter serves as both a street-level hero protecting his neighborhood and a key member of the Avengers fighting universe-threatening dangers. He represents the next generation of heroes, bridging the gap between the legendary Avengers and the future of the MCU. Despite his incredible power and connections to Earth's mightiest heroes, Peter never loses sight of his responsibility to help the little guy.</p>
+        </section>
+
+        <!-- Powers Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Superpowers & Abilities
+            </h2>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>🧗 Wall-Crawling</h4>
+                    <p>Can adhere to virtually any surface, allowing him to climb buildings, cling to ceilings, and perform incredible parkour-style movements through New York.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕸️ Web-Shooting</h4>
+                    <p>Uses high-tech web-shooters (initially provided by Tony Stark, later self-designed) with various web configurations including web wings, parachutes, and taser webs.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕷️ Spider-Sense (Peter Tingle)</h4>
+                    <p>Precognitive danger sense that alerts him to threats. Initially referred to as the "Peter Tingle," this ability evolves throughout his journey, becoming more refined and reliable.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🤸 Enhanced Agility</h4>
+                    <p>Superhuman agility, reflexes, and acrobatic skills that make him one of the most graceful and fluid fighters in the MCU, capable of dodging attacks with ease.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💪 Superhuman Strength</h4>
+                    <p>Enhanced strength allowing him to lift several tons, stop moving vehicles, hold together a splitting ferry, and even briefly hold back Thanos during battle.</p>
+                </div>
+                <div class="power-item">
+                    <h4>⚡ Enhanced Speed & Reflexes</h4>
+                    <p>Lightning-fast reaction time and movement speed that allows him to dodge bullets, catch falling objects, and react to threats faster than the eye can see.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🛡️ Enhanced Durability</h4>
+                    <p>Increased resistance to physical damage, allowing him to withstand powerful impacts and continue fighting against superhuman opponents.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🔬 Genius-Level Intellect</h4>
+                    <p>Exceptional scientific aptitude in chemistry, physics, and engineering. Created his own web fluid formula and upgraded his suit technology multiple times.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notable Allies Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🤝</span>
+                Notable Allies
+            </h2>
+            <div class="allies-grid">
+                <div class="character-card">
+                    <h4>MJ (Michelle Jones-Watson)</h4>
+                    <p class="actor">Portrayed by Zendaya</p>
+                    <p>Peter's girlfriend and intellectual equal who discovers his identity and supports his heroics. Their relationship forms the emotional core of the trilogy, making the ending of No Way Home all the more heartbreaking when Peter must let her forget him.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Ned Leeds</h4>
+                    <p class="actor">Portrayed by Jacob Batalon</p>
+                    <p>Peter's best friend and "guy in the chair" who discovers his secret identity early on. Ned provides crucial technical support, comic relief, and unwavering loyalty throughout Peter's adventures.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Tony Stark / Iron Man</h4>
+                    <p class="actor">Portrayed by Robert Downey Jr.</p>
+                    <p>Peter's mentor and father figure who recruits him into the Avengers. Tony provides advanced technology, guidance, and emotional support, shaping Peter's development as both a hero and a person. His death profoundly impacts Peter's journey.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Aunt May Parker</h4>
+                    <p class="actor">Portrayed by Marisa Tomei</p>
+                    <p>Peter's loving aunt who eventually discovers his secret identity and fully supports his heroics. Her iconic final words, "With great power comes great responsibility," become Peter's defining principle after her tragic death.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Happy Hogan</h4>
+                    <p class="actor">Portrayed by Jon Favreau</p>
+                    <p>Tony Stark's former head of security who becomes a mentor figure and friend to Peter after Tony's death. Happy provides support, resources, and a connection to Tony's legacy.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Doctor Strange</h4>
+                    <p class="actor">Portrayed by Benedict Cumberbatch</p>
+                    <p>The Sorcerer Supreme who attempts to help Peter with his identity crisis, inadvertently causing the multiverse to break open. Despite initial tensions, Strange comes to respect Peter's heroism and selflessness.</p>
+                </div>
+                <div class="character-card">
+                    <h4>The Avengers</h4>
+                    <p class="actor">Various Actors</p>
+                    <p>Earth's Mightiest Heroes including Captain America, Black Widow, Falcon, Winter Soldier, and more. Peter fights alongside them in the battles against Team Cap, Thanos, and other universe-threatening dangers.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Villains Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">💀</span>
+                Main Villains
+            </h2>
+            <div class="villains-grid">
+                <div class="character-card villain-card-profile">
+                    <h4>Vulture</h4>
+                    <p class="actor">Adrian Toomes - Portrayed by Michael Keaton</p>
+                    <p>A salvage company owner turned high-tech arms dealer who uses advanced alien technology to create a powerful flying suit. As Peter's first major villain, Vulture is a blue-collar criminal driven by desperation to provide for his family. The twist that he's Liz's father adds emotional complexity to their conflict.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Mysterio</h4>
+                    <p class="actor">Quentin Beck - Portrayed by Jake Gyllenhaal</p>
+                    <p>A former Stark Industries employee who uses advanced holographic technology and drones to create elaborate illusions, posing as a hero from another dimension. Beck manipulates Peter's trust and grief over Tony's death, ultimately framing Spider-Man as a villain and exposing his identity to the world.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Green Goblin (Multiversal)</h4>
+                    <p class="actor">Norman Osborn - Portrayed by Willem Dafoe</p>
+                    <p>A villain from an alternate universe who arrives in the MCU through Strange's broken spell. The Goblin manipulates Peter's desire to help, resulting in Aunt May's death—the MCU Peter's "Uncle Ben moment" that defines his heroic journey.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Doctor Octopus (Multiversal)</h4>
+                    <p class="actor">Otto Octavius - Portrayed by Alfred Molina</p>
+                    <p>A brilliant scientist from another universe with powerful mechanical arms. Initially antagonistic, Doc Ock is eventually cured of his madness by Peter, showing the young hero's compassionate approach to villainy.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Electro (Multiversal)</h4>
+                    <p class="actor">Max Dillon - Portrayed by Jamie Foxx</p>
+                    <p>A living electrical generator from another universe who arrives in the MCU seeking to stay in a world where he has power and respect. Peter must find a way to depower him without killing him.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Thanos</h4>
+                    <p class="actor">Portrayed by Josh Brolin</p>
+                    <p>The Mad Titan seeking to wipe out half of all life in the universe. Peter fights Thanos on Titan and becomes one of the victims of the snap, making the ultimate sacrifice until he's resurrected to help defeat Thanos in the final battle.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Character Growth Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📈</span>
+                Character Growth & Development
+            </h2>
+            <p>Tom Holland's Spider-Man undergoes one of the most significant character arcs in the MCU:</p>
+            <ul>
+                <li><strong>Homecoming Era:</strong> An eager teenager desperate to prove himself worthy of being an Avenger, learning that being a hero isn't about the suit or the recognition</li>
+                <li><strong>Infinity War/Endgame:</strong> Faces universe-threatening stakes, experiences death, and loses his mentor Tony Stark, forcing him to grow up quickly</li>
+                <li><strong>Far From Home:</strong> Struggles with Tony's legacy and self-doubt, ultimately accepting his role as a hero in his own right</li>
+                <li><strong>No Way Home:</strong> Faces his greatest challenge when his identity is exposed, losing everything including Aunt May, MJ, and Ned, fully embracing the sacrifice required to be Spider-Man</li>
+            </ul>
+            <p>By the end of No Way Home, Peter has transformed from a boy who wanted to be like Iron Man into a true, selfless hero who stands alone—the friendly neighborhood Spider-Man in his purest form.</p>
+        </section>
+
+        <!-- Unique Characteristics Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⭐</span>
+                Unique Characteristics
+            </h2>
+            <p>Tom Holland's MCU Spider-Man has several distinctive traits:</p>
+            <ul>
+                <li><strong>Youthful Energy:</strong> The youngest and most inexperienced Spider-Man, bringing authentic teenage awkwardness and enthusiasm</li>
+                <li><strong>Tech-Savvy:</strong> Access to Tony Stark's advanced technology including AI suit systems, various suit upgrades, and high-tech web-shooters</li>
+                <li><strong>Mentor-Student Dynamic:</strong> Unique relationship with Tony Stark provides emotional depth and character growth rarely seen in superhero films</li>
+                <li><strong>Integrated Universe:</strong> First Spider-Man fully connected to a larger universe, interacting with Avengers, using Stark tech, and dealing with cosmic threats</li>
+                <li><strong>Academic Focus:</strong> Strong emphasis on Peter's intelligence through his participation in academic decathlon and science competitions</li>
+                <li><strong>Reluctant Celebrity:</strong> Unlike other versions, this Peter never wanted recognition, making his identity reveal particularly traumatic</li>
+                <li><strong>Multiversal Connection:</strong> Only Spider-Man to meet alternate versions of himself, creating the spectacular Spider-Verse team-up</li>
+            </ul>
+        </section>
+
+        <!-- Legacy Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🏆</span>
+                Legacy & Impact
+            </h2>
+            <p>Tom Holland's Spider-Man has become one of the most successful interpretations of the character, with his films grossing over $3.9 billion worldwide. Spider-Man: No Way Home became the sixth highest-grossing film of all time, demonstrating the character's massive cultural impact.</p>
+            
+            <p>Holland's portrayal successfully integrated Spider-Man into the MCU while maintaining the character's core essence—a kid from Queens trying to do the right thing. His youthful energy, emotional vulnerability, and genuine enthusiasm for being a hero resonated with audiences worldwide.</p>
+            
+            <p>The character's journey from an eager teenager to a mature, selfless hero who sacrifices everything represents one of the MCU's most complete character arcs. No Way Home's ending, where Peter loses everyone he loves to save the multiverse, brings the character full circle to his comic book roots as a solo hero bearing the weight of responsibility.</p>
+            
+            <p>With more MCU appearances confirmed, Tom Holland's Spider-Man continues to be a cornerstone of the franchise, representing hope for the future of the superhero genre and remaining, truly, your friendly neighborhood Spider-Man.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#versions" class="btn btn-primary">← Return to Spider-Verse</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About MCU Spider-Man</h4>
+                    <p>Tom Holland's Spider-Man is the first version fully integrated into the Marvel Cinematic Universe, bringing youthful energy and emotional depth to the iconic character.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Film Details</h4>
+                    <p><strong>Actor:</strong> Tom Holland</p>
+                    <p><strong>Director:</strong> Jon Watts (Solo films)</p>
+                    <p><strong>Studio:</strong> Marvel Studios / Sony Pictures</p>
+                    <p><strong>Years:</strong> 2016-Present</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Man Fan Hub. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment and Sony Pictures.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        <a href="spiderversions.html" 
+   style="color:#00aaff; 
+          display:block; 
+          margin-top:40px; 
+          text-align:center; 
+          font-size:18px; 
+          text-decoration:none;">
+  ← Back to Spider-Man Versions
+</a>
+
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+

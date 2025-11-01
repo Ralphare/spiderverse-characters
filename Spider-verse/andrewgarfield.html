@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peter Parker - The Amazing Spider-Man Films</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to character profile page */
+        .character-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .character-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .character-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .character-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .character-universe {
+            display: inline-block;
+            background: rgba(227, 30, 36, 0.9);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+        
+        .character-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+        
+        .character-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(227, 30, 36, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #e31e24;
+            border-color: #e31e24;
+            transform: translateX(-5px);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .character-image-section {
+            display: none;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #e31e24;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #1e3a8a;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '🕷️';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .movie-timeline {
+            display: grid;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .movie-entry {
+            background: linear-gradient(135deg, #e31e24 0%, #1e3a8a 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #000;
+        }
+        
+        .movie-entry:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+        }
+        
+        .movie-entry h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 2px;
+        }
+        
+        .movie-entry .year {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .movie-entry p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+            line-height: 1.7;
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #1e3a8a 0%, #000000 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(227, 30, 36, 0.3);
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+            border-color: #e31e24;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #e31e24;
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
+            margin: 0;
+        }
+        
+        .allies-grid,
+        .villains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .character-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-5px);
+            border-color: #e31e24;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .character-card h4 {
+            font-size: 1.3rem;
+            color: #0f1729;
+            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+        
+        .character-card .actor {
+            color: #e31e24;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .character-card p {
+            font-size: 1rem;
+            color: #6c757d;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .villain-card-profile {
+            background: linear-gradient(135deg, #000000 0%, #1e3a8a 100%);
+            color: white;
+        }
+        
+        .villain-card-profile h4 {
+            color: #e31e24;
+        }
+        
+        .villain-card-profile .actor {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .villain-card-profile p {
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .functions-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .function-badge {
+            background: linear-gradient(135deg, #e31e24 0%, #1e3a8a 100%);
+            padding: 1.2rem;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .function-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .character-hero {
+                height: 300px;
+            }
+            
+            .character-name {
+                font-size: 50px;
+            }
+            
+            .character-alias {
+                font-size: 1.4rem;
+            }
+            
+            .character-universe {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .character-hero {
+                height: 250px;
+            }
+            
+            .character-name {
+                font-size: 36px;
+            }
+            
+            .character-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid,
+            .allies-grid,
+            .villains-grid,
+            .functions-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#versions" class="back-button">
+        <span>←</span>
+        <span>Back to Spider-Verse</span>
+    </a>
+
+    <!-- Character Hero Section -->
+    <section class="character-hero">
+        <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2022/01/Marvel-Fans-Andrew-Garfield-spiderman-peter-parker-criticism-wrong.jpg" alt="Andrew Garfield Spider-Man" class="character-hero-image">
+        <div class="character-hero-content">
+            <div class="character-universe">THE AMAZING SPIDER-MAN • 2012-2014</div>
+            <h1 class="character-name">PETER PARKER</h1>
+            <p class="character-alias">Andrew Garfield's Spider-Man</p>
+        </div>
+    </section>
+
+    <!-- Character Profile -->
+    <div class="profile-container">
+        <!-- Character Image -->
+        <div class="character-image-section">
+            <div class="character-image">
+                <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2022/01/Marvel-Fans-Andrew-Garfield-spiderman-peter-parker-criticism-wrong.jpg" alt="Andrew Garfield Spider-Man">
+            </div>
+        </div>
+
+        <!-- Universe/World Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🎬</span>
+                Universe & Origins
+            </h2>
+            <p><strong>Universe:</strong> The Amazing Spider-Man Movie Universe</p>
+            <p><strong>Portrayed by:</strong> Andrew Garfield</p>
+            <p><strong>Director:</strong> Marc Webb</p>
+            <p><strong>Films:</strong> The Amazing Spider-Man (2012), The Amazing Spider-Man 2 (2014)</p>
+            <p><strong>Location:</strong> New York City</p>
+            <p>The Amazing Spider-Man series presented a fresh, modern take on the Spider-Man origin story. Andrew Garfield's portrayal brought a contemporary edge to Peter Parker, depicting him as a skateboarding, wisecracking teenager with a deeper emotional vulnerability. This universe explored Peter's parents' mysterious past and featured a more scientifically grounded approach to the Spider-Man mythology, while delivering spectacular action sequences and heartbreaking emotional moments.</p>
+        </section>
+
+        <!-- Story/Background Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📖</span>
+                Story & Background
+            </h2>
+            <p>Peter Parker was a brilliant but troubled teenager who lived with his Aunt May and Uncle Ben after his parents mysteriously disappeared when he was young. Obsessed with uncovering the truth about his parents' fate, Peter discovered his father's research had been conducted at Oscorp Industries.</p>
+            
+            <p>While investigating Oscorp, Peter was bitten by a genetically-modified spider, granting him incredible abilities. Initially using his powers recklessly, Peter's life changed forever when Uncle Ben was killed by a criminal. Consumed by guilt and a desire for revenge, Peter began hunting criminals as a masked vigilante.</p>
+            
+            <p>Eventually, Peter learned the true meaning of heroism and responsibility, transforming from a vengeful vigilante into a genuine hero dedicated to protecting New York City. His journey was marked by deep personal relationships, particularly with Gwen Stacy, and the ongoing mystery surrounding his parents' work.</p>
+
+            <div class="movie-timeline">
+                <div class="movie-entry">
+                    <h3>The Amazing Spider-Man (2012)</h3>
+                    <p class="year">Directed by Marc Webb</p>
+                    <p>Peter Parker discovers his father's research at Oscorp and is bitten by a genetically-altered spider, gaining superhuman abilities. After Uncle Ben's tragic death, Peter becomes a masked vigilante hunting criminals. He faces Dr. Curt Connors, his father's former partner, who transforms into the monstrous Lizard after attempting to regenerate his missing arm. Peter must stop the Lizard's plan to transform all of New York into reptilian creatures while navigating his relationship with Gwen Stacy and uncovering secrets about his parents.</p>
+                </div>
+
+                <div class="movie-entry">
+                    <h3>The Amazing Spider-Man 2 (2014)</h3>
+                    <p class="year">Directed by Marc Webb</p>
+                    <p>Peter continues protecting New York while struggling with his promise to Gwen's late father to keep her out of danger. He faces multiple threats: Max Dillon, an Oscorp engineer who becomes the powerful Electro after an accident; and his old friend Harry Osborn, who transforms into the Green Goblin in a desperate attempt to cure his terminal illness. The film reaches its tragic climax with Gwen Stacy's death during the final battle, a devastating loss that nearly destroys Peter but ultimately inspires him to continue being a hero.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Functions/Roles Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🦸</span>
+                Functions & Roles
+            </h2>
+            <div class="functions-list">
+                <div class="function-badge">Superhero</div>
+                <div class="function-badge">Protector of New York City</div>
+                <div class="function-badge">High School Student</div>
+                <div class="function-badge">Photographer</div>
+                <div class="function-badge">Crime Fighter</div>
+                <div class="function-badge">Masked Vigilante</div>
+            </div>
+            <p style="margin-top: 1.5rem;">As Spider-Man, Peter Parker serves as New York City's friendly neighborhood hero, swinging through the streets to stop criminals and save lives. Unlike other heroes, Peter maintains a quippy, conversational style with both friends and foes. He balances his superhero duties with his personal life as a high school student and his relationship with Gwen Stacy, constantly struggling between his desire for a normal life and his responsibility to protect others.</p>
+        </section>
+
+        <!-- Powers Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Superpowers & Abilities
+            </h2>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>🧗 Wall-Crawling</h4>
+                    <p>Enhanced adhesion allows Peter to cling to and scale any surface, demonstrated through spectacular climbing and parkour-style movements across buildings.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕸️ Web-Shooting</h4>
+                    <p>Uses mechanical web-shooters of his own design to fire strong, versatile webbing. Peter constantly innovates his web formulas for different situations.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕷️ Spider-Sense</h4>
+                    <p>A precognitive danger warning system that alerts Peter to threats, giving him split-second reaction time to avoid attacks and protect others.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🤸 Enhanced Agility</h4>
+                    <p>Superhuman agility, balance, and coordination that allows for incredible acrobatic feats and fluid, graceful movement through the city.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💪 Superhuman Strength</h4>
+                    <p>Enhanced strength allowing him to lift several tons, overpower criminals, and perform incredible physical feats like stopping cars.</p>
+                </div>
+                <div class="power-item">
+                    <h4>⚡ Enhanced Reflexes</h4>
+                    <p>Lightning-fast reflexes that enable him to dodge bullets, catch objects mid-air, and react to danger faster than humanly possible.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🛡️ Enhanced Durability</h4>
+                    <p>Increased resistance to physical harm, allowing him to withstand impacts, falls, and attacks that would seriously injure normal people.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🔬 Genius-Level Intellect</h4>
+                    <p>Brilliant scientific mind with expertise in chemistry, engineering, and biology. Designed his own web-shooters and web fluid formulas.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notable Allies Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🤝</span>
+                Notable Allies
+            </h2>
+            <div class="allies-grid">
+                <div class="character-card">
+                    <h4>Gwen Stacy</h4>
+                    <p class="actor">Portrayed by Emma Stone</p>
+                    <p>Peter's girlfriend and intellectual equal, a brilliant scientist at Oscorp. Gwen is Peter's greatest love and closest confidant who knows his secret identity. Their relationship forms the emotional heart of the series, culminating in the tragic events that define Peter's journey as a hero.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Aunt May Parker</h4>
+                    <p class="actor">Portrayed by Sally Field</p>
+                    <p>Peter's loving aunt who raised him after his parents' disappearance. She provides emotional support and wisdom, serving as Peter's anchor and moral compass. Despite not knowing his secret initially, she senses the weight Peter carries and supports him unconditionally.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Captain George Stacy</h4>
+                    <p class="actor">Portrayed by Denis Leary</p>
+                    <p>Gwen's father and captain of the NYPD who initially hunts Spider-Man but comes to respect him. Before his death, he makes Peter promise to keep Gwen safe, a promise that haunts Peter throughout the second film.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Uncle Ben Parker</h4>
+                    <p class="actor">Portrayed by Martin Sheen</p>
+                    <p>Peter's uncle whose death catalyzes Peter's transformation into a true hero. His guidance about responsibility and doing the right thing becomes Peter's moral foundation.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Villains Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">💀</span>
+                Main Villains
+            </h2>
+            <div class="villains-grid">
+                <div class="character-card villain-card-profile">
+                    <h4>The Lizard</h4>
+                    <p class="actor">Dr. Curt Connors - Portrayed by Rhys Ifans</p>
+                    <p>A brilliant scientist and Peter's father's former partner who transforms into a reptilian monster after using experimental serum to regenerate his missing arm. The Lizard's enhanced strength, regenerative abilities, and plan to transform New York into lizard creatures make him a formidable first villain for Spider-Man.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Electro</h4>
+                    <p class="actor">Max Dillon - Portrayed by Jamie Foxx</p>
+                    <p>An obsessed Oscorp electrical engineer who becomes a living generator of electricity after a freak accident. Feeling invisible and betrayed by Spider-Man, Electro unleashes his devastating powers on New York. He can control electricity, fly, and discharge powerful energy blasts that make him one of Spider-Man's most dangerous foes.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Green Goblin</h4>
+                    <p class="actor">Harry Osborn - Portrayed by Dane DeHaan</p>
+                    <p>Peter's childhood friend who becomes the Green Goblin after using unstable spider venom to cure his terminal genetic disease. Armed with advanced Oscorp technology including a glider and enhanced strength, Harry's descent into villainy leads to the tragic confrontation that claims Gwen Stacy's life.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>The Rhino</h4>
+                    <p class="actor">Aleksei Sytsevich - Portrayed by Paul Giamatti</p>
+                    <p>A Russian criminal who pilots a heavily armored mechanical rhino suit provided by Oscorp. Though appearing briefly, the Rhino represents the escalating threats Spider-Man faces and sets up future conflicts in the Amazing Spider-Man universe.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Character Traits Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⭐</span>
+                Character Traits & Style
+            </h2>
+            <p>Andrew Garfield's Spider-Man is characterized by several distinctive traits that set this version apart:</p>
+            <ul>
+                <li><strong>Quippy and Witty:</strong> More talkative and humorous during fights, constantly making jokes and banter with villains and bystanders</li>
+                <li><strong>Modern and Relatable:</strong> A skateboarding, photography-loving teenager who feels authentic to contemporary youth culture</li>
+                <li><strong>Emotionally Vulnerable:</strong> More openly emotional, showing fear, grief, and love in raw, genuine ways</li>
+                <li><strong>Scientifically Minded:</strong> Emphasizes Peter's genius through his invention of mechanical web-shooters and web formulas</li>
+                <li><strong>Acrobatic Fighting Style:</strong> Features more dynamic, parkour-inspired movements and web-swinging sequences</li>
+                <li><strong>Romantic:</strong> The deep, authentic chemistry with Gwen Stacy creates one of cinema's most beloved superhero romances</li>
+            </ul>
+        </section>
+
+        <!-- Legacy Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🏆</span>
+                Legacy & Impact
+            </h2>
+            <p>While The Amazing Spider-Man series was cut short after two films, Andrew Garfield's portrayal left a lasting impact on Spider-Man fans. His interpretation brought a fresh energy and emotional depth to the character, with particular praise for his chemistry with Emma Stone and his portrayal of Spider-Man's trademark wit and humor.</p>
+            
+            <p>The death of Gwen Stacy in The Amazing Spider-Man 2 remains one of the most emotionally devastating moments in superhero cinema, faithfully adapting the iconic comic book storyline with heartbreaking authenticity. This moment defined Peter's character arc and demonstrated the true cost of being a hero.</p>
+            
+            <p>Andrew Garfield's triumphant return as Spider-Man in <em>Spider-Man: No Way Home</em> (2021) was met with overwhelming fan enthusiasm. His redemptive moment of saving MJ provided closure to his character's grief while showcasing why fans loved his interpretation. Many fans have advocated for "The Amazing Spider-Man 3" to give this version of the character a proper conclusion.</p>
+            
+            <p>The series is also remembered for its stunning visual effects, particularly the first-person web-swinging sequences that made audiences feel like they were truly swinging through New York City alongside Spider-Man.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#versions" class="btn btn-primary">← Return to Spider-Verse</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About The Amazing Spider-Man</h4>
+                    <p>Andrew Garfield's Spider-Man films (2012-2014) directed by Marc Webb brought a modern, emotionally resonant take on the Spider-Man story.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Film Details</h4>
+                    <p><strong>Actor:</strong> Andrew Garfield</p>
+                    <p><strong>Director:</strong> Marc Webb</p>
+                    <p><strong>Studio:</strong> Columbia Pictures / Sony Pictures</p>
+                    <p><strong>Years:</strong> 2012-2014</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Man Fan Hub. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment and Sony Pictures.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        <a href="spiderversions.html" 
+   style="color:#00aaff; 
+          display:block; 
+          margin-top:40px; 
+          text-align:center; 
+          font-size:18px; 
+          text-decoration:none;">
+  ← Back to Spider-Man Versions
+</a>
+
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+
+</body>
+</html>
+

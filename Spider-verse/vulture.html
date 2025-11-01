@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulture - The High-Flying Predator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to villain profile page */
+        .villain-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .villain-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .villain-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .villain-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .villain-badge {
+            display: inline-block;
+            background: rgba(26, 61, 26, 0.95);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(74, 124, 46, 0.6);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+        
+        .villain-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 5px;
+        }
+        
+        .villain-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(26, 61, 26, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(74, 124, 46, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #1a3d1a;
+            border-color: #7cfc00;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(45,80,22,0.6);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .villain-image-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .villain-image {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .villain-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(74, 124, 46, 0.2) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .villain-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #2d5016;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #4a7c2e;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '🦅';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #2d5016 0%, #1a3d1a 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(74, 124, 46, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .power-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(74, 124, 46, 0.2) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(45, 80, 22, 0.6);
+            border-color: #7cfc00;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #7cfc00;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+        }
+        
+        .battles-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .battle-card {
+            background: linear-gradient(135deg, #1a3d1a 0%, #2d5016 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            border-left: 5px solid #4a7c2e;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .battle-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(74, 124, 46, 0.2) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .battle-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(45, 80, 22, 0.5);
+        }
+        
+        .battle-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 2px;
+            color: #7cfc00;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .battle-card p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+            line-height: 1.7;
+        }
+        
+        .age-note {
+            background: linear-gradient(135deg, #4a7c2e 0%, #2d5016 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid #7cfc00;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(45, 80, 22, 0.4);
+        }
+        
+        .age-note p {
+            color: #ffffff;
+            margin: 0;
+            font-style: italic;
+            font-weight: 500;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .villain-hero {
+                height: 300px;
+            }
+            
+            .villain-name {
+                font-size: 50px;
+            }
+            
+            .villain-alias {
+                font-size: 1.4rem;
+            }
+            
+            .villain-badge {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .villain-hero {
+                height: 250px;
+            }
+            
+            .villain-name {
+                font-size: 36px;
+            }
+            
+            .villain-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#villains" class="back-button">
+        <span>←</span>
+        <span>Back to Villains</span>
+    </a>
+
+    <!-- Villain Hero Section -->
+    <header class="villain-hero">
+        <img src="https://i.pinimg.com/1200x/49/3a/6c/493a6c2882b09f1c65f2f824474a5c33.jpg" alt="Vulture" class="villain-hero-image">
+        <div class="villain-hero-content">
+            <div class="villain-badge">THE HIGH-FLYING PREDATOR</div>
+            <h1 class="villain-name">VULTURE</h1>
+            <p class="villain-alias">Adrian Toomes</p>
+        </div>
+    </header>
+
+    <!-- Villain Profile -->
+    <main class="profile-container">
+        <!-- Origin Story Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📜</span>
+                Origin Story & Flight into Crime
+            </h2>
+            <p>The Vulture is one of Spider-Man's oldest and most enduring foes—not just in publication history (debuting in <em>The Amazing Spider-Man #2</em> in 1963), but in the literal sense. Adrian Toomes was already an elderly man when he first clashed with the teenage Spider-Man, creating a unique dynamic where an aged predator hunted a young hero. Yet age proved no weakness—Toomes combined brilliant engineering genius with ruthless cunning and bitter resentment to become one of Spider-Man's most persistent and dangerous adversaries.</p>
+            
+            <p><strong>Adrian Toomes: The Inventor Betrayed</strong></p>
+            <p>Adrian Toomes was born in Staten Island, New York, during an era when American engineering was ascending to greatness. From childhood, Adrian showed exceptional aptitude for electronics and mechanical engineering. Unlike contemporaries who pursued fame or fortune, Toomes was a pure engineer—someone who loved the work itself, the satisfaction of solving technical problems and creating functional innovations.</p>
+            
+            <p>After earning engineering degrees, Toomes founded an electronics firm with his business partner, Gregory Bestman. Their partnership seemed ideal: Toomes provided the technical genius and inventions, while Bestman handled the business operations, sales, and client relations. For years, this arrangement worked well. Toomes, content to work in his lab designing new technologies, never paid much attention to the company's finances or business decisions. He trusted his partner implicitly—a trust that would prove catastrophic.</p>
+            
+            <p>Adrian Toomes' crowning achievement was the electromagnetic harness—a revolutionary invention that could generate anti-gravitational fields, allowing a person to fly with precision and sustained power. The technology was groundbreaking, with potential applications in transportation, military operations, rescue services, and countless other fields. It should have made Toomes wealthy and famous, cementing his legacy as one of America's great inventors.</p>
+            
+            <p>But Gregory Bestman had been embezzling from the company for years. When Toomes finally discovered the financial irregularities and confronted his partner, Bestman acted swiftly and ruthlessly. Using legal maneuvering and fraudulent documentation, Bestman ousted Toomes from his own company, claiming full ownership of all patents—including the electromagnetic harness. Adrian Toomes, after decades of work and innovation, was left with nothing. His life's work was stolen, his reputation damaged by Bestman's lies that portrayed him as an incompetent engineer forced into retirement, and his finances ruined.</p>
+            
+            <div class="age-note">
+                <p><strong>The Bitterness of Betrayal:</strong> The betrayal destroyed Toomes psychologically as much as financially. He had trusted completely, worked honestly, and created genuine innovations—yet the system rewarded the dishonest businessman while discarding the honest engineer. This wasn't just theft; it was a fundamental violation of the meritocratic ideal Toomes believed in. His bitterness wasn't mere anger—it was the corrosive realization that playing by the rules had made him a victim, while cheating had made Bestman rich.</p>
+            </div>
+            
+            <p><strong>The Birth of the Vulture</strong></p>
+            <p>Adrian Toomes was elderly, broke, and consumed by rage. But he still had his mind, his engineering skills, and one prototype harness that Bestman hadn't seized. Toomes retreated to a workshop and began refining his invention, no longer for commercial purposes but for revenge. He enhanced the harness with additional features: wing surfaces for increased flight capability and intimidation, electromagnetically-charged talons for combat, and various integrated weapons systems.</p>
+            
+            <p>As he worked, Toomes realized something unexpected: the electromagnetic fields generated by his harness had a side effect—they enhanced his physical strength and vitality, partially counteracting the effects of aging. The man who'd been forced into retirement due to supposed old age found himself stronger, faster, and more vigorous than he'd been in decades. The irony wasn't lost on him—his greatest invention, stolen to retire him, had given him the power to return stronger than ever.</p>
+            
+            <p>Toomes designed a costume to complement the harness—a green bodysuit with wing-like cape attachments that created a distinctive silhouette in flight. When he looked in the mirror, he saw what he'd become: a predatory bird, a creature that fed on the weak and dishonest. The media would dub him "the Vulture," a name Adrian embraced. Like his namesake, he would circle above, then swoop down to take what others had.</p>
+            
+            <p>His first target was obvious: Gregory Bestman and the company that should have been Toomes'. The Vulture struck with precision—destroying company property, terrorizing Bestman personally, and stealing the company's assets. But revenge against one man wasn't enough to satisfy the rage and bitterness festering inside him. Toomes expanded his targets: he would rob from anyone, hurt anyone who got in his way, and prove that his genius made him superior to the society that had discarded him.</p>
+            
+            <p><strong>Clash with Spider-Man</strong></p>
+            <p>When the Vulture began his crime spree, he drew the attention of New York's newest hero—Spider-Man. Their first encounter established a pattern that would repeat for decades: the Vulture's aerial superiority and enhanced strength initially overwhelmed the young hero, but Spider-Man's agility, intelligence, and web-shooters eventually allowed him to ground and defeat the flying villain.</p>
+            
+            <p>What made their rivalry unique was the age disparity. Here was an elderly man, someone who should have been retired and harmless, fighting a teenager on equal or superior terms. The Vulture mocked Spider-Man's youth and inexperience, while Spider-Man's jokes about Toomes' age infuriated the villain. Yet beneath the banter was genuine danger—Toomes had nothing to lose, while Peter Parker had everything ahead of him.</p>
+            
+            <p>The Vulture became a founding member of the Sinister Six, Doctor Octopus's team of Spider-Man's greatest foes. Throughout decades of criminal activity, Toomes has proven remarkably resilient—repeatedly escaping prison, upgrading his technology, and returning for revenge. His age, rather than weakening him, seemed to make him more dangerous: he had the patience for long-term planning, the ruthlessness that comes from having little to lose, and the cunning acquired through decades of experience.</p>
+            
+            <p><strong>The Eternal Vulture</strong></p>
+            <p>What makes Adrian Toomes fascinating is his refusal to stop. Most people his age would have retired, accepted their fate, perhaps found peace. But Toomes' bitterness and pride won't allow it. He continues flying, continues fighting, continues proving that age hasn't diminished him. In a twisted way, his villain career gave him what legitimate work never did: recognition, fear, and proof that Adrian Toomes matters. The electromagnetic harness keeps him vital, but it's his bitter determination that truly sustains him—he'll keep soaring and preying until Spider-Man or death finally grounds him permanently.</p>
+        </section>
+
+        <!-- Powers & Abilities Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Powers, Technology & Predatory Arsenal
+            </h2>
+            <p style="margin-bottom: 1rem;"><strong>The Vulture has no natural superpowers, but his electromagnetic harness and decades of experience make him a formidable aerial combatant:</strong></p>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>🦅 Electromagnetic Harness & Flight</h4>
+                    <p>Toomes' greatest invention—a harness generating electromagnetic anti-gravitational fields that allow sustained, controlled flight. He can fly at speeds up to 95 mph, hover in place, perform complex aerial maneuvers, and carry significant weight while airborne. The flight is silent, energy-efficient, and allows him to reach altitudes where Spider-Man cannot pursue.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💪 Enhanced Strength & Vitality</h4>
+                    <p>An unexpected benefit of the harness's electromagnetic fields—they enhance Toomes' physical strength and counteract aging effects. Despite being elderly (often in his 70s or older), the Vulture possesses strength allowing him to lift approximately 700 pounds and physical vitality comparable to a man in his physical prime. This enhancement only works while wearing the harness.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🦅 Razor-Sharp Talons</h4>
+                    <p>The Vulture's gloves and boots contain electromagnetically-charged, razor-sharp talons capable of slicing through metal, stone, and flesh. These talons are his primary weapons in combat—he uses his flight speed to build momentum, then strikes with devastating swooping attacks that can tear through Spider-Man's webs or rend steel beams.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🛡️ Durable Winged Suit</h4>
+                    <p>His costume incorporates wing surfaces that aid flight stability and control while providing some protection against impacts and attacks. The suit is made from lightweight but durable materials that can withstand significant damage and environmental stresses encountered during high-altitude or high-speed flight.</p>
+                </div>
+                <div class="power-item">
+                    <h4>✈️ Aerial Superiority</h4>
+                    <p>Master of aerial combat with decades of experience fighting while airborne. The Vulture uses three-dimensional tactics that ground-based heroes struggle to counter—attacking from above, using altitude as cover, diving attacks, and aerial grappling. His flight gives him mobility and tactical advantages that neutralize many opponents' strengths.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🧠 Engineering Genius</h4>
+                    <p>Brilliant inventor and engineer, particularly in electromagnetic applications. Toomes constantly upgrades his harness, repairs damage, and develops new technologies. His understanding of physics and engineering allows him to analyze and counter technological threats, design traps, and exploit weaknesses in opponents' equipment.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🎯 Strategic Thinker</h4>
+                    <p>Decades of experience have made Toomes a cunning tactician. He plans crimes meticulously, identifies optimal escape routes (usually aerial), and adapts strategies based on opponents' capabilities. His age brings patience—he'll wait for the perfect moment rather than act rashly, making him more dangerous than impulsive younger villains.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🦅 Magnetic Attraction/Repulsion</h4>
+                    <p>Some harness versions allow Toomes to generate focused electromagnetic fields for purposes beyond flight—attracting or repelling metal objects, disrupting electronic systems, or creating magnetic shields. These abilities vary depending on harness configuration but add versatility to his arsenal.</p>
+                </div>
+                <div class="power-item">
+                    <h4>👁️ Enhanced Senses</h4>
+                    <p>Years of aerial combat have honed Toomes' spatial awareness, depth perception, and reaction times. He can track fast-moving targets while in flight, anticipate attacks from multiple angles, and navigate complex urban environments at high speed without collision.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💀 Weapons Integration</h4>
+                    <p>Various Vulture suits have integrated additional weapons—wing-mounted projectiles, sonic disruptors, flash-bang devices, or electromagnetically-propelled sharpened feathers. Toomes constantly tinkers with new offensive capabilities, making each encounter potentially different from the last.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🔋 Harness Dependency</h4>
+                    <p><strong>Major Weakness:</strong> Without his harness, Toomes is an elderly man with all the physical limitations that implies. His enhanced strength and vitality disappear immediately when the harness is removed or disabled. He's dependent on the technology for combat effectiveness and even for quality of life—removing it forces him to confront his true age. Additionally, strong magnetic fields or EMP attacks can disrupt the harness's functions, grounding him and leaving him vulnerable.</p>
+                </div>
+                <div class="power-item">
+                    <h4>⚔️ Close Combat Vulnerability</h4>
+                    <p><strong>Limitation:</strong> While formidable in aerial combat, Vulture is more vulnerable in close-quarters ground fighting, especially against superpowered opponents. Spider-Man's superior agility and spider-sense give him advantage once he closes distance. The Vulture's strategy relies on maintaining distance and aerial superiority—being grounded or grappled negates his tactical advantages.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personality & Motivations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🧠</span>
+                Personality, Motivations & Bitter Cunning
+            </h2>
+            <p>The Vulture's personality is shaped by age, betrayal, and corrosive bitterness. Unlike younger villains driven by impulse or megalomania, Toomes represents cold, calculating resentment aged like wine into toxic vintage.</p>
+            
+            <p><strong>Core Personality Traits:</strong></p>
+            <ul>
+                <li><strong>Bitter Resentment:</strong> Toomes' defining trait is deep, abiding bitterness toward society, business, and anyone who has what he believes he deserves. His partner's betrayal created a worldview where honesty is weakness and power is the only thing that matters. This bitterness fuels everything he does.</li>
+                <li><strong>Elderly But Lethal:</strong> Toomes uses his age strategically—people underestimate him, allowing him to exploit their assumptions. Yet he's also genuinely old, with the patience, experience, and reduced fear of consequences that age brings. He's past caring about redemption or legacy beyond proving he's not finished.</li>
+                <li><strong>Pride in Intelligence:</strong> Toomes is genuinely brilliant and knows it. His engineering achievements rival Tony Stark's early work, and he takes pride in his inventions. Being forced out of legitimate recognition for his genius drives much of his criminal career—if society won't honor his intelligence, he'll use it to prey on them.</li>
+                <li><strong>Ruthless Pragmatism:</strong> Age has stripped away illusions about morality or fair play. Toomes will hurt or kill without hesitation if it serves his goals. He has no interest in elaborate schemes or dramatic gestures—he's a pragmatic criminal who commits crimes for profit and revenge, not performance.</li>
+                <li><strong>Predatory Nature:</strong> Appropriately for his namesake, Toomes is a predator—patient, calculating, and opportunistic. He circles situations looking for weaknesses, strikes when opponents are vulnerable, and retreats if the situation turns unfavorable. There's no honor in his combat; there's only winning or surviving.</li>
+                <li><strong>Contempt for Youth:</strong> Toomes harbors particular contempt for young people who haven't "earned" their success—especially Spider-Man. He sees Peter Parker as an adolescent with accidentally-acquired powers who plays at heroism without understanding real sacrifice or the harsh realities of life.</li>
+                <li><strong>Survivor Mentality:</strong> Having been betrayed, ruined, and defeated multiple times, Toomes has developed remarkable resilience. He always comes back, rebuilds, and tries again. This persistence stems partly from stubbornness and partly from having nothing else—his criminal career is all he has left.</li>
+                <li><strong>Isolated & Alone:</strong> Toomes works alone by preference and necessity. Age and bitterness have left him without genuine connections. When he joins villain teams like the Sinister Six, it's pure pragmatism—temporary alliance for mutual benefit, ended as soon as it's no longer advantageous.</li>
+            </ul>
+            
+            <div class="age-note">
+                <p><strong>The Tragedy of the Vulture:</strong> Adrian Toomes could have been remembered as a great inventor, his electromagnetic harness changing aviation and transportation forever. Instead, he's a elderly supervillain, his genius used for petty crimes and revenge. The harness keeps him physically vital but can't restore what betrayal took—his legitimate career, his reputation, his innocence. He's trapped flying in circles, never landing because there's nothing to land for, sustained by bitterness rather than purpose.</p>
+            </div>
+            
+            <p><strong>Motivations Across His Career:</strong></p>
+            <ul>
+                <li><strong>Initial Revenge:</strong> His first crimes targeted Gregory Bestman and the company stolen from him. This was personal vengeance, pure and simple. Toomes wanted Bestman to suffer as he had suffered, to lose everything as Toomes had lost everything.</li>
+                <li><strong>Greed & Survival:</strong> After revenge lost its immediate satisfaction, Toomes continued crime for money. He needed income to survive, fund his equipment upgrades, and maintain the lifestyle he believed his intelligence deserved. Crime proved more profitable than legitimate work ever had.</li>
+                <li><strong>Proving Vitality:</strong> Many schemes seem designed to prove Toomes isn't finished, that age hasn't diminished him. Each successful crime, each time he defeats younger opponents, validates that he still matters. The alternative—accepting retirement and irrelevance—is unbearable.</li>
+                <li><strong>Revenge Against Spider-Man:</strong> After repeated defeats by Spider-Man, Toomes developed specific hatred for the wall-crawler. Spider-Man represents everything Toomes resents: youth, power granted by accident rather than earned through intellect, and society's approval despite operating outside the law.</li>
+                <li><strong>Pride & Recognition:</strong> Deep down, Toomes still craves recognition for his genius. When other villains or criminals acknowledge his engineering brilliance or tactical cunning, he responds positively. This need for respect makes him occasionally cooperative with other villains, though his trust is never complete.</li>
+                <li><strong>Nothing Left to Lose:</strong> At his age, with no family, no legitimate career, and no hope of redemption, Toomes has reached a dangerous place: he doesn't care if he dies, as long as he takes someone with him or accomplishes one last great crime. This makes him reckless in ways younger villains with futures to protect are not.</li>
+            </ul>
+            
+            <p><strong>Relationship with Other Villains:</strong></p>
+            <p>Toomes' age and personality create unique dynamics with other criminals:</p>
+            <ul>
+                <li><strong>Sinister Six:</strong> As a founding member, Toomes has been part of most incarnations. He provides aerial support and tactical experience, though he often clashes with Doc Ock over leadership. Toomes respects intelligence but resents being subordinate to someone younger.</li>
+                <li><strong>Generational Disdain:</strong> Younger villains often disrespect Toomes until he demonstrates his lethality. He's been underestimated countless times, which he uses to his advantage. Those who survive underestimating him don't make that mistake twice.</li>
+                <li><strong>Professional Respect:</strong> Tech-based villains like Doctor Octopus, while not friends, respect Toomes' engineering skills. This professional respect is the closest thing Toomes has to positive relationships in the criminal underworld.</li>
+                <li><strong>Betrayal Paranoia:</strong> Having been betrayed by his business partner, Toomes is deeply suspicious of allies. He plans for betrayal, maintains escape routes, and never reveals his full capabilities to teammates. This paranoia has saved him multiple times when allies turned on him.</li>
+            </ul>
+            
+            <p>Adrian Toomes is ultimately a cautionary tale about bitterness and pride. His genius could have benefited humanity; instead, it's wasted on crime. His years could have been spent in peaceful retirement; instead, they're burned pursuing revenge and validation through violence. He's a predator whose prey is often himself—circling endlessly, never satisfied, unable to land because the ground holds nothing but the reality he refuses to accept: that he's wasted his gifts and his years on pointless vengeance, and no amount of flying can lift him above that truth.</p>
+        </section>
+
+        <!-- World & Operations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🌆</span>
+                World, Territory & Aerial Operations
+            </h2>
+            <p>The Vulture operates primarily in New York City, but his territory is three-dimensional—he owns the skies. While other criminals fight over street corners and territories, Toomes soars above them, striking from angles most defenders can't easily counter.</p>
+            
+            <p><strong>Operating Environments:</strong></p>
+            <ul>
+                <li><strong>Urban Airspace:</strong> The Vulture's primary domain is above New York's skyline. He uses buildings as perches, air currents for efficient flight, and altitude as tactical advantage. He knows the city's aerial geography intimately—which buildings provide best vantage points, which areas have favorable winds, and which routes allow fastest escape.</li>
+                <li><strong>Rooftops & High Structures:</strong> When not in flight, Toomes favors rooftops and high structures. These locations provide easy access to his preferred aerial environment while offering security—few opponents can reach him easily at height. His lairs are typically in abandoned high-rise buildings or old industrial towers.</li>
+                <li><strong>Industrial Areas:</strong> Toomes maintains workshops in abandoned factories or warehouses where he upgrades his harness and equipment. These locations provide tools, materials, and privacy for his engineering work. He changes locations frequently to avoid detection.</li>
+                <li><strong>Financial District & Jewelry Stores:</strong> Primary targets for his crimes—locations with valuable, portable goods accessible from above. He can smash through skylights, grab valuable items, and escape vertically before ground-based security can respond.</li>
+                <li><strong>Coastal & Bridge Areas:</strong> Water provides escape routes and areas where pursuit is difficult. Toomes has used New York's rivers and bridges tactically, knowing that many heroes and police can't follow him over or across water.</li>
+            </ul>
+            
+            <p><strong>Criminal Methods & Tactics:</strong></p>
+            <ul>
+                <li><strong>Smash-and-Grab Heists:</strong> Toomes' signature tactic—aerial approach, smash through defenses from above (using talons or momentum), grab valuables, and vertical escape. The entire operation takes minutes, often seconds, too fast for conventional response.</li>
+                <li><strong>Assassination & Hired Muscle:</strong> Other criminals have hired the Vulture for hits, sabotage, or intimidation. His ability to reach targets conventional hired guns cannot makes him valuable. He can fly to high-security penthouses, escape routes unavailable to ground-based criminals, or conduct aerial surveillance.</li>
+                <li><strong>Kidnapping & Ransom:</strong> Toomes has used his flight capability for kidnappings—grabbing targets from secure locations and flying them to hideouts inaccessible without aircraft. Victims can't escape when held stories above the ground.</li>
+                <li><strong>Sinister Six Operations:</strong> When working with villain teams, Vulture provides aerial reconnaissance, air support during battles, and extraction of team members from danger. His flight makes him invaluable for operations requiring multi-dimensional tactics.</li>
+                <li><strong>Technology Theft:</strong> Toomes targets electronics companies and research facilities for advanced components that might improve his harness. He's stolen from Stark Industries, Oscorp, and countless other tech companies, always seeking the latest innovations to incorporate.</li>
+            </ul>
+            
+            <p><strong>Tactical Advantages:</strong></p>
+            <ul>
+                <li><strong>Three-Dimensional Combat:</strong> Most heroes and law enforcement are ground-based. Vulture's aerial capability gives him escape routes and attack angles they can't easily counter. Even Spider-Man, who can swing between buildings, is limited compared to true flight.</li>
+                <li><strong>Speed & Mobility:</strong> At 95 mph flight speed, Vulture can cross Manhattan in minutes, reach locations before authorities, and escape pursuit by ground vehicles. Police helicopters are too slow to intercept him effectively.</li>
+                <li><strong>Altitude Advantage:</strong> Toomes can fly high enough that he's difficult to spot or target, then dive-bomb targets with incredible momentum. The altitude also provides safety—few weapons threaten him at height, and many powers lose effectiveness with distance.</li>
+                <li><strong>Silent Flight:</strong> Unlike aircraft, Toomes' electromagnetic flight is nearly silent. He can approach targets without warning, conduct surveillance undetected, and escape without audible evidence of direction.</li>
+                <li><strong>Experience & Cunning:</strong> Decades of crime have taught Toomes every trick—police response times, hero patrol patterns, building security vulnerabilities, and optimal escape routes. This experience makes him far more dangerous than raw power would suggest.</li>
+            </ul>
+            
+            <p><strong>Interaction with Law Enforcement:</strong></p>
+            <ul>
+                <li>NYPD is largely helpless against the Vulture—conventional weapons rarely hit him at altitude and speed, patrol cars can't pursue flight, and standard tactics assume ground-based criminals</li>
+                <li>Police helicopters have been deployed but struggle to match his maneuverability and speed in urban environments with tall buildings</li>
+                <li>Specialized anti-Vulture protocols exist: rooftop sniper positions, coordination with heroes like Iron Man or Falcon who can fly, and tracking technology that triangulates his position</li>
+                <li>Despite decades of crime, Vulture's escape rate is among the highest in Spider-Man's rogues gallery—when he wants to flee, he usually succeeds</li>
+            </ul>
+            
+            <p><strong>Impact on New York:</strong></p>
+            <ul>
+                <li>Property damage from dive-bomb attacks and aerial combat—shattered skylights, damaged rooftops, and destroyed upper-story infrastructure</li>
+                <li>Economic impact from targeted heists of high-value goods and technology</li>
+                <li>Psychological effect of a aerial threat civilians cannot escape by running—if Vulture targets you, there's nowhere to hide except indoors</li>
+                <li>Increased security costs for high-rise buildings requiring aerial defenses</li>
+                <li>Urban legends about "the bird-man" among populations who've witnessed his attacks</li>
+            </ul>
+            
+            <p>The Vulture transformed New York's crime landscape by adding a vertical dimension. Other criminals compete over streets and territories; Toomes owns the sky. His decades of aerial crime have forced the city to think defensively in three dimensions, but despite countermeasures, the old man in green wings continues to soar above the law, a predator that refuses to be grounded.</p>
+        </section>
+
+        <!-- Key Battles & Events Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚔️</span>
+                Key Battles, Events & Defining Moments
+            </h2>
+            <div class="battles-grid">
+                <div class="battle-card">
+                    <h3>First Appearance: The Amazing Spider-Man #2 (1963)</h3>
+                    <p>Created by Stan Lee and Steve Ditko, the Vulture was the second super-villain Spider-Man ever faced, making him one of the web-slinger's oldest foes both in publication order and character age. The story introduced Adrian Toomes and his electromagnetic harness, establishing the elderly-but-dangerous villain archetype. Spider-Man initially struggled against Vulture's aerial superiority until Peter's scientific mind devised a solution—inventing a device that disrupted the harness's electromagnetic field. The battle established patterns for future encounters: Vulture's initial advantage through flight, Spider-Man's need for clever tactics rather than brute force, and the unique dynamic of a teen hero versus an elderly villain. The Vulture's distinctive look—green costume with prominent wings—made him instantly memorable and visually iconic.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Founding the Sinister Six</h3>
+                    <p>In <em>The Amazing Spider-Man Annual #1</em> (1964), the Vulture joined Doctor Octopus, Electro, Mysterio, Sandman, and Kraven the Hunter as founding members of the Sinister Six. Doc Ock organized Spider-Man's greatest enemies to attack him in sequence, wearing him down for a final confrontation. Though the plan failed, the Sinister Six became recurring threat with Vulture as consistent member. His aerial reconnaissance and tactical experience made him valuable to the team despite frequent clashes with Doc Ock over strategy and leadership. The Vulture has appeared in nearly every Sinister Six iteration, proving his staying power and importance to Spider-Man's rogues gallery.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Revenge Against Gregory Bestman</h3>
+                    <p>One of the most personal Vulture storylines involved his final confrontation with Gregory Bestman, the business partner who'd stolen his company. After years of criminal activity, Toomes returned specifically to make Bestman pay for the original betrayal. The storyline explored Toomes' origins and motivations, showing that beneath the supervillain was a man whose life had been destroyed by corporate betrayal. Bestman's fate (varying by version—sometimes killed, sometimes merely ruined financially) provided closure to Toomes' origin but revealed that revenge didn't heal his bitterness. Even with his betrayer punished, Toomes continued his criminal career, suggesting the betrayal was just an excuse for darkness that was always within him.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Child Vulture</h3>
+                    <p>In a disturbing storyline, a young man named Jimmy Natale stole one of Toomes' harnesses and became a "young Vulture," committing crimes in Toomes' style. Adrian, enraged by the theft of his technology and identity, hunted Jimmy with lethal intent. The confrontation between old and young Vulture created unusual dynamics—Spider-Man found himself protecting a criminal from a more dangerous criminal. The story explored themes of legacy, aging, and Toomes' territorial possessiveness about his villain identity. It reinforced that Vulture's danger isn't primarily physical—it's his ruthlessness and cunning, willingness to kill without hesitation.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Spider-Man: Homecoming (2017)</h3>
+                    <p>Michael Keaton portrayed Adrian Toomes in the MCU's <em>Spider-Man: Homecoming</em>, giving the character his most prominent mainstream portrayal and winning widespread critical acclaim. This version updated Toomes as a working-class salvage operator who turned to illegal weapons dealing after being economically displaced by Tony Stark's Damage Control. Keaton's Vulture was blue-collar pragmatic rather than elderly embittered—a family man committing crimes to provide for his daughter. The exo-suit design emphasized industrial functionality over the comics' bird-like appearance. The film's most memorable moment: Toomes discovering Peter Parker is Spider-Man during a car ride, creating incredible tension as the villain drove Peter to prom while deciding whether to kill him. Keaton's performance emphasized Toomes as a genuinely threatening working-class villain with understandable (if not justifiable) motivations, making him one of the MCU's most compelling antagonists. His survival at the film's end left possibilities for future appearances.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Maximum Carnage</h3>
+                    <p>During the "Maximum Carnage" crossover event, the Vulture was forced into an unlikely alliance with Spider-Man and other heroes to stop Carnage's murder spree. Toomes' participation was purely pragmatic—Carnage's indiscriminate killing threatened everyone, including criminals. The storyline showed rare cooperation between Vulture and Spider-Man, with mutual respect for each other's capabilities despite their enmity. Toomes proved effective against Carnage's symbiote-infected allies, using aerial tactics and experience to contribute meaningfully to the heroes' efforts. His return to villainy after the crisis reinforced that his cooperation was purely situational—he'd work with heroes against greater threats but never abandon his criminal career.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Identity Crisis & Nathan Lubensky</h3>
+                    <p>One of the Vulture's darker storylines involved Nathan Lubensky, an elderly man who befriended Aunt May. When Toomes targeted a location where Nathan happened to be, he was caught in the crossfire. The subsequent events led to Nathan's death (circumstances varying by version), with the Vulture showing no remorse. The storyline made the conflict personal for Peter Parker in ways beyond their usual battles—Toomes had killed someone Peter cared about, an elderly man who should have been off-limits. This cemented Toomes as genuinely dangerous rather than just an elderly opponent to be treated lightly, and eliminated any sympathy Peter might have had for the aged villain.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>De-aging and Re-aging Cycles</h3>
+                    <p>Various storylines have featured Toomes being temporarily de-aged through different means—advanced technology, power-draining encounters, or harness malfunctions. These stories explored what Toomes would do with youth restored: inevitably, he used it for more effective crime rather than redemption. The temporary nature of these de-agings reinforced that the harness keeps him vital but can't truly reverse aging. When he returns to his true age, his bitterness intensifies—he's experienced youth again and lost it, reminder of everything time has taken from him.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Clone Saga Involvement</h3>
+                    <p>The Vulture had roles in Spider-Man's infamous Clone Saga, using his engineering skills and connections to profit from the chaos and confusion. His involvement was typically mercenary—selling technology to interested parties, conducting industrial espionage related to cloning tech, or being hired for jobs amidst the confusion. These storylines reinforced Toomes as a survivor who capitalizes on others' conflicts while maintaining his own agenda.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Savage Six Leadership</h3>
+                    <p>In some continuities, an elderly Adrian Toomes actually led his own villain team called the Savage Six, selecting members and planning operations. His leadership style was pragmatic and ruthless—no ego-driven speeches or theatrical gestures, just efficient criminal operations with clear division of profits. Team members who challenged his authority or showed incompetence were abandoned or even killed. This leadership role showed that Toomes, despite his age, commanded respect through competence and fear rather than charisma.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Prison Escapes</h3>
+                    <p>The Vulture's escapes from prison are legendary—he's broken out of maximum security facilities dozens of times. Sometimes he smuggles in harness components piece by piece, assembles the technology in his cell, and flies out through the roof. Other times, allies arrange for harness delivery during outdoor exercise. His escape record is so consistent that authorities developed specialized Vulture-proof cells with electromagnetic dampening and reinforced ceilings, yet he still finds ways out. Each escape demonstrates his engineering genius, resourcefulness, and the fundamental problem of imprisoning someone whose power is portable technology rather than innate ability.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Legacy & Impact Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🏆</span>
+                Legacy, Themes & Cultural Impact
+            </h2>
+            <p>The Vulture, created by Stan Lee and Steve Ditko in 1963, has endured for over six decades as one of Spider-Man's most essential villains. His longevity (both as published character and as elderly villain) makes him unique—few comic book villains are defined by their age, and fewer still make age a strength rather than weakness.</p>
+            
+            <p><strong>Thematic Significance:</strong></p>
+            <ul>
+                <li><strong>Age & Vitality:</strong> The Vulture subverts expectations about aging and capability. In a genre dominated by young, physically prime heroes and villains, Toomes proves that experience, cunning, and technology can overcome age-related decline. He represents fears about aging—becoming obsolete, forgotten, powerless—while also embodying how some people refuse to accept those limitations.</li>
+                <li><strong>Betrayal & Bitterness:</strong> Toomes' origin story is fundamentally about trust destroyed and how betrayal can corrupt even brilliant minds. His transformation from honest engineer to ruthless criminal came from experiencing the fundamental unfairness of a system where dishonest people prosper while honest ones suffer. This resonates with anyone who's been betrayed by partners, employers, or institutions they trusted.</li>
+                <li><strong>Technology as Equalizer:</strong> Unlike heroes with innate powers, Toomes' abilities come entirely from his inventions. This makes him an early example of the tech-based villain—someone dangerous not because of what they are but because of what they built. His electromagnetic harness predated modern discussions of Iron Man-style powered armor by decades.</li>
+                <li><strong>Predator Archetype:</strong> The vulture as symbol is perfect for Toomes—a creature that soars above, patient and opportunistic, feeding on the weak or wounded. His tactics mirror actual vulture behavior: circling, watching, then swooping when vulnerability appears. The name shapes how readers perceive him as calculating rather than impulsive predator.</li>
+                <li><strong>Working-Class Resentment:</strong> Particularly in the MCU version, Vulture represents working-class people discarded by corporate consolidation and technological progress. His turn to crime comes from economic displacement—a villain created by system failure rather than personal moral failure. This adds social commentary often absent from supervillain origins.</li>
+            </ul>
+            
+            <p><strong>Visual & Cultural Impact:</strong></p>
+            <ul>
+                <li>The distinctive green costume with prominent wings is one of comics' most recognizable villain designs, immediately identifiable even in silhouette</li>
+                <li>His elderly appearance makes him visually unique among supervillains—balding head, aged features contrasting with powerful mechanical wings</li>
+                <li>Appeared in virtually every Spider-Man animated series, often as recurring antagonist and Sinister Six member</li>
+                <li>Michael Keaton's acclaimed performance in <em>Homecoming</em> introduced mainstream audiences to a sympathetic, working-class version that resonated with contemporary economic anxieties</li>
+                <li>Action figures and collectibles regularly feature Vulture, with wings making for dynamic display pieces</li>
+                <li>Video games have embraced his aerial combat—boss battles against Vulture showcase three-dimensional gameplay distinct from ground-based enemies</li>
+            </ul>
+            
+            <p><strong>Character Evolution:</strong></p>
+            <ul>
+                <li><strong>Classic Era:</strong> Straightforward elderly villain with flight powers and resentment toward Spider-Man</li>
+                <li><strong>Sinister Six Regular:</strong> Established as core member of Spider-Man's rogues gallery through team appearances</li>
+                <li><strong>Origin Depth:</strong> Later stories expanded his backstory with the Bestman betrayal, adding tragic dimension</li>
+                <li><strong>Darker Portrayals:</strong> Modern comics emphasize his ruthlessness and willingness to kill, removing any "harmless old man" misconceptions</li>
+                <li><strong>MCU Reinvention:</strong> Keaton's blue-collar family man version provided new take on motivations while maintaining core predatory nature</li>
+                <li><strong>Age As Weapon:</strong> Recent stories emphasize how Toomes weaponizes others' assumptions about elderly people, using underestimation as tactical advantage</li>
+            </ul>
+            
+            <p><strong>Influence on Spider-Man Mythology:</strong></p>
+            <ul>
+                <li>Second villain Spider-Man ever faced, establishing early that Peter's rogues gallery would be diverse in age, powers, and motivations</li>
+                <li>His aerial attacks forced Spider-Man to develop three-dimensional combat strategies, expanding beyond ground-based web-slinging</li>
+                <li>Demonstrated that tech-based villains could be as dangerous as those with innate superpowers</li>
+                <li>Regular Sinister Six member, his aerial capability making the team tactically diverse</li>
+                <li>Created precedent for elderly villains in comics—proving that age doesn't disqualify someone from being genuine threat</li>
+            </ul>
+            
+            <p><strong>Why Vulture Endures:</strong></p>
+            <ul>
+                <li><strong>Unique Age Dynamic:</strong> Few villains are defined by being elderly, making Toomes stand out in rogues galleries dominated by prime-age antagonists</li>
+                <li><strong>Visual Distinctiveness:</strong> Flight and prominent wings create memorable, dynamic visuals across all media</li>
+                <li><strong>Tactical Versatility:</strong> Aerial combat adds dimension to stories, creating challenges different from ground-based villains</li>
+                <li><strong>Relatable Motivations:</strong> Betrayal, economic displacement, and resentment about being discarded are universally understandable even if his response isn't</li>
+                <li><strong>Adaptability:</strong> Core concept works across different interpretations—elderly embittered engineer or working-class family man both create compelling Vultures</li>
+            </ul>
+            
+            <p>Adrian Toomes represents something rarely explored in superhero media: what happens to genius when it's embittered, age when it's weaponized, and pride when it's wounded beyond healing. He could have been remembered as a great inventor; instead, he'll be remembered as an old man in green wings who refused to land, who chose to soar on currents of rage and resentment rather than accept the graceful retirement society expected.</p>
+            
+            <p>In an age where discussions about aging workforce, retirement security, and economic displacement dominate public discourse, the Vulture's rage at being discarded feels more relevant than ever. He's a cautionary tale about what happens when society treats people as disposable once they're deemed past their prime—some people don't go quietly into retirement; they put on wings and become predators.</p>
+            
+            <p>The Vulture will continue soaring through Spider-Man's world as long as there are stories to tell about age versus youth, experience versus innovation, and the bitter determination of those who refuse to be grounded by time, society, or defeat. He's proof that in the Marvel Universe, the most dangerous predators aren't always the strongest or fastest—sometimes they're the oldest, wisest, and most patient, circling overhead until the perfect moment to strike.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#villains" class="btn btn-primary">← Return to Villains Gallery</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Vulture</h4>
+                    <p>Adrian Toomes, the elderly but lethal inventor who uses his electromagnetic flying harness to soar above New York as one of Spider-Man's oldest and most persistent foes—proving that age and cunning can be as dangerous as youth and power.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Details</h4>
+                    <p><strong>Real Name:</strong> Adrian Toomes</p>
+                    <p><strong>First Appearance:</strong> The Amazing Spider-Man #2 (1963)</p>
+                    <p><strong>Created by:</strong> Stan Lee & Steve Ditko</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Verse Fan Site. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        console.log("Vulture page loaded");
+        
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+

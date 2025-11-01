@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhino - The Unstoppable Juggernaut</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to villain profile page */
+        .villain-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .villain-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .villain-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .villain-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .villain-badge {
+            display: inline-block;
+            background: rgba(74, 74, 74, 0.95);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(169, 169, 169, 0.6);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+        
+        .villain-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 5px;
+        }
+        
+        .villain-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(74, 74, 74, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(169, 169, 169, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #696969;
+            border-color: #d3d3d3;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(74,74,74,0.6);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .villain-image-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .villain-image {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .villain-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(169, 169, 169, 0.2) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .villain-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #696969;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #808080;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '🦏';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #696969 0%, #4a4a4a 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(169, 169, 169, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .power-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(169, 169, 169, 0.2) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(74, 74, 74, 0.6);
+            border-color: #d3d3d3;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #d3d3d3;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+        }
+        
+        .battles-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .battle-card {
+            background: linear-gradient(135deg, #4a4a4a 0%, #696969 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            border-left: 5px solid #808080;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .battle-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(169, 169, 169, 0.2) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .battle-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(74, 74, 74, 0.5);
+        }
+        
+        .battle-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 2px;
+            color: #d3d3d3;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .battle-card p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+            line-height: 1.7;
+        }
+        
+        .tragedy-note {
+            background: linear-gradient(135deg, #808080 0%, #696969 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid #d3d3d3;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(74, 74, 74, 0.4);
+        }
+        
+        .tragedy-note p {
+            color: #ffffff;
+            margin: 0;
+            font-style: italic;
+            font-weight: 500;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .villain-hero {
+                height: 300px;
+            }
+            
+            .villain-name {
+                font-size: 50px;
+            }
+            
+            .villain-alias {
+                font-size: 1.4rem;
+            }
+            
+            .villain-badge {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .villain-hero {
+                height: 250px;
+            }
+            
+            .villain-name {
+                font-size: 36px;
+            }
+            
+            .villain-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#villains" class="back-button">
+        <span>←</span>
+        <span>Back to Villains</span>
+    </a>
+
+    <!-- Villain Hero Section -->
+    <header class="villain-hero">
+        <img src="https://i0.wp.com/spidermannews.com/wp-content/uploads/2014/05/f2cJ4ec.jpg?fit=665%2C505&quality=80&strip=info&ssl=1" alt="Rhino" class="villain-hero-image">
+        <div class="villain-hero-content">
+            <div class="villain-badge">THE UNSTOPPABLE JUGGERNAUT</div>
+            <h1 class="villain-name">RHINO</h1>
+            <p class="villain-alias">Aleksei Sytsevich</p>
+        </div>
+    </header>
+
+    <!-- Villain Profile -->
+    <main class="profile-container">
+        <!-- Origin Story Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📜</span>
+                Origin Story & Transformation into Living Weapon
+            </h2>
+            <p>The Rhino is one of Spider-Man's most physically powerful and tragically simple villains—a working-class criminal transformed into a virtually unstoppable living weapon through experimental science, then trapped in the very suit that gave him power. Aleksei Sytsevich represents the exploitation of desperate people by those in power, the dehumanization of treating people as tools, and the tragedy of being defined entirely by violence and strength when you dream of something more.</p>
+            
+            <p><strong>Aleksei Sytsevich: The Russian Thug</strong></p>
+            <p>Aleksei Mikhailovich Sytsevich was born in Russia during the late Soviet era, growing up in poverty and limited opportunities. He was never particularly intelligent or ambitious—just a large, strong young man with few prospects beyond manual labor. Aleksei's size and strength made him useful for physical work, but in post-Soviet Russia's chaotic transition to capitalism, legitimate opportunities were scarce for someone without education or connections.</p>
+            
+            <p>Aleksei drifted into petty crime, working as muscle for various criminal organizations. He wasn't a mastermind or even particularly violent by nature—he was just a guy who needed money and whose main asset was his physical presence. He did what he was told: intimidate shopkeepers, collect debts, move contraband, and occasionally break bones when necessary. It was work, and for Aleksei, that was enough. He wasn't proud of being a thug, but he saw it as his only option.</p>
+            
+            <p>Eventually, Aleksei's criminal work brought him to the attention of more sophisticated operators who saw potential in someone so physically imposing yet willing to follow orders without question. These weren't street-level gangsters—they were scientists working for shadowy organizations (variously identified as Russian intelligence, criminal syndicates, or rogue scientists depending on the version) who needed test subjects for experimental procedures. They specifically sought individuals who were expendable, desperate for money, and unlikely to be missed if experiments went wrong.</p>
+            
+            <p>Aleksei Sytsevich fit the profile perfectly.</p>
+            
+            <div class="tragedy-note">
+                <p><strong>The Faustian Bargain:</strong> The scientists offered Aleksei an opportunity that seemed too good to refuse: participate in an experimental procedure that would give him superhuman strength and durability, making him one of the most powerful men alive. In exchange, he would work for them as an operative—a living weapon they could deploy for high-stakes operations. They promised him money beyond his dreams, respect, and power. What they didn't fully explain was that the procedure would be irreversible and that the "suit" would become permanent part of his body. Aleksei, desperate and not particularly given to questioning authority, agreed.</p>
+            </div>
+            
+            <p><strong>The Rhino Procedure</strong></p>
+            <p>The transformation process was agonizing. Scientists subjected Aleksei to experimental chemical and radiation treatments that fundamentally altered his body at the cellular level, increasing his muscle density, bone strength, and overall durability far beyond human norms. Then came the suit—a full-body polymer-based armor designed to look like rhinoceros hide, gray and thick with a distinctive horn on the helmet.</p>
+            
+            <p>The suit was molecularly bonded to Aleksei's skin through a proprietary chemical process. It wasn't something he wore—it became part of him, a second skin that couldn't be removed without killing him or causing catastrophic damage. The horn wasn't decorative; it was a reinforced battering ram designed to concentrate his charging force into a single devastating point. The suit's design was both brilliant and cruel: it gave Aleksei incredible power while literally dehumanizing him, transforming him into a beast.</p>
+            
+            <p>When Aleksei woke from the procedure, he was no longer just a man—he was the Rhino, a living weapon with strength rivaling the Hulk's (at base levels), skin that could withstand bullets and most conventional weapons, and the ability to charge at enemies with unstoppable momentum. The scientists had succeeded beyond their wildest expectations in creating a virtually indestructible operative.</p>
+            
+            <p>But they'd also created a prisoner. Aleksei couldn't remove the suit. He couldn't touch his own skin or feel normal human sensations through the thick hide. He couldn't blend into society or live a normal life. His hands were too thick and strong for delicate work; his appearance was too distinctive to go unnoticed. The Rhino wasn't just a codename—it was what Aleksei had become, a beast in human form, trapped in armor he couldn't escape.</p>
+            
+            <p><strong>Breaking Free and Criminal Career</strong></p>
+            <p>The scientists intended to use Rhino for espionage and assassination, but they'd made a critical error: they'd given incredible power to someone with nothing to lose. During his first mission in America (which involved kidnapping J. Jonah Jameson for information he possessed), Spider-Man intervened. The battle was brutal—Rhino's strength and durability pushed Spider-Man to his limits—but the web-slinger's agility and intelligence eventually won.</p>
+            
+            <p>More importantly, the conflict made Aleksei realize he didn't have to follow his creators' orders. He had the power; they were just men. Why should he take orders and share the profits when he could keep everything for himself? Rhino turned against his creators and went freelance, becoming a mercenary and criminal-for-hire. His services were simple: point him at a target, get out of the way, and pay him when the job was done.</p>
+            
+            <p>Rhino's criminal career was remarkably straightforward compared to more sophisticated villains. He robbed banks by charging through walls. He worked as muscle for other criminals who needed someone unstoppable. He fought heroes when they got in his way. His tactics never varied: charge, smash, repeat. This simplicity made him predictable but also terrifyingly effective—there's something to be said for an enemy whose strategy is "hit it until it breaks" when you're strong enough to break almost anything.</p>
+            
+            <p><strong>The Tragedy of Aleksei Sytsevich</strong></p>
+            <p>What makes Rhino tragic rather than simply brutish is that Aleksei never wanted to be a supervillain. He wanted money for a normal life, maybe a family, some respect. Instead, he got trapped in a suit he couldn't remove, marked forever as a monster. He committed crimes not out of ambition or madness but because it was the only work available to someone who looked like a rhinoceros and could only solve problems through violence.</p>
+            
+            <p>Various storylines have explored Aleksei's desperate attempts to escape his fate: experimental procedures to remove the suit (which sometimes worked temporarily before he was forced or chose to don new versions), attempts to go straight (which failed because society couldn't accept him), and brief periods of normalcy before circumstances dragged him back to crime. These stories reveal that underneath the gray hide and brute force is a man who never wanted to be the Rhino but can't figure out how to be Aleksei Sytsevich again.</p>
+            
+            <p>The Rhino is Spider-Man's tragedy—a victim of exploitation who became a criminal because that was the only role society would allow him to play once he'd been transformed into a monster. He's a cautionary tale about treating people as disposable tools, about how desperation makes people accept terrible bargains, and about how society defines people by their worst moments rather than giving them chances to change.</p>
+        </section>
+
+        <!-- Powers & Abilities Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Powers, Abilities & Unstoppable Force
+            </h2>
+            <p style="margin-bottom: 1rem;"><strong>Rhino's powers are straightforward but devastating—he represents pure kinetic force made flesh:</strong></p>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>💪 Superhuman Strength</h4>
+                    <p>Rhino possesses tremendous strength, able to lift approximately 75-80 tons. This puts him in the upper tier of Marvel's street-level powerhouses, capable of matching or overpowering most heroes in direct combat. He can flip cars, tear through steel, demolish buildings, and trade blows with heavy hitters like Hulk (though he's significantly weaker than Hulk's upper levels).</p>
+                </div>
+                <div class="power-item">
+                    <h4>🦏 Nearly Indestructible Hide</h4>
+                    <p>The polymer suit bonded to his skin is virtually impervious to conventional damage. Bullets bounce off, bladed weapons can't penetrate, and most energy attacks are absorbed or deflected. The suit can withstand extreme temperatures, radiation, and chemical attacks. Spider-Man's punches barely faze him, and even powerful heroes struggle to hurt him through his armor.</p>
+                </div>
+                <div class="power-item">
+                    <h4>⚡ Devastating Charging Attack</h4>
+                    <p>Rhino's signature ability—he can build up tremendous speed and momentum, then crash through virtually any obstacle with unstoppable force. Once he starts charging, it's nearly impossible to stop him through direct opposition. The horn focuses this impact into a single point, allowing him to pierce reinforced walls, armored vehicles, and even some force fields through sheer kinetic energy.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🏃 Superhuman Speed</h4>
+                    <p>Despite his bulk, Rhino can run at speeds up to 100 mph in a straight line. This speed combined with his mass creates incredible momentum—he's essentially a living missile. The downside is that at full speed, he has limited ability to turn or stop, often overshooting targets or crashing through buildings when he can't brake in time.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💀 Enhanced Durability & Stamina</h4>
+                    <p>Beyond the suit's protection, the procedures enhanced Aleksei's body itself. His bones are denser, his muscles tireless, and his organs protected by enhanced physiology. He can fight for extended periods without fatigue, survive falls that would kill normal humans, and recover from injuries that would incapacitate others. His cardiovascular system was enhanced to supply oxygen for his enormous musculature.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🦏 Battering Ram Horn</h4>
+                    <p>The horn on his helmet isn't decorative—it's a reinforced spike designed to concentrate his charging force into a single point. This allows him to pierce through materials that might deflect a broader impact. The horn can gore opponents, penetrate armor, and break through barriers that his bulk alone couldn't smash.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🛡️ Resistance to Mental Attacks</h4>
+                    <p>The suit and enhancement process created unexpected benefit—Rhino has high resistance to telepathy and mental manipulation. Whether this is due to the suit's materials, his altered brain chemistry, or simple-mindedness making him hard to manipulate telepathically varies by interpretation. Regardless, mental attacks that would incapacitate most people often fail against him.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🧱 Immovable Object</h4>
+                    <p>When Rhino plants himself and braces, he's extraordinarily difficult to move. His combination of weight, strength, and enhanced density allows him to resist being thrown, telekinetically moved, or blown back by most attacks. This makes him ideal for blocking passages or holding defensive positions—moving him requires overwhelming force.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🔨 Shockwave Generation</h4>
+                    <p>When Rhino stomps or strikes the ground with full force, he can create localized shockwaves that knock opponents off balance, crack pavement, and destabilize structures. This area-effect attack helps him deal with agile opponents who dodge his charges or groups of enemies who surround him.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🧠 Limited Intelligence</h4>
+                    <p><strong>Significant Limitation:</strong> Aleksei isn't stupid, but he's not particularly bright either. He struggles with complex plans, falls for tactical deceptions, and tends to approach problems with direct force rather than strategy. Heroes exploit this by outthinking him, leading him into traps, or using his momentum against him. His limited education and tendency toward simple solutions make him predictable.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🎯 Maneuverability Problems</h4>
+                    <p><strong>Major Weakness:</strong> Rhino's greatest weakness is his inability to turn or stop quickly, especially at full speed. Agile opponents like Spider-Man can dodge his charges and attack while he's trying to brake or turn around. He often crashes through buildings or overshoots targets because he can't stop in time. His bulk also makes him vulnerable in confined spaces where he can't build charging momentum.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🔧 Suit Dependency</h4>
+                    <p><strong>Psychological/Physical Weakness:</strong> The suit is bonded to his body—removing it would require extensive surgery and might kill him. He's dependent on the very thing that made him powerful and ruined his life. Some versions show him trying to remove the suit, which weakens him and leaves him vulnerable. His identity is so tied to being Rhino that without it, he doesn't know who Aleksei Sytsevich is anymore.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personality & Motivations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🧠</span>
+                Personality, Motivations & Working-Class Tragedy
+            </h2>
+            <p>Rhino's personality is defined by simplicity, frustration, and tragic awareness of his own limitations. Unlike sophisticated villains who plan elaborate schemes, Aleksei is a working-class criminal who just wants to make money and maybe find some peace.</p>
+            
+            <p><strong>Core Personality Traits:</strong></p>
+            <ul>
+                <li><strong>Straightforward & Direct:</strong> Aleksei's approach to life and problems is refreshingly simple: identify obstacle, charge through it. This simplicity isn't stupidity—it's the mentality of someone who's learned that overthinking gets him nowhere. He's not built for complex plans, so he doesn't make them. Point him at a target, and he'll smash it.</li>
+                <li><strong>Working-Class Mentality:</strong> Unlike villains who crave power or recognition, Rhino just wants to get paid for his work. He's essentially a blue-collar criminal—he has a service (unstoppable force), clients pay him, he does the job, repeat. This pragmatic approach makes him relatable despite his monstrous appearance.</li>
+                <li><strong>Frustrated Intelligence:</strong> Aleksei knows he's not smart, and it frustrates him. He's been outsmarted repeatedly, tricked into traps, and manipulated by smarter criminals. This awareness of his limitations creates insecurity—he knows others view him as dumb muscle, and being aware of that judgment while unable to change it is psychologically painful.</li>
+                <li><strong>Desire for Normalcy:</strong> Unlike many villains who embrace their roles, Aleksei often expresses desire for normal life. He doesn't want to be famous supervillain—he wants what he had before the suit: the ability to live quietly, maybe have a relationship, not be recognized everywhere as a monster. This unfulfilled desire for normalcy creates melancholy beneath his aggressive exterior.</li>
+                <li><strong>Aggressive When Cornered:</strong> While not naturally vicious, Rhino becomes extremely aggressive when challenged, mocked, or cornered. His size and power mean aggression usually works, reinforcing the behavior. When heroes beat him through cleverness rather than strength, it triggers rage born of frustration—he knows he's being outsmarted but can't figure out how to stop it.</li>
+                <li><strong>Loyal But Not Stupid:</strong> When criminals hire him and treat him fairly, Rhino is remarkably loyal. He'll complete jobs even when situations become dangerous because he gave his word. However, betray him or treat him as expendable, and he'll turn on employers with the same unstoppable force he brings to jobs. His loyalty has limits, and crossing those limits is catastrophic.</li>
+                <li><strong>Self-Aware Tragedy:</strong> Modern portrayals emphasize Aleksei's awareness of his situation—he knows he's trapped in a role he never wanted, that society sees him as monster rather than man, and that his options are limited. This self-awareness makes him tragic figure rather than simple brute. He understands his tragedy but can't escape it.</li>
+                <li><strong>Occasional Heroism:</strong> Despite being villain, Rhino has occasionally helped heroes against greater threats or shown compassion for innocents. These moments reveal that Aleksei isn't evil—he's desperate, frustrated, and trapped. Given different circumstances, he could have been different person.</li>
+            </ul>
+            
+            <div class="tragedy-note">
+                <p><strong>The Curse of Being Rhino:</strong> Aleksei's tragedy is that being Rhino is both his power and his prison. The suit gave him strength but took his humanity. It made him formidable but unemployable for legitimate work. It gave him an identity but erased Aleksei Sytsevich. He's trapped in a life he never wanted, unable to escape because removing the suit means becoming powerless in a world where his only value is being powerful. He's a man dressed as a beast who's been treated as a beast for so long he's forgotten how to be a man.</p>
+            </div>
+            
+            <p><strong>Motivations Across His Career:</strong></p>
+            <ul>
+                <li><strong>Money for Survival:</strong> Aleksei's primary motivation is making money. He commits crimes not because he enjoys them but because being a supervillain is his only marketable skill. He needs money to survive, and his appearance and abilities limit him to criminal employment.</li>
+                <li><strong>Revenge Against Exploiters:</strong> Periodically, Aleksei seeks revenge against those who transformed him, tricked him, or exploited him. These revenge missions are deeply personal—they're about punishing people who treated him as disposable tool rather than human being.</li>
+                <li><strong>Desire to Remove Suit:</strong> Various storylines feature Rhino seeking ways to permanently remove his suit and return to normal life. These quests drive some of his most sympathetic stories, showing his desperate desire to escape his fate. When removal seems possible, he'll work with anyone—heroes, scientists, or rival villains.</li>
+                <li><strong>Proving Himself:</strong> Sometimes Aleksei accepts jobs or challenges specifically to prove he's not just dumb muscle. When called stupid or treated dismissively, he'll take risks to demonstrate his value. This need for respect drives poor decisions but reveals his human desire for validation.</li>
+                <li><strong>Protection of Others:</strong> When someone shows Aleksei genuine kindness or respect, he becomes fiercely protective. Storylines featuring romantic interests or friendships show him willing to risk everything to protect people who treat him like a person rather than monster.</li>
+                <li><strong>Simpler Times:</strong> Underlying many actions is desire to return to his pre-Rhino life. He wasn't happy as a thug, but at least he was human. This nostalgia for simpler times when he had options drives his attempts at redemption and frustration when those attempts fail.</li>
+            </ul>
+            
+            <p><strong>Relationship with Other Villains:</strong></p>
+            <p>Rhino's interactions with other criminals reveal his position as working-class villain among more sophisticated operators:</p>
+            <ul>
+                <li><strong>Hired Muscle:</strong> Most sophisticated villains hire Rhino as muscle for operations requiring brute force. They value his power but often treat him as expendable, which frustrates and angers him. He knows they're using him but needs the work.</li>
+                <li><strong>Sinister Six:</strong> Rhino has been member of various Sinister Six lineups, typically as the team's powerhouse. He provides raw strength while others handle planning. His simple tactics complement more complex members' strategies, though he's often comic relief during team discussions.</li>
+                <li><strong>Respect from Peers:</strong> Other working-class villains (Shocker, Boomerang, etc.) often respect Rhino as competent professional. They understand him in ways genius villains don't—he's just trying to make living like them. These relationships are more fraternal than hierarchical.</li>
+                <li><strong>Manipulation by Smarter Villains:</strong> Villains like Doctor Octopus or Mysterio frequently manipulate Rhino, using his straightforward nature against him. They promise payment, then betray him once he's served his purpose. These betrayals reinforce his distrust but don't stop him from accepting future offers because he needs work.</li>
+            </ul>
+            
+            <p>Aleksei Sytsevich is ultimately a working-class tragedy—a man who took a bad deal from desperate circumstances and spent the rest of his life paying for that decision. He's not evil, just limited in options and defined by his worst choice. The Rhino is what happens when society treats people as disposable, when desperation drives bad decisions, and when transformation becomes trap rather than liberation. He's a monster who wants to be a man, a villain who wants to be normal, and a tragedy that keeps repeating because he can't see any other way to be.</p>
+        </section>
+
+        <!-- World & Operations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🌆</span>
+                World, Operations & Life as Living Weapon
+            </h2>
+            <p>Rhino operates wherever criminals need unstoppable force—primarily in New York City but available for hire anywhere money takes him. His world is one of straightforward violence, working-class crime, and the harsh reality of being a human weapon for sale.</p>
+            
+            <p><strong>Operating Methods & Criminal Activities:</strong></p>
+            <ul>
+                <li><strong>Bank Robberies:</strong> Rhino's most common independent work. He charges through bank walls, grabs money, and charges out before authorities can respond. His approach lacks subtlety but is devastatingly effective—security systems can't stop him, guards' weapons can't hurt him, and he's gone before police arrive with equipment that might slow him down.</li>
+                <li><strong>Hired Muscle:</strong> Most of Rhino's work is as hired operative for other criminals. When someone needs building demolished, target captured, or opposition eliminated through overwhelming force, they hire Rhino. He's mercenary who provides specific service: unstoppable kinetic force pointed at target of client's choosing.</li>
+                <li><strong>Prison Breaks:</strong> Rhino is frequently hired to break criminals out of prisons or secure facilities. He charges through walls, creates chaos, and provides physical protection during escape. His invulnerability makes him ideal for operations where heavy gunfire is expected.</li>
+                <li><strong>Assassination & Intimidation:</strong> While not subtle assassin, Rhino has been hired for hits where message matters more than discretion. When someone wants target killed in a way that demonstrates overwhelming power and instills fear, Rhino is perfect choice. Similarly, his mere presence can intimidate rivals into cooperation.</li>
+                <li><strong>Destruction for Hire:</strong> Sometimes clients just need something destroyed—building, vehicle, evidence. Rhino provides demolition services, no questions asked. Point him at target, pay him, watch him smash it. Simple, effective, and he always completes the job.</li>
+                <li><strong>Sinister Six Operations:</strong> When part of villain teams, Rhino provides frontline offense—charging into hero defenses, creating breaches, and absorbing attacks while teammates execute more sophisticated aspects of plans. He's the battering ram that opens doors for others.</li>
+            </ul>
+            
+            <p><strong>Interaction with Law Enforcement:</strong></p>
+            <ul>
+                <li>Police are largely helpless against Rhino—standard firearms can't penetrate his hide, and patrol cars can't catch or stop him when he's charging at full speed</li>
+                <li>SWAT and tactical units require heavy weapons (rocket launchers, high-caliber machine guns) to even slow him down, and these create massive collateral damage in urban environments</li>
+                <li>Specialized containment requires either superhuman intervention or elaborate traps that exploit his limited maneuverability—pits, restraints strong enough to hold his strength, or areas where his charging does more harm to himself</li>
+                <li>Prison containment is particularly difficult—standard cells can't hold him, and he can charge through most walls. Specialized facilities use force fields, underground cells where he can't build momentum, or chemically neutralize him</li>
+            </ul>
+            
+            <p><strong>Daily Life & Challenges:</strong></p>
+            <ul>
+                <li><strong>No Normal Life:</strong> Aleksei can't blend into society. His appearance is too distinctive, his hands too large for normal activities, and his body too different for normal comforts. He can't wear regular clothes, use normal furniture, or participate in everyday activities without drawing attention.</li>
+                <li><strong>Economic Necessity:</strong> Crime isn't optional for Rhino—it's his only employment option. No legitimate employer would hire someone who looks like a rhinoceros, can't perform delicate tasks, and comes with criminal record. He's economically trapped in villainy.</li>
+                <li><strong>Social Isolation:</strong> Beyond his appearance, Rhino's reputation isolates him. People fear him, which prevents forming normal relationships. Those who aren't afraid often want to exploit him. Genuine human connection becomes nearly impossible when everyone sees you as monster or weapon.</li>
+                <li><strong>Constant Conflict:</strong> Even when Rhino wants peace, heroes hunt him, police pursue him, and criminals seek his services or elimination. He can't retire because his reputation and appearance make him perpetual target. Peace isn't option for someone as recognizable and powerful as Rhino.</li>
+            </ul>
+            
+            <p><strong>Impact on New York:</strong></p>
+            <ul>
+                <li>Massive property damage from charging attacks—Rhino leaves trails of destruction through buildings, streets, and infrastructure whenever he operates</li>
+                <li>Economic costs of his crimes run into millions—between stolen money, destroyed property, and security upgrades needed to defend against him</li>
+                <li>Psychological impact on citizens who've witnessed his attacks—the terror of seeing unstoppable monster charging through their neighborhood</li>
+                <li>Insurance industry struggles with "Rhino damage" claims, as his attacks are classified as acts of supervillain terrorism rather than normal criminal activity</li>
+                <li>Construction industry paradoxically benefits from constant need to rebuild structures he's demolished, creating grim economic incentive in his continued operation</li>
+            </ul>
+            
+            <p>Rhino's world is one of constant motion and violence—he charges forward because stopping means confronting the bleakness of his situation. He works because working gives him purpose and keeps him from thinking about what he's lost. He fights because fighting is what he does, and maybe if he fights enough, charges through enough walls, and smashes enough obstacles, he'll eventually break through to something better on the other side. But there's never anything better—just another wall, another fight, another reminder that he's trapped being Rhino because Aleksei Sytsevich has nowhere left to go.</p>
+        </section>
+
+        <!-- Key Battles & Events Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚔️</span>
+                Key Battles, Events & Defining Moments
+            </h2>
+            <div class="battles-grid">
+                <div class="battle-card">
+                    <h3>First Appearance: The Amazing Spider-Man #41 (1966)</h3>
+                    <p>Created by Stan Lee and John Romita Sr., Rhino debuted as one of Spider-Man's most physically powerful foes. His first mission involved kidnapping J. Jonah Jameson for information about moon landing coverage (the character's origin ties to Cold War espionage). The battle demonstrated Rhino's overwhelming strength and durability—Spider-Man's punches barely fazed him, and direct confrontation was futile. Peter had to use intelligence and agility, eventually defeating Rhino by exploiting his inability to stop at full charge, leading him into traps and using his momentum against him. The iconic gray suit with distinctive horn became immediately recognizable, and Rhino's straightforward brutality provided refreshing contrast to more complex villains. His tragic origin as exploited test subject was established, creating sympathy despite his criminal actions.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Sinister Six Membership</h3>
+                    <p>Rhino has been member of multiple Sinister Six lineups, typically serving as the team's powerhouse and frontline attacker. His role is straightforward: charge through defenses, absorb punishment, and create chaos while more sophisticated members execute complex aspects of plans. These team-ups showcase both his effectiveness and limitations—he's devastating when pointed in right direction but often comic relief during planning phases where his simple suggestions are dismissed by genius villains. Despite this, Rhino's participation makes Sinister Six significantly more dangerous, as his unstoppable charges create openings others exploit.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Suit Removal Saga</h3>
+                    <p>Multiple storylines have featured Rhino's desperate attempts to permanently remove his suit and return to normal life. One memorable arc showed scientists successfully removing the suit, allowing Aleksei to live as normal man for first time in years. He found happiness, even starting romantic relationship and considering legitimate work. However, circumstances (villains threatening his loved ones, need for money, or new Rhino taking his identity and terrorizing city) forced him back into the suit. The tragedy of these stories is that Aleksei consistently chooses or is forced back into being Rhino despite desperately wanting freedom. Each failed attempt at normalcy makes him more resigned to his fate, suggesting that escape from being Rhino might be impossible.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Rhino vs. Hulk</h3>
+                    <p>Various encounters between Rhino and Hulk have showcased limits of Rhino's strength. While immensely powerful by street-level standards, Rhino is significantly weaker than Hulk at even moderate anger levels. These battles typically see Rhino charging confidently, believing his unstoppable force will win, only to discover that Hulk is literally immovable object. The Hulk has sent Rhino flying with single punches, no-sold his charges, and overpowered him completely. These defeats are humbling for Aleksei, reminding him that while he's one of strongest Spider-Man villains, he's nowhere near top tier of Marvel's powerhouses. The fights reinforce that Rhino's power has limits, creating vulnerability in his confidence.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Gauntlet: Remorse & Redemption</h3>
+                    <p>In "The Gauntlet" storyline, writers explored Rhino's character depth through subplot where he'd finally achieved normalcy after suit removal. He had girlfriend he loved, quiet life, and hope for future. Then new Rhino appeared, using upgraded suit and more brutal methods. The new Rhino killed Aleksei's girlfriend while targeting him, destroying his chance at happiness. Consumed by grief and rage, Aleksei donned new suit and killed the man who'd stolen his identity and murdered his love. The story was heartbreaking—Aleksei had escaped being Rhino and found happiness, only to have it viciously stolen. His return to villainy wasn't about greed or violence but grief and revenge. The arc showed Rhino at his most sympathetic, making clear that circumstances rather than evil nature drive his criminal career.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Spider-Man: No Way Home (2021)</h3>
+                    <p>In the MCU's multiverse event, Rhino from alternate dimension appeared briefly, showcasing the character's mainstream recognition. While his role was limited, the inclusion demonstrated Rhino's status as essential Spider-Man villain. Various fans hope for more substantial MCU appearance featuring character's tragic backstory and physical threat, potentially with more developed portrayal than previous film appearances.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Amazing Spider-Man 2 (2014)</h3>
+                    <p>Paul Giamatti portrayed Aleksei Sytsevich/Rhino in brief appearance at film's beginning and end. This version was Russian mobster who donned mechanical Rhino suit rather than having it bonded to his body. The mechanized suit design traded the bonded-suit tragedy for more armored vehicle aesthetic. While Giamatti's enthusiastic performance was memorable and the suit's design imposing, the limited screen time prevented character development. The film's ending suggested sequel would feature Rhino more prominently, but franchise's conclusion meant this storyline was never resolved, leaving audiences with glimpse of Rhino's potential without payoff.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Prison Riots & Breakouts</h3>
+                    <p>Rhino has been featured in numerous prison riot and breakout storylines where his power makes him natural leader or catalyst for chaos. His ability to smash through any containment means when Rhino decides to escape, walls and guards won't stop him. These events often see other criminals following in his wake—he's the battering ram that breaks prisons open for everyone else. However, these breakouts also showcase his limited planning—he can escape any time he wants but typically has nowhere to go once free except back to crime that lands him in prison again, creating tragic cycle of capture, breakout, and recapture.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Temporary Alliances with Heroes</h3>
+                    <p>Several stories feature Rhino temporarily allying with Spider-Man or other heroes against greater threats. When facing enemies who endanger everyone (alien invasions, apocalyptic villains, or threats to his loved ones), Aleksei has worked with heroes he normally fights. These team-ups reveal his capacity for heroism and that his villainy is circumstantial rather than inherent. However, these alliances are always temporary—once immediate threat ends, systemic circumstances push him back to crime. The tragedy is that both sides often acknowledge Rhino could be hero if different choices had been made or if society offered him different options.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Job That Goes Wrong</h3>
+                    <p>Multiple storylines feature pattern: Rhino accepts straightforward job (rob bank, break someone out, destroy building), but complications emerge—heroes interfere, employers betray him, or innocents are endangered. These stories explore Aleksei's moral limits and frustration with how nothing ever goes simply. He wants jobs to be clean: get in, smash target, get paid, leave. But reality is messy, and messes force him to make choices that reveal he's not monster despite appearance. When forced to choose between completing job and protecting innocents, he often chooses protection, showing that Aleksei Sytsevich still exists underneath Rhino's hide. However, these moral choices rarely change his situation—he's still criminal, still trapped, still defined by his worst moments rather than his best ones.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Ultimate Comics: Darker Portrayal</h3>
+                    <p>The Ultimate Universe version of Rhino was even more tragic—teenager who underwent experimental procedure, transforming him into monster. This younger version emphasized exploitation of vulnerable people by those in power and made tragedy even more pronounced. The Ultimate Rhino's storylines featured his desperate attempts to reverse transformation and society's rejection of him despite his youth and victimhood. This alternate version reinforced core themes of character while exploring them through lens of exploited youth rather than desperate adult, showing how Rhino concept resonates across different interpretations and age ranges.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Legacy & Impact Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🏆</span>
+                Legacy, Themes & Cultural Impact
+            </h2>
+            <p>Rhino, created by Stan Lee and John Romita Sr. in 1966, has endured for nearly six decades as one of Spider-Man's most iconic physical threats. While he lacks the complexity of villains like Green Goblin or Doctor Octopus, Rhino represents something equally important: the tragedy of exploitation, the trap of limited choices, and the struggle to maintain humanity when society treats you as monster.</p>
+            
+            <p><strong>Thematic Significance:</strong></p>
+            <ul>
+                <li><strong>Exploitation & Desperation:</strong> Rhino's origin is fundamentally about exploitation—desperate person accepting terrible bargain from those in power, then suffering consequences while exploiters escape responsibility. His story resonates with anyone who's taken bad deal from desperation and spent years paying for it.</li>
+                <li><strong>Working-Class Criminality:</strong> Unlike genius or wealthy villains, Rhino is working-class criminal—he commits crimes for money because it's his only employment option. This economic motivation makes him relatable and highlights how systemic problems create and perpetuate crime.</li>
+                <li><strong>Dehumanization:</strong> The transformation into Rhino literally dehumanized Aleksei—he became beast in appearance and was treated as weapon rather than person. His story explores how society dehumanizes people, particularly those who are different, poor, or have made mistakes.</li>
+                <li><strong>Brains vs. Brawn:</strong> Rhino represents pure physical power that intelligence consistently defeats. His battles with Spider-Man are David vs. Goliath stories where clever hero outsmarts stronger opponent, reinforcing themes about intelligence over strength.</li>
+                <li><strong>Redemption's Impossibility:</strong> Rhino repeatedly tries to reform but circumstances drag him back to crime, exploring whether true redemption is possible for those society has labeled criminals. His failed attempts suggest systemic change is needed, not just individual will.</li>
+                <li><strong>Identity Crisis:</strong> Aleksei struggles with whether he's man forced to be beast or if Rhino has consumed Aleksei entirely. This identity crisis—being defined by worst thing about yourself while better parts are ignored—resonates with anyone who's felt reduced to single trait.</li>
+            </ul>
+            
+            <p><strong>Visual & Cultural Impact:</strong></p>
+            <ul>
+                <li>Distinctive gray suit with horn is instantly recognizable across all media, making Rhino visually iconic despite simple design</li>
+                <li>Appeared in virtually every Spider-Man animated series, typically as recurring physical threat and occasional comic relief</li>
+                <li>Video games frequently feature Rhino as boss fight showcasing physics engines—his charging attacks create spectacular environmental destruction</li>
+                <li>Action figures and collectibles regularly include Rhino, with his bulk making for impressive display pieces</li>
+                <li>Cultural shorthand for "unstoppable charging force"—when someone or something charges ahead regardless of obstacles, it's "rhino-like"</li>
+            </ul>
+            
+            <p><strong>Character Evolution:</strong></p>
+            <ul>
+                <li><strong>Simple Bruiser:</strong> Initially portrayed as straightforward strong villain, primarily muscle for hire</li>
+                <li><strong>Tragic Victim:</strong> Later stories emphasized exploitation and desperate origin, making him sympathetic despite crimes</li>
+                <li><strong>Character Depth:</strong> Modern portrayals give him emotional complexity—desires for normalcy, love interests, grief, and moral struggles</li>
+                <li><strong>Comic Relief:</strong> Sometimes portrayed humorously, emphasizing limited intelligence in ways that are sympathetic rather than cruel</li>
+                <li><strong>Working-Class Hero:</strong> Recent interpretations frame him almost as anti-capitalist figure—victim of system that treats people as disposable resources</li>
+            </ul>
+            
+            <p><strong>Influence on Spider-Man Mythology:</strong></p>
+            <ul>
+                <li>Established that Spider-Man villains could be physically superior but intellectually inferior, creating template for brawn-over-brains antagonists</li>
+                <li>His charging attacks forced Spider-Man to develop agility-based tactics that became signature of web-slinger's fighting style</li>
+                <li>Recurring Sinister Six member who provides team with necessary physical muscle</li>
+                <li>His tragic attempts at redemption influenced how later villains' reform storylines were written</li>
+                <li>Represents consequences of scientific experimentation without ethical oversight, theme recurring throughout Spider-Man stories</li>
+            </ul>
+            
+            <p><strong>Why Rhino Endures:</strong></p>
+            <ul>
+                <li><strong>Visual Simplicity:</strong> Distinctive look that works across all media and is easily recognized even by casual audiences</li>
+                <li><strong>Straightforward Threat:</strong> Provides pure physical challenge without needing complex schemes—sometimes stories need unstoppable force as obstacle</li>
+                <li><strong>Sympathetic Tragedy:</strong> His desire for normalcy and repeated failed attempts at redemption create emotional investment beyond typical villain</li>
+                <li><strong>Versatility:</strong> Works as serious threat, tragic figure, comic relief, or temporary ally depending on story needs</li>
+                <li><strong>Relatable Desperation:</strong> His economic desperation and limited choices resonate with working-class audiences who understand being trapped by circumstances</li>
+            </ul>
+            
+            <p>Aleksei Sytsevich represents something profoundly human despite his monstrous appearance: the tragedy of being trapped by a choice you made when you had no good options. He's the desperate person who took the wrong job because bills needed paying, the reformed criminal society won't give second chance, the victim of exploitation who became criminal because that was only role available.</p>
+            
+            <p>Rhino's story is cautionary tale about how society treats people as disposable—he was transformed into weapon when vulnerable, used until no longer convenient, then discarded to criminal life because legitimate society couldn't accept him. His repeated attempts at normalcy that fail despite genuine effort highlight systemic barriers to redemption and how second chances often aren't really offered to those who need them most.</p>
+            
+            <p>In an era of increasing discussion about criminal justice reform, economic exploitation, and systemic barriers to social mobility, Rhino's relevance grows. He's the working poor pushed into bad decisions, the exploited worker whose employer cared nothing for his wellbeing, the ex-convict society won't give legitimate opportunities. He represents everyone who's been told they're defined by their worst moment and can never be anything more.</p>
+            
+            <p>The Rhino charges forward because stopping means confronting the tragedy of his situation—that he's trapped, that escape is likely impossible, that Aleksei Sytsevich was lost when scientists bonded that suit to his skin. So he keeps charging, keeps smashing through walls, keeps hoping that maybe beyond the next obstacle is freedom he's been seeking. But there's never freedom on the other side—just another wall, another fight, another reminder that once you become the Rhino, you can never fully be Aleksei again. And that, ultimately, is the tragedy that makes this seemingly simple bruiser one of Spider-Man's most heartbreaking villains.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#villains" class="btn btn-primary">← Return to Villains Gallery</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Rhino</h4>
+                    <p>Aleksei Sytsevich, transformed into virtually unstoppable living weapon through experimental procedure that bonded indestructible suit to his body—a working-class tragedy of exploitation and desperate choices.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Details</h4>
+                    <p><strong>Real Name:</strong> Aleksei Mikhailovich Sytsevich</p>
+                    <p><strong>First Appearance:</strong> The Amazing Spider-Man #41 (1966)</p>
+                    <p><strong>Created by:</strong> Stan Lee & John Romita Sr.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Verse Fan Site. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        console.log("Rhino page loaded");
+        
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+

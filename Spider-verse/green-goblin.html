@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Goblin - Spider-Man's Greatest Enemy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to villain profile page */
+        .villain-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .villain-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .villain-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .villain-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .villain-badge {
+            display: inline-block;
+            background: rgba(0, 168, 0, 0.9);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(255, 165, 0, 0.5);
+        }
+        
+        .villain-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+        
+        .villain-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(0, 168, 0, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #00a800;
+            border-color: #00a800;
+            transform: translateX(-5px);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .villain-image-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .villain-image {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .villain-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #00a800;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #ffa500;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '💀';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #00a800 0%, #006400 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 165, 0, 0.3);
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 168, 0, 0.5);
+            border-color: #ffa500;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+        }
+        
+        .battles-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .battle-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #00a800 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border-left: 5px solid #ffa500;
+        }
+        
+        .battle-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(0, 168, 0, 0.4);
+        }
+        
+        .battle-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 2px;
+            color: #ffd700;
+        }
+        
+        .battle-card p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+            line-height: 1.7;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .villain-hero {
+                height: 300px;
+            }
+            
+            .villain-name {
+                font-size: 50px;
+            }
+            
+            .villain-alias {
+                font-size: 1.4rem;
+            }
+            
+            .villain-badge {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .villain-hero {
+                height: 250px;
+            }
+            
+            .villain-name {
+                font-size: 36px;
+            }
+            
+            .villain-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#villains" class="back-button">
+        <span>←</span>
+        <span>Back to Villains</span>
+    </a>
+
+    <!-- Villain Hero Section -->
+    <header class="villain-hero">
+        <img src="https://images7.alphacoders.com/795/thumb-1920-795557.jpg" alt="Green Goblin" class="villain-hero-image">
+        <div class="villain-hero-content">
+            <div class="villain-badge">SPIDER-MAN'S ARCH-NEMESIS</div>
+            <h1 class="villain-name">GREEN GOBLIN</h1>
+            <p class="villain-alias">Norman Osborn</p>
+        </div>
+    </header>
+
+    <!-- Villain Profile -->
+    <main class="profile-container">
+        <!-- Villain Image -->
+
+        <!-- Origin Story Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📜</span>
+                Origin Story & Backstory
+            </h2>
+            <p>Norman Osborn was a brilliant but ruthless businessman who built Oscorp Industries into one of the world's most powerful corporations. Born into poverty, Norman's early life was marked by an abusive father and a desperate hunger for wealth and respect. This traumatic childhood forged him into a man obsessed with power, control, and proving his superiority to the world.</p>
+            
+            <p>As the head of Oscorp, Norman became increasingly desperate to secure military contracts and maintain his company's dominance. When his scientists developed an experimental formula designed to create super-soldiers, Norman saw an opportunity to achieve the ultimate power. Despite warnings about the formula's instability and dangerous side effects, Norman tested it on himself in a moment of desperation.</p>
+            
+            <p>The experiment went catastrophically wrong. While the formula granted Norman incredible physical abilities beyond human limits, it also triggered a severe mental breakdown. The chemicals drove him completely insane, fracturing his psyche and unleashing his darkest impulses. In his madness, Norman created the Green Goblin persona—a cackling, sadistic monster that embodied all of his suppressed rage, cruelty, and desire for domination.</p>
+            
+            <p>Donning a terrifying green and purple costume with a grotesque goblin mask, Norman equipped himself with advanced Oscorp weaponry and technology. He built a bat-shaped glider for aerial mobility and developed an arsenal of deadly gadgets, including his signature pumpkin bombs. The Green Goblin was born—and with him, Spider-Man's greatest and most personal enemy.</p>
+            
+            <p>What makes the Green Goblin particularly dangerous is Norman's dual nature. At times, Norman retains control and operates with cold, calculating intelligence, using his wealth and influence to attack Spider-Man from multiple angles. But when the Goblin personality takes over, he becomes an unpredictable force of chaos, capable of unspeakable atrocities. This split personality makes him nearly impossible to anticipate or reason with.</p>
+        </section>
+
+        <!-- Powers & Abilities Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Powers, Abilities & Arsenal
+            </h2>
+            <p style="margin-bottom: 1rem;"><strong>The Goblin Formula transformed Norman into a superhuman threat, and his genius-level intellect allowed him to weaponize Oscorp's technology:</strong></p>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>💪 Enhanced Strength</h4>
+                    <p>The Goblin Formula grants superhuman strength allowing Norman to lift approximately 9 tons, enabling him to overpower Spider-Man in direct combat and tear through reinforced structures.</p>
+                </div>
+                <div class="power-item">
+                    <h4>⚡ Enhanced Speed & Reflexes</h4>
+                    <p>Superhuman reflexes and speed that allow him to dodge attacks, react to Spider-Man's movements, and strike with lightning-fast precision.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🛡️ Enhanced Durability</h4>
+                    <p>Increased resistance to physical damage, allowing him to withstand impacts, falls, and attacks that would kill a normal person, including surviving his own explosive weapons.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🔬 Genius-Level Intellect</h4>
+                    <p>Beyond his physical enhancements, Norman possesses brilliant scientific and business acumen, allowing him to create advanced technology and orchestrate complex schemes against Spider-Man.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🎃 Pumpkin Bombs</h4>
+                    <p>His signature weapons—jack-o'-lantern-shaped explosives with devastating power. Variants include incendiary bombs, smoke bombs, ghost bombs (hallucinogenic gas), and razor bats.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🦇 Goblin Glider</h4>
+                    <p>A bat-shaped hover vehicle equipped with machine guns, missiles, and blades. The glider grants him high-speed aerial mobility and serves as both transportation and a deadly weapon.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🔪 Razor Gloves & Weapons</h4>
+                    <p>Equipped with razor-sharp gloves, knives, and other cutting implements. His arsenal includes stun bombs, sleeping gas, and various specialized grenades.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🧠 Unpredictable Madness</h4>
+                    <p>His fractured psyche and split personality make him wildly unpredictable. The Goblin operates without fear, remorse, or rational limits, willing to commit any atrocity to achieve his goals.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personality & Motivations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🧠</span>
+                Personality Traits & Motivations
+            </h2>
+            <p>The Green Goblin is defined by his complete lack of moral restraint and his sadistic enjoyment of causing suffering. Unlike villains driven by greed or ideology, the Goblin commits evil for the pure pleasure of it. He delights in tormenting Spider-Man psychologically, targeting the hero's loved ones and orchestrating scenarios designed to break Peter Parker's spirit.</p>
+            
+            <p><strong>Key personality traits include:</strong></p>
+            <ul>
+                <li><strong>Obsessive Rivalry:</strong> The Goblin is utterly consumed by his hatred of Spider-Man. He sees the web-slinger as both his greatest enemy and his most worthy opponent, creating a twisted obsession that defines his existence.</li>
+                <li><strong>Sadistic Cruelty:</strong> The Goblin doesn't just want to defeat Spider-Man—he wants to destroy him psychologically. He targets Peter's friends, family, and loved ones, believing that breaking Peter's spirit is more satisfying than simply killing him.</li>
+                <li><strong>Unpredictable Madness:</strong> His fractured psyche makes him dangerously erratic. He can shift from calculated scheming to explosive violence in an instant, making him impossible to reason with or predict.</li>
+                <li><strong>Power and Control:</strong> Norman's original desire for respect and dominance remains core to his character. As the Goblin, he seeks to prove his superiority over everyone, especially Spider-Man.</li>
+                <li><strong>No Remorse:</strong> The Goblin feels no guilt for his actions. Whether murdering innocents or targeting children, he operates without conscience or hesitation.</li>
+                <li><strong>Manipulative Intelligence:</strong> Despite his madness, the Goblin retains Norman's brilliant tactical mind. He crafts elaborate schemes, manipulates others, and always has backup plans.</li>
+            </ul>
+            
+            <p>What makes the Green Goblin truly terrifying is his personal connection to Spider-Man. He eventually learns Peter Parker's secret identity, giving him unprecedented access to Peter's personal life. This knowledge allows the Goblin to attack Peter in ways no other villain can, targeting everyone Peter loves and destroying any sense of safety or normalcy in his life. The Goblin doesn't just fight Spider-Man—he wages war on Peter Parker himself.</p>
+        </section>
+
+        <!-- World & Operations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🌆</span>
+                Base of Operations & World
+            </h2>
+            <p>The Green Goblin operates from multiple secret hideouts throughout New York City, often using abandoned Oscorp facilities, warehouses, and underground laboratories. His dual identity as Norman Osborn gives him unique advantages—by day, he's a respected (if feared) businessman with vast resources and influence; by night, he's a terrorizing supervillain.</p>
+            
+            <p>Norman's position as head of Oscorp Industries provides him with virtually unlimited funding, access to cutting-edge technology, and legitimate cover for his criminal activities. He can develop weapons, conduct experiments, and mobilize resources without raising suspicion. This corporate power makes him nearly untouchable through legal means, as he can hire the best lawyers, bribe officials, and manipulate the system.</p>
+            
+            <p>The Goblin interacts with Spider-Man on multiple levels. As Norman Osborn, he may publicly condemn Spider-Man while privately funding anti-vigilante campaigns. As the Green Goblin, he attacks directly, terrorizing the city and forcing confrontations with the web-slinger. This dual approach creates a web of manipulation that Spider-Man struggles to untangle.</p>
+            
+            <p>Throughout different storylines, Norman has:</p>
+            <ul>
+                <li>Led the Sinister Twelve, assembling a massive team of supervillains against Spider-Man</li>
+                <li>Directed H.A.M.M.E.R. and the Dark Avengers, achieving legitimate government authority</li>
+                <li>Manipulated public opinion against Spider-Man through media campaigns and false flag operations</li>
+                <li>Infiltrated Peter Parker's personal life through his son Harry's friendship with Peter</li>
+                <li>Used his corporate resources to attack Peter's civilian life, threatening his job and relationships</li>
+            </ul>
+            
+            <p>The Goblin's intelligence network and resources mean he can strike at Spider-Man anywhere, anytime. He knows Peter's routines, his weaknesses, his pressure points. This makes every encounter with the Green Goblin a life-or-death situation where Peter must protect not just himself, but everyone he cares about.</p>
+        </section>
+
+        <!-- Key Battles & Events Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚔️</span>
+                Key Battles & Defining Moments
+            </h2>
+            <div class="battles-grid">
+                <div class="battle-card">
+                    <h3>The Night Gwen Stacy Died</h3>
+                    <p>The most infamous and tragic battle in Spider-Man history. The Green Goblin kidnapped Gwen Stacy, Peter Parker's girlfriend, and threw her from the George Washington Bridge. Despite Spider-Man's attempt to save her with his webbing, Gwen died from the fall—either from the whiplash or before Spider-Man caught her. This event fundamentally changed Spider-Man, teaching him that he couldn't always save everyone and cementing the Green Goblin as his most hated enemy. Norman seemingly died in this same battle when he was impaled by his own glider, but he would return years later.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Discovery of Spider-Man's Identity</h3>
+                    <p>Through careful observation and deduction, the Green Goblin discovered that Spider-Man was Peter Parker. This knowledge made their conflict intensely personal, as Norman could now attack Peter's civilian life directly. He used this information to terrorize Peter's friends and family, particularly Aunt May, turning Peter's greatest fear—that his loved ones would be endangered by his heroic identity—into devastating reality.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Clone Saga</h3>
+                    <p>Norman Osborn was revealed to be the secret mastermind behind the Clone Saga, one of Spider-Man's most complex and psychologically devastating ordeals. He had survived his apparent death and spent years orchestrating an elaborate scheme involving clones of Peter Parker and Gwen Stacy. This storyline showed the extent of Norman's obsession and his willingness to destroy Peter's entire sense of reality and identity.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Siege and Dark Reign</h3>
+                    <p>Norman Osborn achieved his ultimate power fantasy when he became the director of H.A.M.M.E.R. (replacing S.H.I.E.L.D.) and formed the Dark Avengers. As the Iron Patriot, Norman had legitimate authority and commanded his own team of "heroes." His siege on Asgard brought him into conflict with the entire Marvel Universe, ultimately leading to his downfall and return to villainy. This arc demonstrated how dangerous Norman becomes when he combines his corporate power with government authority.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Goblin Nation</h3>
+                    <p>In the Superior Spider-Man storyline, the Green Goblin built an underground criminal empire called the Goblin Nation, complete with an army of goblin-themed criminals. He waged a full-scale war for control of New York's underworld, forcing a confrontation that revealed the limits of Otto Octavius (who had taken over Peter's body). This battle showed the Goblin at his most organized and strategic, commanding resources like a military general.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Red Goblin</h3>
+                    <p>In one of his most terrifying transformations, Norman Osborn bonded with the Carnage symbiote to become the Red Goblin—combining the Goblin's intelligence and weapons with the symbiote's shapeshifting powers and increased strength. This fusion created an almost unstoppable threat that pushed Spider-Man to his absolute limits. Peter was forced to accept the Venom symbiote himself to stand a chance, leading to a brutal battle that threatened to destroy both men.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Legacy & Impact Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🏆</span>
+                Legacy & Impact
+            </h2>
+            <p>The Green Goblin is universally recognized as Spider-Man's greatest enemy and one of the most iconic villains in all of comic book history. Created by Stan Lee and Steve Ditko, the character first appeared in <em>The Amazing Spider-Man #14</em> (1964). Norman Osborn's identity as the Green Goblin was revealed in <em>The Amazing Spider-Man #39-40</em> (1966), establishing one of the most compelling hero-villain dynamics in comics.</p>
+            
+            <p>What sets the Green Goblin apart from other villains is the deeply personal nature of his conflict with Spider-Man. Unlike the Joker or Lex Luthor, whose battles with their respective heroes are primarily ideological or ego-driven, the Goblin's war with Spider-Man is intimate and cruel. He doesn't just threaten the city—he destroys Peter's life piece by piece, targeting everyone Peter loves and creating trauma that never fully heals.</p>
+            
+            <p>The death of Gwen Stacy at the Goblin's hands remains one of the most significant moments in comic book history. It marked the end of the Silver Age's innocence, proving that even superheroes couldn't always save everyone. This event influenced decades of storytelling and established that superhero comics could tackle genuinely tragic, adult themes. It's often cited as the moment Spider-Man matured from a teenage hero to an adult character dealing with real loss.</p>
+            
+            <p>Norman Osborn has appeared in virtually every Spider-Man adaptation:</p>
+            <ul>
+                <li><strong>Sam Raimi's Spider-Man (2002):</strong> Willem Dafoe's iconic portrayal introduced the character to mainstream audiences, delivering a terrifying performance that balanced Norman's humanity with the Goblin's madness.</li>
+                <li><strong>The Amazing Spider-Man 2 (2014):</strong> Dane DeHaan portrayed Harry Osborn's version of the Goblin in a tragic take on the character.</li>
+                <li><strong>Spider-Man: No Way Home (2021):</strong> Willem Dafoe returned as the Green Goblin from the multiverse, reminding audiences why he's Spider-Man's most dangerous foe. His performance was universally praised as even better than the original.</li>
+                <li><strong>Various Animated Series:</strong> The Goblin has appeared in every major Spider-Man cartoon, from the 1994 series to Spectacular Spider-Man to Ultimate Spider-Man.</li>
+                <li><strong>Video Games:</strong> Norman appears in countless Spider-Man games, often as the final boss or primary antagonist.</li>
+            </ul>
+            
+            <p>The Green Goblin's influence extends beyond Spider-Man. The character established the template for the "hero's personal enemy who knows their secret identity" trope. His combination of physical threat, psychological warfare, and personal connection to the hero has been emulated countless times across all media.</p>
+            
+            <p>Norman Osborn's character has also evolved beyond simple villainy. His complex relationship with his son Harry, his struggles with mental illness, and his occasional attempts at redemption have added layers of depth. Yet no matter how many times Norman tries to reform or how much sympathy his backstory generates, the Green Goblin always returns—a testament to the character's enduring appeal as pure, unrepentant evil.</p>
+            
+            <p>In the pantheon of supervillains, the Green Goblin stands alongside the Joker, Doctor Doom, and Magneto as one of the most compelling and dangerous antagonists ever created. He is Spider-Man's ultimate test—the enemy who can never be fully defeated, who knows Peter's deepest fears, and who will never stop trying to destroy everything Peter holds dear. The Green Goblin isn't just a villain; he's a nightmare made real, forever haunting Spider-Man's world.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#villains" class="btn btn-primary">← Return to Villains Gallery</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Green Goblin</h4>
+                    <p>Norman Osborn, the Green Goblin, is Spider-Man's arch-nemesis and most dangerous enemy—a brilliant madman with superhuman powers and an arsenal of deadly weapons.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Details</h4>
+                    <p><strong>Real Name:</strong> Norman Osborn</p>
+                    <p><strong>First Appearance:</strong> The Amazing Spider-Man #14 (1964)</p>
+                    <p><strong>Created by:</strong> Stan Lee & Steve Ditko</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Verse Fan Site. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        console.log("Green Goblin page loaded");
+        
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+

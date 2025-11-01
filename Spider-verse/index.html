@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider-Verse Index</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 80vh;
+            min-height: 600px;
+            background: linear-gradient(135deg, #dc143c 0%, #0000ff 50%, #000000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .hero-banner-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 0;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="spiderweb" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><line x1="50" y1="0" x2="50" y2="100" stroke="rgba(255,255,255,0.15)" stroke-width="1"/><line x1="0" y1="50" x2="100" y2="50" stroke="rgba(255,255,255,0.15)" stroke-width="1"/><circle cx="50" cy="50" r="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none"/><circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none"/></pattern></defs><rect width="1200" height="800" fill="url(%23spiderweb)"/></svg>');
+            opacity: 0.3;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .hero h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 90px;
+            font-weight: bold;
+            color: #FFFFFF;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            letter-spacing: 10px;
+        }
+        
+        .hero p {
+            font-size: 1.8rem;
+            color: #ffffff;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        /* Section Styling */
+        .section {
+            margin-bottom: 5rem;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-header h2 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3.5rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            letter-spacing: 4px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #dc143c, #0000ff);
+            border-radius: 2px;
+        }
+        
+        .section-header p {
+            font-size: 1.2rem;
+            color: #cccccc;
+            max-width: 800px;
+            margin: 1rem auto 0;
+            line-height: 1.8;
+        }
+        
+        .view-all-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #dc143c 0%, #0000ff 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+        }
+        
+        .view-all-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(220, 20, 60, 0.5);
+        }
+        
+        /* Card Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 2px solid transparent;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(220, 20, 60, 0.3);
+            border-color: #dc143c;
+        }
+        
+        .card-image {
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #dc143c 0%, #0000ff 100%);
+        }
+        
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover .card-image img {
+            transform: scale(1.1);
+        }
+        
+        .card-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(220, 20, 60, 0.95);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .villain-card .card-badge {
+            background: rgba(0, 0, 0, 0.9);
+        }
+        
+        .card-content {
+            padding: 2rem;
+        }
+        
+        .card h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+        
+        .card p {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-link {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #dc143c 0%, #0000ff 100%);
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+        }
+        
+        .card-link:hover {
+            background: linear-gradient(135deg, #ff1654 0%, #1a1aff 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 20, 60, 0.5);
+        }
+        
+        .villain-card .card-link {
+            background: linear-gradient(135deg, #000000 0%, #8b0000 100%);
+        }
+        
+        .villain-card .card-link:hover {
+            background: linear-gradient(135deg, #1a1a1a 0%, #a00000 100%);
+        }
+        
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 5rem;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h4 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            color: #dc143c;
+        }
+        
+        .footer-section p {
+            color: #cccccc;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul li a {
+            color: #cccccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section ul li a:hover {
+            color: #dc143c;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            color: #999;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 60px;
+            }
+            
+            .hero p {
+                font-size: 1.3rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2.5rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+            
+            .card-image {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero">
+        <img src="https://64.media.tumblr.com/3bfc0faa35b203e3f71033228ad5c384/812aca9587a0001c-d9/s1280x1920/2c3f9046f578d79d797033778c9af81a9a0bd7bd.png" alt="Spider-Verse Banner" class="hero-banner-image">
+        <div class="hero-content">
+            <h1>SPIDER-VERSE CHARACTERS</h1>
+            <p>Explore the Heroes and Villains of the Spider-Man Universe</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Spider-Man Versions Section -->
+        <section class="section" id="versions">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Spider-Man Versions</h2>
+                    <p>From the classic Peter Parker to heroes across the multiverse, discover the many faces behind the mask. Each Spider-Person brings unique abilities, backgrounds, and perspectives to the heroic legacy.</p>
+                </div>
+                
+                <div class="cards-grid">
+                    <!-- Peter Parker (Earth-616) -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://i.redd.it/tvpd6dm9czic1.jpeg" alt="Peter Parker Earth-616">
+                            <div class="card-badge">Original</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Peter Parker (Earth-616)</h3>
+                            <p>The original Spider-Man from the main Marvel Universe. After being bitten by a radioactive spider, teenager Peter Parker gained incredible powers and learned that with great power comes great responsibility.</p>
+                            <a href="peterparker-earth616.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Tobey Maguire -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://i.redd.it/rrd0gfbhbyq11.jpg" alt="Tobey Maguire Spider-Man">
+                            <div class="card-badge">Raimi Films</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Tobey Maguire Spider-Man</h3>
+                            <p>From Sam Raimi's beloved trilogy (2002-2007), this Peter Parker features organic web-shooters and iconic battles against Green Goblin, Doc Ock, and Venom. A defining portrayal of the character for a generation.</p>
+                            <a href="tobeymaguire.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Andrew Garfield -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://d26oc3sg82pgk3.cloudfront.net/files/media/edit/image/45817/article_full%403x.jpg" alt="Andrew Garfield Spider-Man">
+                            <div class="card-badge">Amazing</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Andrew Garfield Spider-Man</h3>
+                            <p>From The Amazing Spider-Man films (2012-2014), featuring a more quippy, skateboarding Peter with mechanical web-shooters. His emotional journey with Gwen Stacy remains one of cinema's most heartbreaking superhero stories.</p>
+                            <a href="andrewgarfield.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Tom Holland -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.alphacoders.com/136/thumb-1920-1368102.jpeg" alt="Tom Holland Spider-Man">
+                            <div class="card-badge">MCU</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Tom Holland Spider-Man</h3>
+                            <p>The MCU's Spider-Man (2016-present), mentored by Tony Stark and fighting alongside the Avengers. Youngest and most tech-enhanced version, with Stark tech suit and "Peter Tingle" replacing traditional spider-sense.</p>
+                            <a href="tomhollywood.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Miles Morales -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://i.redd.it/wie16es2bbdb1.jpg" alt="Miles Morales">
+                            <div class="card-badge">Ultimate</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Miles Morales</h3>
+                            <p>Brooklyn teenager who gained spider powers in the Ultimate Universe. With unique abilities like invisibility and venom strike, Miles proves anyone can wear the mask and became the first Afro-Latino Spider-Man.</p>
+                            <a href="milesmorales.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Spider-Man 2099 -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://i.redd.it/g1gmeumuq49b1.jpg" alt="Spider-Man 2099">
+                            <div class="card-badge">Future</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Spider-Man 2099</h3>
+                            <p>Miguel O'Hara from the year 2099, with enhanced vision, organic webbing, talons, and venomous fangs. A geneticist who gained powers through futuristic experiments, protecting Nueva York from corporate tyranny.</p>
+                            <a href="spiderman2099.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Spider-Gwen -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://i.pinimg.com/736x/b1/9b/78/b19b787e00a549d6fcc9043e423ac2c5.jpg" alt="Spider-Gwen">
+                            <div class="card-badge">Earth-65</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Spider-Gwen</h3>
+                            <p>Gwen Stacy from Earth-65, where she was bitten by the spider instead of Peter Parker. A drummer in a band and hero driven by the tragedy of her universe's Peter, combining style with substance.</p>
+                            <a href="spidergwen.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Spider-Man Noir -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/8971ab4e-777c-4897-b797-ddc3448e6bda/ddc3kta-15f8137b-8b4c-4d23-8df4-79d71f53ddf2.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiIvZi84OTcxYWI0ZS03NzdjLTQ4OTctYjc5Ny1kZGMzNDQ4ZTZiZGEvZGRjM2t0YS0xNWY4MTM3Yi04YjRjLTRkMjMtOGRmNC03OWQ3MWY1M2RkZjIuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.ycHsuiYCbumMpdbwUyViolPIUCwBGrv46EYZDR0AMUQ" alt="Spider-Man Noir">
+                            <div class="card-badge">1930s</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Spider-Man Noir</h3>
+                            <p>From a dark 1930s universe, this Peter Parker operates as a detective-style hero fighting crime in Depression-era New York. With mystical spider powers and trench coat aesthetic, he's noir cinema personified.</p>
+                            <a href="spidernoir.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Spider-Ham -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://i.pinimg.com/736x/93/97/c2/9397c2aa9297ed9513e5397948a91a0f.jpg" alt="Spider-Ham">
+                            <div class="card-badge">Cartoon</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Spider-Ham</h3>
+                            <p>Peter Porker from a cartoon universe where a spider was bitten by a radioactive pig. Operating on cartoon physics with hammerspace and fourth-wall awareness, he's comedic chaos personified as a superhero.</p>
+                            <a href="spiderham.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Spider-Man India -->
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://i.pinimg.com/736x/ff/7a/2a/ff7a2aebc66746435f5c20783a46f077.jpg" alt="Spider-Man India">
+                            <div class="card-badge">Mumbattan</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Spider-Man India</h3>
+                            <p>Pavitr Prabhakar from Mumbai, gaining powers through mystical means rather than science. Fighting to protect Mumbattan with optimism and cultural pride, representing Spider-Man's universal appeal across cultures.</p>
+                            <a href="spidermanindia.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Villains Section -->
+        <section class="section" id="villains">
+            <div class="container">
+                <div class="section-header">
+                    <h2 style="color: #002147;">Spider-Man Villains</h2>
+                    <p style="color: #002147;">From criminal masterminds to tragic monsters, Spider-Man faces one of comics' greatest rogues galleries. Each villain brings unique challenges, complex motivations, and unforgettable stories.</p>
+                </div>
+                
+                <div class="cards-grid">
+                    <!-- Green Goblin -->
+                    <div class="card villain-card">
+                        <div class="card-image">
+                            <img src="https://i.pinimg.com/736x/03/9d/db/039ddbdbd601aeefb0d7541a75886dcf.jpg" alt="Green Goblin">
+                            <div class="card-badge">Arch-Nemesis</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Green Goblin</h3>
+                            <p>Norman Osborn, driven mad by experimental serum, becomes Spider-Man's most personal and dangerous enemy. Armed with pumpkin bombs and cunning intellect, he represents chaos and knows Peter's secret identity.</p>
+                            <a href="green-goblin.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Doctor Octopus -->
+                    <div class="card villain-card">
+                        <div class="card-image">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/b/bc/Dr._Octopus_Marvel.jpg" alt="Doctor Octopus">
+                            <div class="card-badge">Genius</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Doctor Octopus</h3>
+                            <p>Dr. Otto Octavius with four mechanical tentacles fused to his body, combining genius intellect with devastating physical power. His superiority complex makes him one of Spider-Man's most persistent foes.</p>
+                            <a href="doctor-octopus.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Venom -->
+                    <div class="card villain-card">
+                        <div class="card-image">
+                            <img src="https://i.pinimg.com/564x/92/3d/26/923d26602e806d40af2c0219af1caf32.jpg" alt="Venom">
+                            <div class="card-badge">Symbiote</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Venom</h3>
+                            <p>Eddie Brock bonded with alien symbiote rejected by Spider-Man, creating a dark mirror of the hero. With all Spider-Man's powers plus more, Venom is both terrifying predator and occasional protector.</p>
+                            <a href="venom.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Sandman -->
+                    <div class="card villain-card">
+                        <div class="card-image">
+                            <img src="https://i.pinimg.com/736x/8a/74/e2/8a74e2d08dc201691d530b41c5c8fd88.jpg" alt="Sandman">
+                            <div class="card-badge">Shape-Shifter</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Sandman</h3>
+                            <p>Flint Marko transformed into living sand, able to reshape his body and become virtually indestructible. A sympathetic villain driven by desperation to provide for his daughter.</p>
+                            <a href="sandman.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Lizard -->
+                    <div class="card villain-card">
+                        <div class="card-image">
+                            <img src="https://i.redd.it/gozuk3olffga1.jpg" alt="Lizard">
+                            <div class="card-badge">Transformation</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Lizard</h3>
+                            <p>Dr. Curt Connors' attempt to regrow his lost arm transformed him into reptilian monster. The battle between good man and savage beast creates one of Spider-Man's most tragic villains.</p>
+                            <a href="lizard.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Electro -->
+                    <div class="card villain-card">
+                        <div class="card-image">
+                            <img src="https://i.redd.it/jt91x31ubqba1.jpg" alt="Electro">
+                            <div class="card-badge">Living Lightning</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Electro</h3>
+                            <p>Max Dillon gained ability to generate and control massive electricity. A bitter nobody given ultimate power, proving abilities amplify character flaws rather than fix them.</p>
+                            <a href="electro.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Mysterio -->
+                    <div class="card villain-card">
+                        <div class="card-image">
+                            <img src="https://i.pinimg.com/564x/3e/f6/48/3ef648f2b3a041b0eb4e38fb4b82e17b.jpg" alt="Mysterio">
+                            <div class="card-badge">Master of Illusion</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Mysterio</h3>
+                            <p>Quentin Beck weaponized Hollywood special effects and illusions to become one of Spider-Man's most dangerous psychological foes. In the age of deepfakes, his manipulation feels eerily relevant.</p>
+                            <a href="mysterio.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Vulture -->
+                    <div class="card villain-card">
+                        <div class="card-image">
+                            <img src="https://i.pinimg.com/1200x/49/3a/6c/493a6c2882b09f1c65f2f824474a5c33.jpg" alt="Vulture">
+                            <div class="card-badge">Aerial Predator</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Vulture</h3>
+                            <p>Adrian Toomes' electromagnetic harness grants flight and enhanced vitality. Betrayed by his business partner, this elderly genius proves age and cunning can be as dangerous as youth and power.</p>
+                            <a href="vulture.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Kingpin -->
+                    <div class="card villain-card">
+                        <div class="card-image">
+                            <img src="https://static.wikia.nocookie.net/villains/images/f/fe/Secret_Empire_Vol_1_9_Villain_Variant_Textless.jpg/revision/latest/thumbnail/width/360/height/360?cb=20181005003412" alt="Kingpin">
+                            <div class="card-badge">Crime Lord</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Kingpin</h3>
+                            <p>Wilson Fisk controls New York's underworld through peak human strength, genius intellect, and vast criminal empire. He represents systemic corruption that can't be defeated through punching.</p>
+                            <a href="kingpin.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+
+                    <!-- Rhino -->
+                    <div class="card villain-card">
+                        <div class="card-image">
+                            <img src="https://preview.redd.it/who-else-feels-like-we-should-see-a-comic-accurate-rhino-in-v0-hrozgkuu1mr81.jpg?width=640&crop=smart&auto=webp&s=3350eb8a75fc3950a2dd9a6db83e384240f33e0e" alt="Rhino">
+                            <div class="card-badge">Unstoppable Force</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Rhino</h3>
+                            <p>Aleksei Sytsevich transformed into living weapon with indestructible suit bonded to his body. A working-class tragedy representing desperate people accepting terrible bargains from those in power.</p>
+                            <a href="rhino.html" class="card-link">Learn More →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+    
+            <div class="footer-section">
+                <h4>About Spider-Verse</h4>
+                <p>Explore the vast multiverse of Spider-Man characters, from the original Peter Parker to heroes across dimensions, and the unforgettable villains who challenge them.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#versions">Spider-Man Versions</a></li>
+                    <li><a href="#villains">Villains</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Featured Characters</h4>
+                <ul>
+                    <li><a href="peterparker-earth616.html">Peter Parker (Earth-616)</a></li>
+                    <li><a href="milesmorales.html">Miles Morales</a></li>
+                    <li><a href="spiderman2099.html">Spider-Man 2099</a></li>
+                    <li><a href="green-goblin.html">Green Goblin</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Spider-Verse Fan Site. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment.</p>
+        </div>
+    </footer>
+
+    <script>
+        console.log("Index page loaded");
+        
+        // Add scroll animation to cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

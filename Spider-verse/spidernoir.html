@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider-Man Noir - The Dark Detective</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to character profile page */
+        .character-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .character-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .character-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .character-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .character-universe {
+            display: inline-block;
+            background: rgba(52, 58, 64, 0.9);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(227, 30, 36, 0.5);
+        }
+        
+        .character-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+        
+        .character-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(227, 30, 36, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #e31e24;
+            border-color: #e31e24;
+            transform: translateX(-5px);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .character-image-section {
+            display: none;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            border-left: 5px solid #343a40;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #000000;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '🕷️';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+            filter: grayscale(100%);
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #343a40 0%, #000000 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(227, 30, 36, 0.3);
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+            border-color: #e31e24;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #e31e24;
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
+            margin: 0;
+        }
+        
+        .allies-grid,
+        .villains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .character-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-5px);
+            border-color: #343a40;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .character-card h4 {
+            font-size: 1.3rem;
+            color: #0f1729;
+            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+        
+        .character-card .actor {
+            color: #343a40;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .character-card p {
+            font-size: 1rem;
+            color: #6c757d;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .villain-card-profile {
+            background: linear-gradient(135deg, #000000 0%, #343a40 100%);
+            color: white;
+        }
+        
+        .villain-card-profile h4 {
+            color: #e31e24;
+        }
+        
+        .villain-card-profile .actor {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .villain-card-profile p {
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .functions-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .function-badge {
+            background: linear-gradient(135deg, #343a40 0%, #000000 100%);
+            padding: 1.2rem;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            border: 2px solid rgba(227, 30, 36, 0.3);
+        }
+        
+        .function-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+            border-color: #e31e24;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .character-hero {
+                height: 300px;
+            }
+            
+            .character-name {
+                font-size: 50px;
+            }
+            
+            .character-alias {
+                font-size: 1.4rem;
+            }
+            
+            .character-universe {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .character-hero {
+                height: 250px;
+            }
+            
+            .character-name {
+                font-size: 36px;
+            }
+            
+            .character-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid,
+            .allies-grid,
+            .villains-grid,
+            .functions-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#versions" class="back-button">
+        <span>←</span>
+        <span>Back to Spider-Verse</span>
+    </a>
+
+    <!-- Character Hero Section -->
+    <section class="character-hero">
+        <img src="https://www.joblo.com/wp-content/uploads/2024/07/spider-noir.jpg" alt="Spider-Man Noir" class="character-hero-image">
+        <div class="character-hero-content">
+            <div class="character-universe">1930s NOIR UNIVERSE • GREAT DEPRESSION ERA</div>
+            <h1 class="character-name">SPIDER-MAN NOIR</h1>
+            <p class="character-alias">The Dark Detective of the Shadows</p>
+        </div>
+    </section>
+
+    <!-- Character Profile -->
+    <div class="profile-container">
+        <!-- Character Image -->
+        <div class="character-image-section">
+            <div class="character-image">
+                <img src="https://www.joblo.com/wp-content/uploads/2024/07/spider-noir.jpg" alt="Spider-Man Noir">
+            </div>
+        </div>
+
+        <!-- Universe/World Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🌃</span>
+                Universe & Origins
+            </h2>
+            <p><strong>Universe:</strong> Earth-90214 (1930s Noir Universe)</p>
+            <p><strong>Real Name:</strong> Peter Parker</p>
+            <p><strong>Alias:</strong> Spider-Man Noir, The Spider-Man</p>
+            <p><strong>Time Period:</strong> 1933, Great Depression Era</p>
+            <p><strong>Location:</strong> New York City, during the darkest days of the Depression</p>
+            <p><strong>First Appearance:</strong> Spider-Man Noir #1 (2009) - Comics</p>
+            <p><strong>Voiced by:</strong> Nicolas Cage (Spider-Man: Into the Spider-Verse)</p>
+            <p>Spider-Man Noir exists in a gritty, monochromatic 1930s universe where the Great Depression has plunged New York City into darkness and despair. This world is painted in shades of black, white, and gray—a world where corruption runs deep, crime families control the streets, and the common people suffer under the weight of poverty and oppression. In this bleak landscape, Spider-Man emerges not as a colorful hero, but as a dark, mysterious vigilante operating from the shadows, using fear as a weapon against those who prey on the innocent.</p>
+        </section>
+
+        <!-- Story/Background Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📰</span>
+                Story & Background
+            </h2>
+            <p>Peter Parker was a young man living in the slums of New York City during the Great Depression in 1933. Raised by his Uncle Ben and Aunt May, Peter worked as a photographer for the newspaper <em>The Daily Bugle</em>, run by the crusading editor Ben Urich. Peter was drawn to social justice, fighting alongside workers and activists against the corruption and crime that gripped the city.</p>
+            
+            <p>Peter's life changed forever when he was investigating a warehouse controlled by the crime lord known as the Goblin. During his investigation, Peter encountered a mysterious spider idol that had been stolen from a South American temple. The idol housed an ancient spider-god, and when Peter touched it, he was bitten by a mystical spider that emerged from within. The bite granted him incredible powers but also connected him to dark, primal forces.</p>
+            
+            <p>The transformation was painful and traumatic. Peter found himself with enhanced abilities but also plagued by nightmarish visions and a connection to the spider-god's dark nature. Unlike the bright, hopeful heroes of other universes, this Spider-Man emerged from trauma and darkness, initially struggling with the violent impulses that came with his powers.</p>
+            
+            <p>His Uncle Ben, who was also fighting against the Goblin's criminal empire, was murdered in cold blood—a tragedy that solidified Peter's resolve to become a force for justice. However, his methods are far more brutal than his counterparts. Spider-Man Noir isn't afraid to use fear and intimidation, operating more like a pulp detective or noir anti-hero than a traditional superhero.</p>
+            
+            <p>Peter wears a black costume with goggles (to protect his light-sensitive eyes from his universe's harsh sunlight), a fedora, and sometimes a trench coat, looking more like a 1930s detective or vigilante than a colorful superhero. He works in the shadows, swinging between buildings on webs, striking fear into criminals who think they're safe under the cover of night.</p>
+            
+            <p>In <em>Spider-Man: Into the Spider-Verse</em>, Spider-Man Noir is pulled into another dimension where he meets other Spider-People. His noir perspective—speaking in hardboiled detective metaphors and marveling at the colorful world around him—provides both comic relief and a reminder of how different each Spider-Person's reality can be. Despite his dark origins, Noir proves himself a valuable ally and a hero dedicated to fighting for those who cannot fight for themselves.</p>
+        </section>
+
+        <!-- Functions/Roles Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🕵️</span>
+                Functions & Roles
+            </h2>
+            <div class="functions-list">
+                <div class="function-badge">Detective-Style Vigilante</div>
+                <div class="function-badge">Shadow Operative</div>
+                <div class="function-badge">Social Justice Fighter</div>
+                <div class="function-badge">Photographer</div>
+                <div class="function-badge">Street-Level Hero</div>
+                <div class="function-badge">Spider-Verse Ally</div>
+            </div>
+            <p style="margin-top: 1.5rem;">As Spider-Man Noir, Peter operates more like a hardboiled detective than a traditional superhero. He uses fear, intimidation, and investigation to fight crime in Depression-era New York. His work as a photographer for <em>The Daily Bugle</em> gives him access to information about criminal activities, while his powers allow him to strike from the shadows. Unlike his brighter counterparts, Noir isn't afraid to use violence and fear as tools of justice, believing that in his dark world, only darkness can fight darkness. He fights for workers' rights, social justice, and the common people crushed under the weight of crime and corruption.</p>
+        </section>
+
+        <!-- Powers Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Superpowers & Abilities
+            </h2>
+            <p style="margin-bottom: 1rem;"><strong>Spider-Man Noir's powers are similar to other Spider-People but adapted to his darker universe:</strong></p>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>🧗 Wall-Crawling</h4>
+                    <p>Can adhere to any surface, using this ability to move silently through the shadows of 1930s New York, clinging to walls in dark alleyways and scaling buildings unseen.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕸️ Web-Shooting</h4>
+                    <p>Uses mechanical web-shooters to fire strong webbing. In his black-and-white world, his webs appear as shadowy strands perfect for swinging between art deco skyscrapers and capturing criminals.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕷️ Spider-Sense</h4>
+                    <p>A precognitive warning system that alerts him to danger. In the noir universe, this manifests as a grim intuition, a feeling in his gut that something bad is about to happen.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💪 Enhanced Strength</h4>
+                    <p>Superhuman strength allowing him to overpower multiple opponents, lift heavy objects, and deliver devastating blows to criminals who prey on the weak.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🤸 Enhanced Agility & Reflexes</h4>
+                    <p>Superhuman agility and reflexes that allow him to dodge bullets, perform incredible acrobatic feats, and move with grace through the urban landscape.</p>
+                </div>
+                <div class="power-item">
+                    <h4>👊 Combat Expertise</h4>
+                    <p>Unlike some Spider-People, Noir is a skilled hand-to-hand combatant who isn't afraid to fight dirty. He uses brutal, efficient fighting techniques honed on the mean streets.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🔍 Detective Skills</h4>
+                    <p>Exceptional investigative abilities, using his intellect and journalistic training to uncover criminal conspiracies, follow leads, and solve mysteries.</p>
+                </div>
+                <div class="power-item">
+                    <h4>😨 Fear & Intimidation</h4>
+                    <p>Uses the shadows and his dark appearance to strike fear into criminals. In his universe, Spider-Man is seen as a terrifying urban legend emerging from the darkness.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notable Allies Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🤝</span>
+                Notable Allies
+            </h2>
+            <div class="allies-grid">
+                <div class="character-card">
+                    <h4>Ben Urich</h4>
+                    <p class="actor">Comics & Spider-Verse</p>
+                    <p>Editor of <em>The Daily Bugle</em> and Peter's mentor. A crusading journalist dedicated to exposing corruption and crime, Ben guides Peter's investigation work and provides him with information about criminal activities in the city.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Aunt May</h4>
+                    <p class="actor">Comics</p>
+                    <p>Peter's guardian who, in this universe, is more aware of the harsh realities of their world. She runs a shelter for those affected by the Depression and represents the compassionate resistance against the city's darkness.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Felicia Hardy (Black Cat)</h4>
+                    <p class="actor">Comics</p>
+                    <p>A cat burglar and occasional ally to Spider-Man Noir. In this universe, she operates in the gray areas of morality, sometimes helping Peter while pursuing her own agenda in the criminal underworld.</p>
+                </div>
+                <div class="character-card">
+                    <h4>The Spider-Verse Team</h4>
+                    <p class="actor">Into the Spider-Verse</p>
+                    <p>Including Miles Morales, Peter B. Parker, Spider-Gwen, Peni Parker, and Spider-Ham. When pulled into their colorful world, Noir marvels at the brightness and works alongside them to save the multiverse.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Robbie Robertson</h4>
+                    <p class="actor">Comics</p>
+                    <p>A reporter at <em>The Daily Bugle</em> who works alongside Peter, helping expose criminal activities and social injustices in Depression-era New York.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Villains Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">💀</span>
+                Main Villains
+            </h2>
+            <div class="villains-grid">
+                <div class="character-card villain-card-profile">
+                    <h4>The Goblin</h4>
+                    <p class="actor">Norman Osborn - Crime Lord</p>
+                    <p>The most powerful crime boss in 1930s New York. A ruthless gangster who controls much of the city's criminal operations through fear and violence. This version of the Goblin is more mobster than supervillain, using tommy guns and criminal influence rather than glider and pumpkin bombs.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Doctor Octopus</h4>
+                    <p class="actor">Otto Octavius - Crime Boss</p>
+                    <p>A crime lord with mechanical tentacles powered by steam and gears rather than modern technology. He controls the docks and waterfront criminal operations, representing the industrial brutality of the era.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>The Vulture</h4>
+                    <p class="actor">Adrian Toomes - Cannibal</p>
+                    <p>Perhaps the darkest version of the Vulture—a cannibalistic gangster who preys on victims during the Depression's hunger crisis. This twisted villain represents the depths of depravity in Noir's universe.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Kraven the Hunter</h4>
+                    <p class="actor">Big Game Hunter</p>
+                    <p>A hunter who comes to New York seeking the ultimate prey—Spider-Man. Armed with period-appropriate weapons and tracking skills, Kraven stalks his target through the urban jungle.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>The Crime Master</h4>
+                    <p class="actor">Mysterious Crime Lord</p>
+                    <p>A masked criminal mastermind who operates from the shadows, controlling various criminal enterprises and challenging Spider-Man Noir's investigation efforts.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Mysterio</h4>
+                    <p class="actor">Stage Magician & Con Artist</p>
+                    <p>A 1930s stage performer and con artist who uses illusions, tricks, and showmanship to commit crimes, embodying the desperate theatricality of the Depression era.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What Makes Noir Unique Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⭐</span>
+                What Makes Spider-Man Noir Unique
+            </h2>
+            <p>Spider-Man Noir stands apart from every other Spider-Person in profound ways:</p>
+            <ul>
+                <li><strong>Monochromatic World:</strong> Exists in a black-and-white universe during the Great Depression, creating a stark visual and tonal difference from other Spider-People</li>
+                <li><strong>Darker Methods:</strong> More willing to use violence, fear, and intimidation. This Spider-Man isn't afraid to get his hands dirty</li>
+                <li><strong>Hardboiled Detective:</strong> Operates like a pulp fiction private eye, using investigation and detective work as much as physical prowess</li>
+                <li><strong>Period-Appropriate Aesthetic:</strong> Wears goggles (due to light sensitivity), fedora, and sometimes a trench coat, looking like a 1930s vigilante</li>
+                <li><strong>Mystical Origin:</strong> His powers come from a mystical spider-god rather than science, connecting him to ancient, dark forces</li>
+                <li><strong>Social Justice Warrior:</strong> Fights explicitly for workers' rights and against corporate/criminal oppression during the Depression</li>
+                <li><strong>Uses Weapons:</strong> Unlike most Spider-People, Noir has been known to use period firearms when necessary, reflecting his harsher world</li>
+                <li><strong>Noir Narration:</strong> In comics and film, speaks in hardboiled detective narration and metaphors ("Sometimes, in this line of work, you gotta be able to take a punch")</li>
+                <li><strong>Color Blindness:</strong> In Into the Spider-Verse, Noir reveals he's never seen color, leading to memorable moments when exposed to Miles' colorful world</li>
+            </ul>
+        </section>
+
+        <!-- Spider-Verse Appearance Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🎬</span>
+                Into the Spider-Verse Appearance
+            </h2>
+            <p>In <strong>Spider-Man: Into the Spider-Verse</strong>, Spider-Man Noir is brilliantly voiced by Nicolas Cage, who brings the perfect gravitas and hardboiled detective tone to the character. Noir's appearance in the film is rendered in a distinctive black-and-white style with heavy shadows and high contrast, maintaining his aesthetic even in Miles' colorful world.</p>
+            
+            <p>His dialogue is filled with noir clichés and detective metaphors that he delivers with complete sincerity, creating both humor and genuine character depth. Memorable quotes include his observations about the colorful world ("This is a pretty hardcore origin story"), his philosophical musings ("Sometimes I let matches burn down to my fingertips just to feel something, anything"), and his constant narration in classic detective style.</p>
+            
+            <p>The film plays with the contrast between Noir's dark, serious demeanor and the absurdity of his situation. He marvels at Rubik's Cubes (technology he's never seen), struggles with the concept of color, and provides sage-like wisdom wrapped in hardboiled detective language. His confusion about everyday objects from other universes provides comic relief while never making him a joke—he remains a capable, skilled hero.</p>
+            
+            <p>During the final battle, Spider-Man Noir proves himself in combat, working seamlessly with the other Spider-People despite coming from a universe without color or modern technology. His determination to protect others, his combat prowess, and his moral certainty about fighting evil make him a valuable member of the team.</p>
+            
+            <p>When Noir returns to his universe at the end of the film, he takes a Rubik's Cube with him—a small piece of color and complexity from another world. It's a touching moment that shows even the darkest Spider-Man can find wonder and hope.</p>
+        </section>
+
+        <!-- Cultural Impact Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🏆</span>
+                Cultural Impact & Legacy
+            </h2>
+            <p>Spider-Man Noir was created by David Hine, Fabrice Sapolsky, and artist Carmine Di Giandomenico in 2009 as part of Marvel's "Noir" line, which reimagined various Marvel heroes in a 1930s pulp fiction aesthetic. The character immediately stood out for his unique visual design and the way he adapted Spider-Man's core themes to a darker, grittier setting.</p>
+            
+            <p>The original <em>Spider-Man Noir</em> comic series received critical acclaim for its atmospheric storytelling, period-accurate details, and willingness to explore darker themes than typical Spider-Man stories. The series examined social issues like poverty, corruption, workers' rights, and the cost of violence in ways that felt both historically grounded and relevant to modern readers.</p>
+            
+            <p>Spider-Man Noir has appeared in various video games, including <em>Spider-Man: Shattered Dimensions</em> (2010) and <em>Spider-Man: Edge of Time</em> (2011), where Christopher Daniel Barnes voiced the character, bringing the noir detective atmosphere to interactive media.</p>
+            
+            <p><strong>Nicolas Cage's portrayal</strong> in <em>Spider-Man: Into the Spider-Verse</em> catapulted the character to mainstream recognition. Cage's distinctive voice work, combined with the film's stunning black-and-white animation for the character, made Spider-Man Noir one of the most memorable Spider-People in the movie. His deadpan delivery of hardboiled detective lines became instantly quotable and meme-worthy.</p>
+            
+            <p>The character represents an important aspect of the Spider-Verse—that the core Spider-Man concept is flexible enough to work in radically different settings and tones. While Miles Morales shows Spider-Man can be anyone, Spider-Man Noir shows the character can exist in any time period, any aesthetic, and any genre while remaining recognizable and compelling.</p>
+            
+            <p>A live-action Spider-Man Noir series was announced for development, with Nicolas Cage potentially returning to the role, demonstrating the character's enduring popularity and the demand for darker, more mature Spider-Man stories. Spider-Man Noir has proven that even in the darkest timeline, a Spider-Man will rise to fight for justice.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#versions" class="btn btn-primary">← Return to Spider-Verse</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Spider-Man Noir</h4>
+                    <p>The dark detective of 1930s New York, Spider-Man Noir fights crime and corruption in the shadows during the Great Depression.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Details</h4>
+                    <p><strong>Voice Actor:</strong> Nicolas Cage</p>
+                    <p><strong>Created by:</strong> David Hine, Fabrice Sapolsky, Carmine Di Giandomenico</p>
+                    <p><strong>First Appearance:</strong> 2009 (Comics)</p>
+                    <p><strong>Era:</strong> 1933 (Great Depression)</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Man Fan Hub. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment and Sony Pictures.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        <a href="spiderversions.html" 
+   style="color:#00aaff; 
+          display:block; 
+          margin-top:40px; 
+          text-align:center; 
+          font-size:18px; 
+          text-decoration:none;">
+  ← Back to Spider-Man Versions
+</a>
+
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+

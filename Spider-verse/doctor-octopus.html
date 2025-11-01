@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Octopus - The Superior Villain</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to villain profile page */
+        .villain-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .villain-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .villain-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .villain-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .villain-badge {
+            display: inline-block;
+            background: rgba(139, 0, 0, 0.9);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(255, 69, 0, 0.5);
+        }
+        
+        .villain-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+        
+        .villain-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(139, 0, 0, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #8b0000;
+            border-color: #8b0000;
+            transform: translateX(-5px);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .villain-image-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .villain-image {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .villain-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #8b0000;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #ff4500;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '🦾';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #8b0000 0%, #4a0000 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 69, 0, 0.3);
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(139, 0, 0, 0.5);
+            border-color: #ff4500;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+        }
+        
+        .battles-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .battle-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #8b0000 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border-left: 5px solid #ff4500;
+        }
+        
+        .battle-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(139, 0, 0, 0.4);
+        }
+        
+        .battle-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 2px;
+            color: #ffd700;
+        }
+        
+        .battle-card p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+            line-height: 1.7;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .villain-hero {
+                height: 300px;
+            }
+            
+            .villain-name {
+                font-size: 50px;
+            }
+            
+            .villain-alias {
+                font-size: 1.4rem;
+            }
+            
+            .villain-badge {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .villain-hero {
+                height: 250px;
+            }
+            
+            .villain-name {
+                font-size: 36px;
+            }
+            
+            .villain-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#villains" class="back-button">
+        <span>←</span>
+        <span>Back to Villains</span>
+    </a>
+
+    <!-- Villain Hero Section -->
+    <header class="villain-hero">
+        <img src="https://cdn.mos.cms.futurecdn.net/SWYkLwSQq45YJBQbHr9ecS.jpg" alt="Doctor Octopus" class="villain-hero-image">
+        <div class="villain-hero-content">
+            <div class="villain-badge">MASTER OF THE MECHANICAL ARTS</div>
+            <h1 class="villain-name">DOCTOR OCTOPUS</h1>
+            <p class="villain-alias">Dr. Otto Octavius</p>
+        </div>
+    </header>
+
+    <!-- Villain Profile -->
+    <main class="profile-container">
+        <!-- Origin Story Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📜</span>
+                Origin Story & Backstory
+            </h2>
+            <p>Dr. Otto Gunther Octavius was born into a difficult family life in Schenectady, New York. His father, a brutal factory worker, detested intellectuals and regularly beat young Otto for his bookish interests. His mother, overprotective and controlling, smothered him with affection while simultaneously crushing his independence. These conflicting influences created a man of paradoxes—brilliant yet insecure, ambitious yet desperate for approval, arrogant yet secretly fragile.</p>
+            
+            <p>Despite his troubled childhood, Otto's genius could not be suppressed. He excelled in school and eventually earned a doctorate in nuclear physics, becoming one of the world's leading atomic researchers. Dr. Octavius dedicated himself entirely to science, finding in his work the respect and validation his father never gave him. However, his obsessive focus and increasingly dismissive attitude toward others—traits born from years of mockery—left him isolated and socially awkward.</p>
+            
+            <p>Otto's breakthrough came with the invention of a revolutionary harness equipped with four mechanical tentacle-like arms. These "waldoes" were designed to safely handle radioactive materials from a distance, allowing scientists to work with dangerous substances without risk. The harness attached to his body through a chest-mounted control system, with the arms responding to his mental commands through a sophisticated neural interface. The design was ingenious—the tentacles possessed superhuman strength, precision, and flexibility, making Otto's experiments safer and more efficient than ever before.</p>
+            
+            <p>For a time, Dr. Octavius was at the pinnacle of his career, respected by the scientific community and celebrated for his innovations. But fate had a cruel twist in store. During a high-pressure experiment involving volatile atomic materials, a catastrophic accident occurred. An explosion rocked the laboratory, bathing Otto in radiation and fusing the mechanical tentacles permanently to his body. The neural interface, designed for temporary use, became permanently bonded to his nervous system and spine.</p>
+            
+            <p>When Otto awoke in the hospital, he discovered that the accident had changed him in ways beyond the physical fusion. The radiation had somehow altered his brain, removing his mental inhibitions and amplifying his worst traits. His arrogance transformed into megalomania, his ambition into ruthless obsession, and his frustration with society into contempt for all who weren't his intellectual equals. The neural interface that once allowed him to control the arms now worked both ways—the mechanical tentacles influenced his thoughts, making him more aggressive and less human.</p>
+            
+            <p>The attending physicians tried to remove the harness, but Otto's new psychosis manifested violently. Using his mechanical arms with startling proficiency, he defeated the doctors and escaped, embracing his transformation. He was no longer the meek Dr. Octavius—he was Doctor Octopus, named mockingly by the press for his eight limbs (four mechanical, four human). Rather than reject this moniker, Otto embraced it with pride, seeing it as recognition of his superiority over normal humans.</p>
+            
+            <p>Doctor Octopus turned to crime not out of financial necessity but from a toxic combination of wounded pride and megalomaniacal ambition. He believed his genius entitled him to wealth, power, and respect. When society failed to give him what he deserved, he would take it by force. His first criminal acts were almost petty—robberies and exhibitions of power—but they quickly escalated as his confidence grew and his sanity diminished.</p>
+        </section>
+
+        <!-- Powers & Abilities Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Powers, Abilities & Technology
+            </h2>
+            <p style="margin-bottom: 1rem;"><strong>Doctor Octopus's mechanical tentacles make him one of the most physically formidable opponents Spider-Man has ever faced:</strong></p>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>🦾 Four Mechanical Tentacles</h4>
+                    <p>His signature weapons—four powerful tentacle-like appendages made of stainless steel, each approximately 6 feet long (extendable to 24 feet). They can move at speeds up to 90 feet per second and lift approximately 8 tons each.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🧠 Mental Control & Telepathic Link</h4>
+                    <p>The tentacles are controlled by Otto's thoughts through a neural interface fused to his spine and brain. This psychic connection allows for instantaneous response times and makes the arms function as naturally as his own limbs.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💪 Superhuman Strength</h4>
+                    <p>Through his tentacles, Doc Ock can lift over 30 tons total (approximately 8 tons per arm). This allows him to overpower Spider-Man in direct confrontations, tear through metal, and demolish structures.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🎯 Enhanced Dexterity & Precision</h4>
+                    <p>The tentacles possess incredible precision, capable of delicate scientific work or threading a needle while simultaneously possessing the strength to crush steel. This versatility makes him dangerous in any situation.</p>
+                </div>
+                <div class="power-item">
+                    <h4>⚡ Enhanced Speed & Reflexes</h4>
+                    <p>The mechanical arms can strike with incredible speed and react to threats faster than human reflexes allow. They can even function independently, defending Otto from attacks he doesn't consciously perceive.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🛡️ Enhanced Durability</h4>
+                    <p>The harness and tentacles provide significant protection, shielding Otto from attacks. The adamantium-reinforced versions (later upgrades) are nearly indestructible and resistant to most conventional weapons.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕷️ Wall-Crawling & Mobility</h4>
+                    <p>Using his tentacles, Doc Ock can "walk" on walls and ceilings, scale buildings, and move through urban environments with spider-like agility. He can also use them to swing between buildings or create a shield.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🔬 Genius-Level Intellect</h4>
+                    <p>Beyond his mechanical enhancements, Otto remains one of the world's foremost experts in atomic physics, radiation, engineering, and invention. His scientific knowledge rivals or exceeds that of Tony Stark, Reed Richards, and other Marvel geniuses.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🔧 Master Inventor</h4>
+                    <p>Otto has created numerous devices beyond his tentacles, including energy shields, radiation weapons, mind-control devices, and even reality-altering technology. He constantly upgrades his equipment.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personality & Motivations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🧠</span>
+                Personality Traits & Motivations
+            </h2>
+            <p>Doctor Octopus is driven by a toxic combination of intellectual superiority, wounded ego, and megalomaniacal ambition. Unlike many villains who are simply evil, Otto genuinely believes he is superior to everyone around him—not through delusion, but through cold, logical assessment of his genius compared to the "inferior intellects" of normal humanity.</p>
+            
+            <p><strong>Key personality traits and motivations include:</strong></p>
+            <ul>
+                <li><strong>Intellectual Arrogance:</strong> Otto considers himself one of the smartest people alive, and he's largely correct. This creates a sense of entitlement—he believes the world owes him recognition, wealth, and power commensurate with his genius.</li>
+                <li><strong>Obsession with Proving Superiority:</strong> Much of Otto's villainy stems from a desperate need to prove he's better than everyone, particularly Spider-Man. Every defeat at Spider-Man's hands becomes a personal affront that fuels his obsession.</li>
+                <li><strong>Wounded Pride:</strong> Despite his brilliance, Otto is deeply insecure, carrying scars from his childhood abuse and years of mockery. When the world doesn't give him the respect he thinks he deserves, he lashes out with escalating violence.</li>
+                <li><strong>Methodical Planning:</strong> Unlike impulsive villains, Doc Ock is meticulous and calculating. He plans his schemes carefully, considering multiple contingencies and backup plans. This makes him particularly dangerous.</li>
+                <li><strong>Scientific Curiosity Gone Wrong:</strong> Otto retains his passion for science, but it's now twisted. He'll conduct dangerous experiments without ethical concerns, seeing human subjects as acceptable losses in pursuit of knowledge.</li>
+                <li><strong>Love-Hate Relationship with Spider-Man:</strong> Otto is obsessed with defeating Spider-Man, seeing the wall-crawler as both his greatest adversary and, paradoxically, the only opponent worthy of his attention. He respects Spider-Man's intelligence even as he plots his destruction.</li>
+                <li><strong>Desire for Recognition:</strong> Deep down, Otto still craves the legitimate recognition and respect he lost after his accident. This occasionally manifests in attempts at redemption or proving himself through legitimate science, though these always end in failure.</li>
+                <li><strong>Ruthless Pragmatism:</strong> Otto has no qualms about killing, destroying, or sacrificing others to achieve his goals. He sees morality as a constraint for lesser minds, not applicable to someone of his genius.</li>
+            </ul>
+            
+            <p>What makes Doctor Octopus particularly complex is that he's not entirely unsympathetic. His tragic backstory—the abusive father, the smothering mother, the accident that ruined his life—creates a villain you can almost pity. Yet his subsequent actions, driven by pride and ego rather than necessity, ensure he remains a genuine threat rather than a sympathetic anti-hero. Otto Octavius had chances at redemption but repeatedly chose villainy because, in his twisted worldview, being Doctor Octopus gave him more power and respect than being Dr. Octavius ever did.</p>
+        </section>
+
+        <!-- World & Operations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🌆</span>
+                World & Operations
+            </h2>
+            <p>Doctor Octopus operates primarily in New York City, particularly in areas with scientific institutions, industrial facilities, and the criminal underworld. Unlike villains who maintain a single secret lair, Otto uses his scientific knowledge to create temporary bases in abandoned laboratories, industrial complexes, and underwater facilities. His hideouts are typically filled with advanced equipment, experimental technology, and stolen scientific apparatus.</p>
+            
+            <p>Otto's criminal operations fall into several categories:</p>
+            <ul>
+                <li><strong>Scientific Heists:</strong> He frequently targets laboratories, research facilities, and corporations to steal cutting-edge technology, radioactive materials, and experimental equipment. These thefts serve both his own research and criminal enterprises.</li>
+                <li><strong>Master Criminal Leadership:</strong> Doc Ock has organized and led criminal teams, most notably the Sinister Six (which he founded). His intelligence and strategic thinking make him an effective criminal organizer, respected even by other supervillains.</li>
+                <li><strong>Mercenary Science:</strong> Otto occasionally works as a criminal scientist-for-hire, creating weapons and technology for other villains or criminal organizations in exchange for resources and money.</li>
+                <li><strong>Attempts at World Domination:</strong> In his more megalomaniacal moments, Otto has attempted larger schemes including mind control, weather manipulation, and even holding cities hostage with doomsday devices.</li>
+            </ul>
+            
+            <p><strong>Interaction with Spider-Man:</strong> Doc Ock's relationship with Spider-Man is one of the most complex in comics. Their battles are as much intellectual as physical, with Otto constantly devising new strategies to overcome Spider-Man's advantages. Otto has:</p>
+            <ul>
+                <li>Founded the Sinister Six specifically to defeat Spider-Man</li>
+                <li>Come closer than most villains to actually killing Spider-Man</li>
+                <li>Respected Spider-Man's intelligence, occasionally engaging in scientific discussions even while fighting</li>
+                <li>Saved Spider-Man on rare occasions when it served his interests</li>
+                <li>In one of comics' most shocking twists, actually <em>became</em> Spider-Man by swapping bodies with Peter Parker, taking over his life as the "Superior Spider-Man"</li>
+            </ul>
+            
+            <p>The urban environment of New York serves Doc Ock perfectly. His tentacles allow him to navigate the city's vertical landscape, his scientific hideouts blend into the industrial cityscape, and the dense population provides both targets and human shields. He's as comfortable in a high-tech laboratory as he is in the sewers or on a rooftop, making him nearly impossible to predict or corner.</p>
+        </section>
+
+        <!-- Key Battles & Events Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚔️</span>
+                Key Battles & Defining Moments
+            </h2>
+            <div class="battles-grid">
+                <div class="battle-card">
+                    <h3>First Appearance: The Amazing Spider-Man #3</h3>
+                    <p>Doctor Octopus's debut in 1963 established him as one of Spider-Man's most dangerous foes. After escaping the hospital, Otto easily defeated Spider-Man in their first encounter, establishing his physical superiority. This humiliating loss forced Spider-Man to use strategy and agility to eventually defeat Doc Ock, setting the template for their future battles. The issue also introduced the concept that Doc Ock was one of the few villains who could legitimately overpower Spider-Man in direct combat.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Formation of the Sinister Six</h3>
+                    <p>In <em>The Amazing Spider-Man Annual #1</em> (1964), Doctor Octopus formed the Sinister Six, gathering five other Spider-Man villains (Vulture, Electro, Mysterio, Sandman, and Kraven) to take down their common enemy. Though the team ultimately failed, Doc Ock's role as organizer and leader showcased his intelligence and strategic thinking. He has reformed this team multiple times, establishing himself as the preeminent organizer of Spider-Man's rogues gallery.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Wedding Disruption</h3>
+                    <p>In <em>The Amazing Spider-Man Annual #21</em>, Doctor Octopus attempted to disrupt Peter Parker and Mary Jane Watson's wedding. This storyline highlighted Otto's obsessive desire to destroy Spider-Man's personal happiness. Though he failed, the attempt demonstrated how personal the conflict had become, with Doc Ock targeting Peter's civilian life directly.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Master Planner Saga</h3>
+                    <p>One of the most iconic Spider-Man stories featured Doc Ock as the mysterious "Master Planner," stealing experimental equipment while Spider-Man desperately needed it to save Aunt May's life. The storyline culminated in the legendary issue where Spider-Man, trapped under massive machinery in Doc Ock's underwater base, finds the strength to lift impossibly heavy debris through sheer willpower. This story showcased both Doc Ock's ruthless planning and the depths of Spider-Man's determination.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Superior Spider-Man</h3>
+                    <p>In one of comics' most controversial and acclaimed storylines, a dying Doctor Octopus succeeded in swapping minds with Peter Parker, trapping Peter's consciousness in Otto's failing body (which then died). Otto, now in Peter's body with all his memories, decided to become a "superior" Spider-Man—more efficient, brutal, and technological than Peter ever was. For over a year of real-time publication, Doc Ock <em>was</em> Spider-Man, operating as a hero with his villain's mindset. The storyline explored whether Otto could truly be a hero and what makes Spider-Man who he is. Though Peter eventually returned, the Superior Spider-Man arc fundamentally changed both characters.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Clone Conspiracy</h3>
+                    <p>After Peter's return to his body, Otto's consciousness survived in Peter's implanted tentacles (the Living Brain). Later, Otto created a new clone body for himself and, in the "Clone Conspiracy" storyline, attempted redemption by using cloning technology to bring back the dead, including Gwen Stacy. His methods, though well-intentioned, created horrific consequences, proving that even when Otto tries to be good, his arrogance and lack of ethics cause disaster.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Ends of the Earth</h3>
+                    <p>In this storyline, a dying Doctor Octopus announced a plan to save the world from global warming using satellites—but his true scheme was to use the satellites as weapons to hold the world hostage. The story took Spider-Man and his allies around the globe in a race against time. Otto came closer than ever to actually winning, showcasing how dangerous he becomes when he combines his intelligence with genuine desperation.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Legacy & Impact Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🏆</span>
+                Legacy & Impact
+            </h2>
+            <p>Doctor Octopus, created by Stan Lee and Steve Ditko, first appeared in <em>The Amazing Spider-Man #3</em> (1963), making him one of Spider-Man's earliest and most enduring villains. Over six decades, Doc Ock has evolved from a simple criminal scientist into one of the most complex and compelling antagonists in all of comics.</p>
+            
+            <p>What sets Doctor Octopus apart from other villains is his combination of physical threat and intellectual challenge. Unlike the Green Goblin's madness or Venom's raw power, Doc Ock represents methodical, calculated evil backed by genuine genius. He's one of the few villains who can legitimately claim to be smarter than Spider-Man, and his schemes reflect this intelligence. Many of Spider-Man's most clever victories have come against Doc Ock, as defeating him requires outsmarting a genius rather than simply overpowering a brute.</p>
+            
+            <p>The character has appeared in virtually every Spider-Man adaptation:</p>
+            <ul>
+                <li><strong>Spider-Man 2 (2004):</strong> Alfred Molina's portrayal is widely considered one of the greatest superhero movie villains. Molina brought tragic depth to Otto Octavius, making him sympathetic even as his actions became increasingly dangerous. His final act of redemption, sacrificing himself to stop his own creation, added emotional weight rarely seen in superhero films.</li>
+                <li><strong>Spider-Man: No Way Home (2021):</strong> Molina returned as Doc Ock from the multiverse, initially as an antagonist before being "cured" of his villainous impulses by removing the corrupting chip from his tentacles' neural interface.</li>
+                <li><strong>Spider-Man: Into the Spider-Verse (2018):</strong> A female version, Olivia Octavius, appeared as one of Kingpin's scientists, offering a fresh take on the character.</li>
+                <li><strong>Various Animated Series:</strong> Doc Ock has been a recurring villain in every major Spider-Man cartoon, from the 1960s series to Spectacular Spider-Man to the current Marvel cartoons.</li>
+                <li><strong>Video Games:</strong> Doctor Octopus is featured prominently in numerous Spider-Man games, including as the primary antagonist in 2018's <em>Spider-Man</em> for PlayStation, where he leads the Sinister Six in a devastating assault on New York.</li>
+            </ul>
+            
+            <p>The Superior Spider-Man arc represents Doc Ock's most significant impact on Spider-Man mythology. By literally becoming Spider-Man, Otto forced readers to confront what makes Peter Parker special. Is it the powers? The costume? Or something intrinsic to Peter's character? The storyline proved that Spider-Man is defined by responsibility, compassion, and sacrifice—qualities Otto could mimic but never truly embody. The arc's success led to multiple ongoing series featuring Otto as a heroic (if morally gray) Spider-Man operating in San Francisco.</p>
+            
+            <p>Doctor Octopus has influenced countless villains across all media. The "scientist gone wrong" trope owes much to Otto Octavius, and his combination of physical power through technology and genius-level intelligence created a template for antagonists from Doctor Doom to Syndrome (The Incredibles). His mechanical tentacles have become iconic, instantly recognizable as a signature weapon.</p>
+            
+            <p>What makes Doc Ock endure is his complexity. He's not simply evil—he's a tragic figure whose greatest asset (his intellect) became his greatest weakness, feeding his arrogance until it consumed him. His occasional attempts at redemption, his twisted respect for Spider-Man, and his genuine scientific passion make him more than a one-dimensional villain. He's a man who could have been a hero but chose pride over virtue, making him a perfect foil for Spider-Man—a hero who constantly sacrifices his own interests for others.</p>
+            
+            <p>In the pantheon of Spider-Man villains, Doctor Octopus stands as the ultimate intellectual threat. While the Green Goblin attacks Peter's loved ones and Venom represents his dark reflection, Doc Ock challenges Spider-Man's mind and forces him to think creatively. He represents what Peter Parker might have become if intelligence and power weren't tempered by responsibility and compassion. That's what makes Doctor Octopus not just a great villain, but an essential element of Spider-Man's mythology.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#villains" class="btn btn-primary">← Return to Villains Gallery</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Doctor Octopus</h4>
+                    <p>Dr. Otto Octavius, Doctor Octopus, is a brilliant scientist with four powerful mechanical tentacles fused to his body—one of Spider-Man's most intelligent and dangerous enemies.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Details</h4>
+                    <p><strong>Real Name:</strong> Dr. Otto Gunther Octavius</p>
+                    <p><strong>First Appearance:</strong> The Amazing Spider-Man #3 (1963)</p>
+                    <p><strong>Created by:</strong> Stan Lee & Steve Ditko</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Verse Fan Site. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        console.log("Doctor Octopus page loaded");
+        
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+

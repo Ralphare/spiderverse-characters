@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider-Man 2099 - Miguel O'Hara</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to character profile page */
+        .character-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .character-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .character-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .character-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .character-universe {
+            display: inline-block;
+            background: rgba(227, 30, 36, 0.9);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+        
+        .character-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+        
+        .character-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(227, 30, 36, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #e31e24;
+            border-color: #e31e24;
+            transform: translateX(-5px);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .character-image-section {
+            display: none;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #e31e24;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #1e3a8a;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '🕷️';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #1e3a8a 0%, #000000 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(227, 30, 36, 0.3);
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+            border-color: #e31e24;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #e31e24;
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
+            margin: 0;
+        }
+        
+        .power-item.unique {
+            border-color: #00ffff;
+            background: linear-gradient(135deg, #e31e24 0%, #1e3a8a 100%);
+        }
+        
+        .power-item.unique h4 {
+            color: #00ffff;
+        }
+        
+        .allies-grid,
+        .villains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .character-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-5px);
+            border-color: #e31e24;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .character-card h4 {
+            font-size: 1.3rem;
+            color: #0f1729;
+            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+        
+        .character-card .actor {
+            color: #e31e24;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .character-card p {
+            font-size: 1rem;
+            color: #6c757d;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .villain-card-profile {
+            background: linear-gradient(135deg, #000000 0%, #1e3a8a 100%);
+            color: white;
+        }
+        
+        .villain-card-profile h4 {
+            color: #e31e24;
+        }
+        
+        .villain-card-profile .actor {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .villain-card-profile p {
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .functions-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .function-badge {
+            background: linear-gradient(135deg, #e31e24 0%, #1e3a8a 100%);
+            padding: 1.2rem;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .function-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .character-hero {
+                height: 300px;
+            }
+            
+            .character-name {
+                font-size: 50px;
+            }
+            
+            .character-alias {
+                font-size: 1.4rem;
+            }
+            
+            .character-universe {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .character-hero {
+                height: 250px;
+            }
+            
+            .character-name {
+                font-size: 36px;
+            }
+            
+            .character-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid,
+            .allies-grid,
+            .villains-grid,
+            .functions-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#versions" class="back-button">
+        <span>←</span>
+        <span>Back to Spider-Verse</span>
+    </a>
+
+    <!-- Character Hero Section -->
+    <section class="character-hero">
+        <img src="https://cdn.marvel.com/content/1x/card_image_58.jpg" alt="Spider-Man 2099" class="character-hero-image">
+        <div class="character-hero-content">
+            <div class="character-universe">MARVEL 2099 • FUTURE TIMELINE</div>
+            <h1 class="character-name">MIGUEL O'HARA</h1>
+            <p class="character-alias">Spider-Man 2099</p>
+        </div>
+    </section>
+
+    <!-- Character Profile -->
+    <div class="profile-container">
+        <!-- Character Image -->
+        <div class="character-image-section">
+            <div class="character-image">
+                <img src="https://dknetwork.draftkings.com/wp-content/uploads/2023/06/image_2023_04_04_145646954.0.0.jpeg" alt="Spider-Man 2099">
+            </div>
+        </div>
+
+        <!-- Universe/World Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🌆</span>
+                Universe & Origins
+            </h2>
+            <p><strong>Universe:</strong> Marvel 2099 Universe / Spider-Verse</p>
+            <p><strong>Real Name:</strong> Miguel O'Hara</p>
+            <p><strong>Time Period:</strong> Year 2099</p>
+            <p><strong>Heritage:</strong> Irish and Mexican descent</p>
+            <p><strong>Occupation:</strong> Geneticist at Alchemax Corporation</p>
+            <p><strong>First Appearance:</strong> Spider-Man 2099 #1 (1992) - Comics</p>
+            <p><strong>Voiced by:</strong> Oscar Isaac (Spider-Man: Across the Spider-Verse)</p>
+            <p>Spider-Man 2099 hails from a dystopian future where mega-corporations rule society and the original Spider-Man is a distant legend. Miguel O'Hara is a brilliant geneticist working for the powerful Alchemax Corporation who accidentally gains spider-like abilities through genetic experimentation. His version of Spider-Man represents a darker, more cyberpunk take on the hero, dealing with corporate tyranny and futuristic threats in Nueva York (future New York City).</p>
+        </section>
+
+        <!-- Story/Background Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📖</span>
+                Story & Background
+            </h2>
+            <p>Miguel O'Hara was a brilliant geneticist working for the Alchemax Corporation, one of the mega-corporations that dominated society in 2099. As head of the genetics program, Miguel was tasked with creating super-soldiers by splicing human DNA with animal DNA, attempting to recreate the powers of the legendary Spider-Man from the "Age of Heroes."</p>
+            
+            <p>When Miguel witnessed a test subject die during an experiment, he attempted to quit Alchemax. However, his supervisor Tyler Stone secretly laced Miguel's drink with Rapture, a highly addictive drug that Alchemax controlled, ensuring Miguel's dependence on the corporation. Desperate to cure himself, Miguel used the genetic imprinting equipment on himself to rewrite his DNA to its original state before the drug.</p>
+            
+            <p>A jealous coworker sabotaged the experiment, causing Miguel's DNA to be spliced with spider genes—50% human, 50% spider. The process granted him extraordinary powers but also changed him fundamentally. Unlike Peter Parker, who was bitten by a radioactive spider, Miguel's transformation was on a genetic level, giving him different abilities including organic webbing from his forearms, fangs with paralytic venom, and retractable talons.</p>
+            
+            <p>Initially reluctant to become a hero, Miguel was eventually inspired by the legacy of the original Spider-Man and decided to fight against corporate corruption and protect the innocent. He crafted a costume from unstable molecules originally meant for the Day of the Dead, giving him his distinctive red and blue suit with a skull-like spider emblem.</p>
+            
+            <p>In recent multiverse stories, particularly in <em>Spider-Man: Across the Spider-Verse</em>, Miguel O'Hara has taken on an even greater role as the leader of the Spider-Society, an organization dedicated to protecting the stability of the multiverse by ensuring "canon events" occur as they should.</p>
+        </section>
+
+        <!-- Functions/Roles Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🦸</span>
+                Functions & Roles
+            </h2>
+            <div class="functions-list">
+                <div class="function-badge">Futuristic Superhero</div>
+                <div class="function-badge">Protector of Nueva York</div>
+                <div class="function-badge">Geneticist</div>
+                <div class="function-badge">Spider-Society Leader</div>
+                <div class="function-badge">Multiversal Guardian</div>
+                <div class="function-badge">Corporate Rebel</div>
+            </div>
+            <p style="margin-top: 1.5rem;">As Spider-Man 2099, Miguel O'Hara serves multiple roles across different timelines and universes. In his home timeline, he's the protector of Nueva York in 2099, fighting against corporate oppression and futuristic threats. As leader of the Spider-Society, Miguel has taken on the massive responsibility of maintaining multiversal stability by monitoring "canon events" across thousands of universes. His scientific expertise as a geneticist informs both his crime-fighting approach and his understanding of the multiverse's delicate balance.</p>
+        </section>
+
+        <!-- Powers Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Superpowers & Abilities
+            </h2>
+            <p style="margin-bottom: 1rem;"><strong>Miguel's spider-powers are genetically integrated and differ significantly from Peter Parker's:</strong></p>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>💪 Enhanced Strength</h4>
+                    <p>Superhuman strength allowing him to lift approximately 10 tons, overpower opponents, and perform incredible physical feats in the futuristic cityscape.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🧗 Wall-Crawling (Talons)</h4>
+                    <p>Unlike Peter Parker, Miguel uses retractable talons on his fingers and toes to grip surfaces and climb walls, making his wall-crawling more aggressive and claw-like.</p>
+                </div>
+                <div class="power-item unique">
+                    <h4>🕸️ Organic Webbing</h4>
+                    <p><strong>UNIQUE:</strong> Miguel produces organic webbing from spinnerets in his forearms (not wrists). His webbing is incredibly strong and doesn't require mechanical web-shooters.</p>
+                </div>
+                <div class="power-item unique">
+                    <h4>👁️ Enhanced Vision</h4>
+                    <p><strong>UNIQUE:</strong> Advanced visual acuity allowing him to see in low-light conditions and track fast-moving objects. He can see with telescopic precision but is sensitive to bright light.</p>
+                </div>
+                <div class="power-item unique">
+                    <h4>🦷 Venomous Fangs</h4>
+                    <p><strong>UNIQUE:</strong> Retractable fangs that can inject a paralytic venom, temporarily paralyzing opponents. This makes him more dangerous in close combat.</p>
+                </div>
+                <div class="power-item">
+                    <h4>⚡ Enhanced Speed & Reflexes</h4>
+                    <p>Superhuman speed and reflexes superior to peak human ability, allowing him to dodge attacks and move with incredible agility through the futuristic city.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🛡️ Enhanced Durability</h4>
+                    <p>Increased resistance to physical damage and accelerated healing factor that allows him to recover from injuries faster than normal humans.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🔬 Genius-Level Intellect</h4>
+                    <p>Brilliant geneticist with expertise in molecular biology, biochemistry, and genetic engineering. His scientific knowledge is cutting-edge even by 2099 standards.</p>
+                </div>
+                <div class="power-item unique">
+                    <h4>⚔️ Retractable Talons</h4>
+                    <p><strong>UNIQUE:</strong> Sharp, retractable talons on his fingers and toes that can cut through various materials and are used for both climbing and combat.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notable Allies Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🤝</span>
+                Notable Allies
+            </h2>
+            <div class="allies-grid">
+                <div class="character-card">
+                    <h4>Lyla (LYrate Lifeform Approximation)</h4>
+                    <p class="actor">Voiced by Greta Lee (Spider-Verse films)</p>
+                    <p>Miguel's holographic AI assistant who provides tactical support, information, and manages the Spider-Society's operations. She has a sassy personality and serves as Miguel's closest companion.</p>
+                </div>
+                <div class="character-card">
+                    <h4>The Spider-Society</h4>
+                    <p class="actor">Multiversal Organization</p>
+                    <p>An elite group of Spider-People from across the multiverse that Miguel founded and leads. The Society monitors and protects canon events to maintain the stability of all realities.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Jessica Drew (Spider-Woman)</h4>
+                    <p class="actor">Voiced by Issa Rae (Spider-Verse films)</p>
+                    <p>A pregnant Spider-Woman and one of Miguel's most trusted members of the Spider-Society. She serves as second-in-command and voice of reason within the organization.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Peter B. Parker</h4>
+                    <p class="actor">Various Spider-People across dimensions</p>
+                    <p>Miguel has worked with various versions of Peter Parker across the multiverse, though their relationship is complex due to Miguel's strict adherence to canon events.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Xina Kwan</h4>
+                    <p class="actor">Comics</p>
+                    <p>A fellow scientist at Alchemax and Miguel's ex-girlfriend who knows his secret identity. She provides technical support and occasionally assists in his heroic activities.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Gabriel O'Hara</h4>
+                    <p class="actor">Comics</p>
+                    <p>Miguel's younger brother who eventually learns his secret. Despite their complicated family dynamics, Gabriel supports Miguel's mission as Spider-Man 2099.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Villains Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">💀</span>
+                Main Villains
+            </h2>
+            <div class="villains-grid">
+                <div class="character-card villain-card-profile">
+                    <h4>Hobgoblin 2099</h4>
+                    <p class="actor">Comics</p>
+                    <p>A futuristic version of the Hobgoblin who serves as one of Miguel's most persistent enemies. Armed with advanced technology and enhanced abilities, Hobgoblin 2099 represents a dark reflection of the corporate-controlled future.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Tyler Stone</h4>
+                    <p class="actor">Head of Alchemax Genetics</p>
+                    <p>Miguel's former supervisor at Alchemax who attempted to keep Miguel enslaved through addiction to Rapture. Stone is later revealed to be Miguel's biological father, adding personal complexity to their conflict.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Alchemax Corporation</h4>
+                    <p class="actor">Mega-Corporation</p>
+                    <p>The massive corporation that dominates 2099 society and serves as one of Miguel's primary antagonists. Alchemax's corruption and exploitation drive much of Miguel's mission to fight for justice.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Venom 2099</h4>
+                    <p class="actor">Kron Stone</p>
+                    <p>Tyler Stone's son and Miguel's half-brother (though initially unaware) who becomes bonded with a symbiote, creating a dangerous and personal threat for Spider-Man 2099.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>The Specialist</h4>
+                    <p class="actor">Corporate Assassin</p>
+                    <p>A cybernetically enhanced mercenary hired to eliminate Spider-Man 2099. The Specialist's advanced technology and ruthless efficiency make them a formidable opponent.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Vulture 2099</h4>
+                    <p class="actor">Futuristic Villain</p>
+                    <p>A cannibalistic mutate with actual wings grown from his body. This version of the Vulture is far more monstrous than the original, representing the dark mutations possible in 2099.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>The Spot (Multiversal)</h4>
+                    <p class="actor">Across the Spider-Verse</p>
+                    <p>Though not from his timeline, Miguel faces multiversal threats like the Spot who threaten the stability of all realities, making them enemies of the Spider-Society.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What Makes Miguel Unique Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⭐</span>
+                What Makes Miguel O'Hara Unique
+            </h2>
+            <p>Spider-Man 2099 stands apart from other Spider-People in several key ways:</p>
+            <ul>
+                <li><strong>Genetic Integration:</strong> His powers are the result of having his DNA rewritten to be 50% spider, making him fundamentally different from those bitten by spiders</li>
+                <li><strong>Unique Biology:</strong> Possesses fangs, talons, and organic webbing from forearms—abilities no other Spider-Person has</li>
+                <li><strong>Futuristic Setting:</strong> Operates in a cyberpunk dystopia dominated by mega-corporations, dealing with technological and social issues unique to his timeline</li>
+                <li><strong>No Spider-Sense:</strong> Unlike most Spider-People, Miguel lacks a traditional spider-sense, relying instead on his enhanced vision and reflexes</li>
+                <li><strong>Anti-Corporate Hero:</strong> His origin and mission are deeply tied to fighting corporate oppression and corruption</li>
+                <li><strong>Multiversal Leadership:</strong> As leader of the Spider-Society, Miguel has taken on responsibility for the entire multiverse, not just his own reality</li>
+                <li><strong>Darker Tone:</strong> His story often explores grittier, more mature themes reflective of both the cyberpunk genre and his future setting</li>
+                <li><strong>Complex Morality:</strong> In Spider-Verse films, Miguel's rigid adherence to canon events creates moral conflict, showing a Spider-Man willing to let people die to save reality itself</li>
+            </ul>
+        </section>
+
+        <!-- Spider-Verse Role Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🕸️</span>
+                Role in the Spider-Verse
+            </h2>
+            <p>In <strong>Spider-Man: Across the Spider-Verse</strong>, Miguel O'Hara takes center stage as the leader of the Spider-Society, an organization he founded after experiencing the catastrophic consequences of disrupting canon events. His backstory reveals that he once found a universe where his alternate self had died, and he took that version's place to have a family—only for that entire universe to collapse, seemingly because of his interference.</p>
+            
+            <p>This traumatic experience shaped Miguel's philosophy: he believes that certain events—"canon events"—must happen in every Spider-Person's life to maintain the stability of the multiverse. These include tragedies like the death of a police captain close to Spider-Man, Uncle Ben's death, and similar losses. Miguel sees himself as carrying the burden of protecting billions of lives across infinite realities, even if it means accepting individual tragedies.</p>
+            
+            <p>When Miles Morales discovers his father is destined to die as a canon event and refuses to accept this fate, Miguel sees Miles as a dangerous anomaly who threatens all of reality. This puts Miguel in the antagonistic role—not as a villain, but as someone who genuinely believes he's protecting existence itself, even if it means hunting down a fellow Spider-Man.</p>
+            
+            <p>Miguel's characterization in the Spider-Verse films has made him a complex, morally gray figure who represents the weight of responsibility taken to its extreme. His intimidating presence, aggressive fighting style using his talons and fangs, and unwillingness to compromise make him a formidable force, even as audiences understand his motivations stem from past trauma and a desperate desire to prevent reality from collapsing.</p>
+        </section>
+
+        <!-- Cultural Impact Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🏆</span>
+                Cultural Impact & Legacy
+            </h2>
+            <p>Spider-Man 2099 was created by writer Peter David and artist Rick Leonardi, debuting in 1992 as part of Marvel's futuristic 2099 imprint. The character was revolutionary for bringing a Latino superhero to the forefront and presenting a darker, more cyberpunk take on Spider-Man that resonated with readers looking for something different from traditional superhero stories.</p>
+            
+            <p>Throughout the 1990s and 2000s, Miguel O'Hara maintained a devoted fanbase despite various cancellations and relaunches. His unique powers, complex character, and futuristic setting made him a standout in the Spider-Man family. The character has appeared in numerous video games, including the popular <em>Spider-Man: Edge of Time</em> and <em>Spider-Man: Shattered Dimensions</em>.</p>
+            
+            <p>Oscar Isaac's portrayal in <em>Spider-Man: Across the Spider-Verse</em> (2023) brought Miguel to mainstream prominence like never before. His role as the complex leader of the Spider-Society introduced the character to millions who had never read the comics, making him one of the most talked-about aspects of the critically acclaimed film.</p>
+            
+            <p>The film's exploration of Miguel's trauma, his rigid philosophy about canon events, and his antagonistic relationship with Miles Morales elevated the character from a cult favorite to a central figure in the Spider-Verse mythology. His representation as a Latino superhero in a major blockbuster film has cultural significance, and his morally complex characterization has sparked countless discussions about heroism, sacrifice, and the burden of knowledge.</p>
+            
+            <p>As the Marvel 2099 universe continues to expand in comics and Miguel's role in future Spider-Verse films is anticipated, Spider-Man 2099 has secured his place not just as an alternate version of Spider-Man, but as an essential character in the broader Spider-Man mythology—a hero from the future who carries the weight of protecting every timeline, even at great personal cost.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#versions" class="btn btn-primary">← Return to Spider-Verse</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Spider-Man 2099</h4>
+                    <p>Miguel O'Hara is the Spider-Man of 2099, a geneticist with unique spider-powers who leads the Spider-Society in protecting the multiverse.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Details</h4>
+                    <p><strong>Voice Actor:</strong> Oscar Isaac</p>
+                    <p><strong>Created by:</strong> Peter David & Rick Leonardi</p>
+                    <p><strong>First Appearance:</strong> 1992 (Comics)</p>
+                    <p><strong>Timeline:</strong> Year 2099</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Man Fan Hub. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment and Sony Pictures.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        <a href="spiderversions.html" 
+   style="color:#00aaff; 
+          display:block; 
+          margin-top:40px; 
+          text-align:center; 
+          font-size:18px; 
+          text-decoration:none;">
+  ← Back to Spider-Man Versions
+</a>
+
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+

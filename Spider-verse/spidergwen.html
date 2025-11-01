@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider-Gwen - Gwen Stacy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to character profile page */
+        .character-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .character-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .character-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .character-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .character-universe {
+            display: inline-block;
+            background: rgba(227, 30, 36, 0.9);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+        
+        .character-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+        
+        .character-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(227, 30, 36, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #e31e24;
+            border-color: #e31e24;
+            transform: translateX(-5px);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .character-image-section {
+            display: none;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #e31e24;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #1e3a8a;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '🕷️';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .movie-timeline {
+            display: grid;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .movie-entry {
+            background: linear-gradient(135deg, #e31e24 0%, #1e3a8a 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #000;
+        }
+        
+        .movie-entry:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+        }
+        
+        .movie-entry h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 2px;
+        }
+        
+        .movie-entry .year {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .movie-entry p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+            line-height: 1.7;
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #1e3a8a 0%, #000000 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(227, 30, 36, 0.3);
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+            border-color: #e31e24;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #e31e24;
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
+            margin: 0;
+        }
+        
+        .allies-grid,
+        .villains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .character-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-5px);
+            border-color: #e31e24;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .character-card h4 {
+            font-size: 1.3rem;
+            color: #0f1729;
+            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+        
+        .character-card .actor {
+            color: #e31e24;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .character-card p {
+            font-size: 1rem;
+            color: #6c757d;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .villain-card-profile {
+            background: linear-gradient(135deg, #000000 0%, #1e3a8a 100%);
+            color: white;
+        }
+        
+        .villain-card-profile h4 {
+            color: #e31e24;
+        }
+        
+        .villain-card-profile .actor {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .villain-card-profile p {
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .functions-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .function-badge {
+            background: linear-gradient(135deg, #e31e24 0%, #1e3a8a 100%);
+            padding: 1.2rem;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .function-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .character-hero {
+                height: 300px;
+            }
+            
+            .character-name {
+                font-size: 50px;
+            }
+            
+            .character-alias {
+                font-size: 1.4rem;
+            }
+            
+            .character-universe {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .character-hero {
+                height: 250px;
+            }
+            
+            .character-name {
+                font-size: 36px;
+            }
+            
+            .character-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid,
+            .allies-grid,
+            .villains-grid,
+            .functions-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#versions" class="back-button">
+        <span>←</span>
+        <span>Back to Spider-Verse</span>
+    </a>
+
+    <!-- Character Hero Section -->
+    <section class="character-hero">
+        <img src="https://townsquare.media/site/622/files/2015/12/spider-gwen.jpg?w=780&q=75" alt="Spider-Gwen" class="character-hero-image">
+        <div class="character-hero-content">
+            <div class="character-universe">EARTH-65 • SPIDER-VERSE</div>
+            <h1 class="character-name">GWEN STACY</h1>
+            <p class="character-alias">Spider-Gwen / Ghost-Spider</p>
+        </div>
+    </section>
+
+    <!-- Character Profile -->
+    <div class="profile-container">
+        <!-- Character Image -->
+        <div class="character-image-section">
+            <div class="character-image">
+                <img src="https://townsquare.media/site/622/files/2015/12/spider-gwen.jpg?w=780&q=75" alt="Spider-Gwen">
+            </div>
+        </div>
+
+        <!-- Universe/World Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🌍</span>
+                Universe & Origins
+            </h2>
+            <p><strong>Universe:</strong> Earth-65 / Spider-Verse</p>
+            <p><strong>Real Name:</strong> Gwendolyne Maxine "Gwen" Stacy</p>
+            <p><strong>Alias:</strong> Spider-Woman, Spider-Gwen, Ghost-Spider</p>
+            <p><strong>Location:</strong> New York City, Earth-65</p>
+            <p><strong>Occupation:</strong> Superhero, College Student, Drummer</p>
+            <p><strong>First Appearance:</strong> Edge of Spider-Verse #2 (2014) - Comics</p>
+            <p><strong>Voiced by:</strong> Hailee Steinfeld (Spider-Verse films)</p>
+            <p>Spider-Gwen (also known as Ghost-Spider) comes from Earth-65, an alternate universe where Gwen Stacy was bitten by the radioactive spider instead of Peter Parker. In her universe, the story takes a tragic twist—Peter Parker becomes the Lizard and dies in Gwen's arms, leaving her with tremendous guilt and determination to honor his memory by being a hero. Gwen's story is one of loss, redemption, and finding her place across the multiverse.</p>
+        </section>
+
+        <!-- Story/Background Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📖</span>
+                Story & Background
+            </h2>
+            <p>Gwen Stacy was a typical teenage girl with extraordinary talents—a brilliant student and the drummer for her band, The Mary Janes. During a school field trip to Oscorp, Gwen was bitten by a radioactive spider (genetically modified with interdimensional energy in the Spider-Verse films), granting her incredible spider-like abilities.</p>
+            
+            <p>Initially, Gwen used her powers for fame and glory, performing amazing feats at her band's concerts. However, everything changed when her best friend Peter Parker, a bullied outcast desperate to be special like Gwen, used a formula to transform himself into the Lizard. The transformation went horribly wrong, and Peter died in Gwen's arms after she was forced to fight him. This tragedy became Gwen's defining moment, driving her to become a true hero.</p>
+            
+            <p>The situation was complicated by her father, Captain George Stacy of the NYPD, who was tasked with hunting down Spider-Woman, whom many believed responsible for Peter Parker's death. This created an emotional conflict as Gwen fought to protect the city while hiding her identity from her father—until he eventually discovered the truth.</p>
+            
+            <p>Gwen's life changed again when she was pulled into the multiversal Spider-Verse adventures, where she met other Spider-People including Miles Morales, Peter B. Parker, and countless others. These connections gave Gwen a sense of belonging she'd never felt in her own universe, where she often felt isolated and misunderstood. Her relationship with Miles Morales became particularly significant, offering both friendship and the possibility of something more.</p>
+            
+            <p>As Ghost-Spider, Gwen struggles with the loneliness of being the only Spider-Person in her universe, the weight of Peter Parker's death, and the desire to connect with the Spider-Society while maintaining her relationships at home. Her journey explores themes of guilt, isolation, identity, and finding family in unexpected places.</p>
+
+            <div class="movie-timeline">
+                <div class="movie-entry">
+                    <h3>Spider-Man: Into the Spider-Verse (2018)</h3>
+                    <p class="year">Directed by Bob Persichetti, Peter Ramsey, Rodney Rothman</p>
+                    <p>Gwen is pulled into Miles Morales' universe by Kingpin's super-collider. She initially appears as a student at Miles' school while secretly working to find a way home. Gwen helps mentor Miles alongside Peter B. Parker, and develops a close bond with him. She's impressed by Miles' potential and supports him in becoming the hero he's meant to be. After saving the multiverse, Gwen returns to her dimension, but clearly wishes she could have stayed longer with her newfound Spider-friends.</p>
+                </div>
+
+                <div class="movie-entry">
+                    <h3>Spider-Man: Across the Spider-Verse (2023)</h3>
+                    <p class="year">Directed by Joaquim Dos Santos, Kemp Powers, Justin K. Thompson</p>
+                    <p>Gwen takes a central role as she joins the Spider-Society led by Miguel O'Hara while dealing with her complicated relationship with her father, who has discovered her identity. She's been avoiding returning home after her father tried to arrest her. Gwen reconnects with Miles after months apart, but their reunion is complicated by the Spider-Society's rules and Miguel's opposition to Miles' determination to save his father. Torn between her loyalty to the Society and her friendship with Miles, Gwen must choose what kind of hero she wants to be. The film explores her loneliness, her need for connection, and her courage to stand up for what's right, even against overwhelming odds.</p>
+                </div>
+
+                <div class="movie-entry">
+                    <h3>Comics: Earth-65 & Beyond</h3>
+                    <p class="year">Marvel Comics (2014-Present)</p>
+                    <p>In the comics, Gwen's ongoing series explores her adventures on Earth-65, where she faces villains unique to her universe including an alternate Kingpin, a different Green Goblin (her friend Harry Osborn), and even evil versions of heroes like Captain America (Samantha Wilson) and Daredevil (Matt Murdock as Kingpin's assassin). Gwen also travels between dimensions, teams up with various Spider-People, and eventually becomes known as Ghost-Spider to distinguish herself from her tragic counterpart in other universes.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Functions/Roles Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🦸</span>
+                Functions & Roles
+            </h2>
+            <div class="functions-list">
+                <div class="function-badge">Superhero</div>
+                <div class="function-badge">Spider-Society Member</div>
+                <div class="function-badge">Earth-65 Protector</div>
+                <div class="function-badge">Drummer</div>
+                <div class="function-badge">College Student</div>
+                <div class="function-badge">Multiversal Hero</div>
+            </div>
+            <p style="margin-top: 1.5rem;">As Spider-Woman/Ghost-Spider, Gwen serves as the sole protector of her home universe, Earth-65. She's a member of the Spider-Society, connecting with other Spider-People across dimensions. Beyond her heroics, Gwen is the drummer for The Mary Janes band, expressing herself through music when the weight of being Spider-Woman becomes too heavy. She represents a unique perspective in the Spider-Verse—a hero dealing with guilt, isolation, and the challenge of being the only Spider-Person in her world while knowing countless others exist across the multiverse.</p>
+        </section>
+
+        <!-- Powers Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Superpowers & Abilities
+            </h2>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>🧗 Wall-Crawling</h4>
+                    <p>Can adhere to virtually any surface, allowing her to climb buildings, stick to walls and ceilings, and perform incredible acrobatic maneuvers through the city.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕸️ Web-Shooting</h4>
+                    <p>Uses mechanical web-shooters to fire versatile webbing for swinging, combat, and capturing enemies. Her webs are strong, flexible, and dissolve after a set time.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕷️ Spider-Sense</h4>
+                    <p>Precognitive danger warning that alerts her to threats before they occur. Gwen has developed strong control over this ability, using it both in combat and daily life.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🤸 Enhanced Agility</h4>
+                    <p>Superhuman agility, balance, and acrobatic abilities. Gwen's fighting style is graceful and dance-like, incorporating ballet-inspired movements with her combat training.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💪 Superhuman Strength</h4>
+                    <p>Enhanced strength allowing her to lift several tons, overpower opponents, and perform incredible physical feats like stopping moving vehicles.</p>
+                </div>
+                <div class="power-item">
+                    <h4>⚡ Enhanced Speed & Reflexes</h4>
+                    <p>Lightning-fast reflexes and movement speed that allow her to dodge bullets, catch falling objects, and react to danger faster than humanly possible.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🛡️ Enhanced Durability</h4>
+                    <p>Increased resistance to physical harm and a healing factor that allows her to recover from injuries faster than normal humans.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🎵 Musical Talent</h4>
+                    <p>While not a superpower, Gwen is an incredibly talented drummer with perfect rhythm, which translates into her fighting style—she battles to her own internal beat.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notable Allies Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🤝</span>
+                Notable Allies
+            </h2>
+            <div class="allies-grid">
+                <div class="character-card">
+                    <h4>Miles Morales</h4>
+                    <p class="actor">Voiced by Shameik Moore (Spider-Verse films)</p>
+                    <p>Gwen's closest friend in the Spider-Verse and potential love interest. Their connection transcends universes, though their relationship is complicated by dimensional barriers and Spider-Society rules. Miles represents the connection and understanding Gwen desperately craves.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Peter B. Parker</h4>
+                    <p class="actor">Voiced by Jake Johnson (Spider-Verse films)</p>
+                    <p>A mentor figure and friend to Gwen from another dimension. Peter B. helped guide both Gwen and Miles, and Gwen looks to him for advice when dealing with difficult situations.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Captain George Stacy</h4>
+                    <p class="actor">Voiced by Shea Whigham (Spider-Verse films)</p>
+                    <p>Gwen's father, a police captain who initially hunted Spider-Woman not knowing she was his daughter. After discovering her identity, their relationship becomes strained before eventually reconciling, with George accepting and supporting his daughter's role as a hero.</p>
+                </div>
+                <div class="character-card">
+                    <h4>The Mary Janes</h4>
+                    <p class="actor">Gwen's Band (Comics & Films)</p>
+                    <p>Gwen's bandmates including Mary Jane Watson (lead singer), Glory Grant (keyboardist), and Betty Brant (bassist). The band provides Gwen with a connection to normal teenage life and creative expression.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Jessica Drew (Spider-Woman)</h4>
+                    <p class="actor">Voiced by Issa Rae (Spider-Verse films)</p>
+                    <p>A fellow Spider-Woman and member of the Spider-Society who serves as something of a mentor to Gwen, showing her the ropes of multiversal Spider-operations.</p>
+                </div>
+                <div class="character-card">
+                    <h4>The Spider-Army</h4>
+                    <p class="actor">Various Spider-People</p>
+                    <p>Including Spider-Punk (Hobie Brown), Peni Parker, Spider-Man Noir, Pavitr Prabhakar, and countless other Spider-People across dimensions who have become Gwen's extended family.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Spider-Punk (Hobie Brown)</h4>
+                    <p class="actor">Voiced by Daniel Kaluuya (Spider-Verse films)</p>
+                    <p>A rebellious Spider-Man from a punk-rock universe who becomes one of Gwen's closest allies. Hobie provides Gwen with a place to stay and encourages her to think for herself rather than blindly follow rules.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Villains Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">💀</span>
+                Main Villains
+            </h2>
+            <div class="villains-grid">
+                <div class="character-card villain-card-profile">
+                    <h4>Kingpin (Wilson Fisk)</h4>
+                    <p class="actor">Different versions across universes</p>
+                    <p>In various universes, Kingpin serves as one of Gwen's primary antagonists. In Miles' universe, Kingpin's super-collider pulled her from her dimension. In her own universe (Earth-65), a different version of Kingpin controls much of the criminal underworld.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Green Goblin (Harry Osborn)</h4>
+                    <p class="actor">Earth-65 Comics</p>
+                    <p>On Earth-65, Harry Osborn becomes the Green Goblin, creating personal conflict for Gwen as she must fight someone who was once her friend, similar to her tragedy with Peter Parker.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Matt Murdock (Kingpin's Assassin)</h4>
+                    <p class="actor">Earth-65 Comics</p>
+                    <p>In Gwen's universe, Matt Murdock isn't the noble Daredevil but instead serves as the Kingpin's deadly right-hand man and assassin, representing a dark inversion of the hero from other universes.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>The Vulture (Adrian Toomes)</h4>
+                    <p class="actor">Earth-65</p>
+                    <p>An alternate version of the Vulture who threatens Gwen's New York with his criminal operations and advanced technology.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Venom (Earth-65)</h4>
+                    <p class="actor">Comics</p>
+                    <p>On Earth-65, the Venom symbiote bonds with various hosts, creating threats unique to Gwen's universe. The symbiote storylines explore darker themes of power and corruption.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>The Spot (Multiversal)</h4>
+                    <p class="actor">Across the Spider-Verse</p>
+                    <p>Though not specifically targeting Gwen, the Spot's multiversal rampage affects all Spider-People, including her, as his actions threaten the stability of every dimension.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What Makes Gwen Unique Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⭐</span>
+                What Makes Gwen Unique
+            </h2>
+            <p>Spider-Gwen brings several distinctive elements that set her apart in the Spider-Verse:</p>
+            <ul>
+                <li><strong>Gender-Swapped Legacy:</strong> In most universes, Gwen Stacy dies as Peter Parker's girlfriend. Here, she's the hero while Peter becomes the tragic loss that defines her</li>
+                <li><strong>Inverted Tragedy:</strong> Instead of losing Gwen Stacy, she loses Peter Parker, creating a mirror image of the classic Spider-Man story with equal emotional weight</li>
+                <li><strong>Iconic Design:</strong> Her white, pink, and cyan costume with a hood has become one of the most recognizable and beloved superhero designs in modern comics</li>
+                <li><strong>Artistic Expression:</strong> Gwen's identity as a drummer and musician adds a creative dimension rarely seen in Spider-People, with her music serving as emotional release</li>
+                <li><strong>Multiversal Loneliness:</strong> Unlike most Spider-People who are the only ones in their universe by circumstance, Gwen actively feels the isolation of being alone after meeting the Spider-Society</li>
+                <li><strong>Complex Father Relationship:</strong> Her dynamic with Captain Stacy (who's alive in her universe) explores the challenge of being a hero while your parent is law enforcement hunting you</li>
+                <li><strong>Ballet-Inspired Combat:</strong> Gwen's fighting style incorporates dance and ballet movements, making her combat uniquely graceful and artistic</li>
+                <li><strong>Dimensional Refugee:</strong> In the Spider-Verse films, Gwen exists between worlds, not fully belonging to her home universe or the Spider-Society, embodying themes of displacement</li>
+            </ul>
+        </section>
+
+        <!-- Cultural Impact Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🏆</span>
+                Cultural Impact & Legacy
+            </h2>
+            <p>Spider-Gwen exploded onto the scene in 2014's <em>Edge of Spider-Verse #2</em>, created by Jason Latour and Robbi Rodriguez. What was intended as a one-off story in a multiverse event became a cultural phenomenon. Fans immediately embraced the character, her distinctive costume design, and her fresh take on the Spider-Man mythology.</p>
+            
+            <p>The character's popularity led to her own ongoing series, multiple relaunches, and eventually her rebranding as "Ghost-Spider" to distinguish her from the tragic Gwen Stacy of other universes. Her costume became one of the most popular cosplays at conventions, and her hoodie-wearing, ballet-shoe-sporting design influenced superhero fashion across comics.</p>
+            
+            <p><strong>Hailee Steinfeld's portrayal</strong> in the Spider-Verse films brought Gwen to mainstream prominence. In <em>Spider-Man: Into the Spider-Verse</em>, she proved to be a fan-favorite character, leading to an expanded role in <em>Across the Spider-Verse</em>, where she became essentially a co-lead with Miles Morales. The films explored her emotional depth, loneliness, and complicated relationships in ways that resonated with audiences worldwide.</p>
+            
+            <p>The visual representation of Gwen's emotional state in <em>Across the Spider-Verse</em>—with watercolor backgrounds and shifting color palettes reflecting her feelings—became a masterclass in animation storytelling. Her story about feeling disconnected from both her home world and her found family struck a chord with viewers dealing with their own feelings of displacement.</p>
+            
+            <p>Beyond entertainment, Spider-Gwen has become a symbol of female empowerment in superhero media. She's a hero in her own right, not defined by being someone's girlfriend or tragic victim, but by her own choices, struggles, and triumphs. Her story proves that the Spider-Man mantle can be carried by anyone, regardless of gender, and that new interpretations can honor the legacy while telling fresh, compelling stories.</p>
+            
+            <p>With her central role in upcoming Spider-Verse films and continued presence in comics, Spider-Gwen has evolved from an alternate universe curiosity to an essential pillar of the Spider-Man mythos, inspiring a new generation of fans who see themselves in the girl behind the mask.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#versions" class="btn btn-primary">← Return to Spider-Verse</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Spider-Gwen</h4>
+                    <p>Gwen Stacy of Earth-65 is the Spider-Woman who lost Peter Parker instead of being lost herself. A drummer, hero, and dimensional traveler searching for connection.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Details</h4>
+                    <p><strong>Voice Actress:</strong> Hailee Steinfeld</p>
+                    <p><strong>Created by:</strong> Jason Latour & Robbi Rodriguez</p>
+                    <p><strong>First Appearance:</strong> 2014 (Comics)</p>
+                    <p><strong>Universe:</strong> Earth-65</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Man Fan Hub. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment and Sony Pictures.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        <a href="spiderversions.html" 
+   style="color:#00aaff; 
+          display:block; 
+          margin-top:40px; 
+          text-align:center; 
+          font-size:18px; 
+          text-decoration:none;">
+  ← Back to Spider-Man Versions
+</a>
+
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+

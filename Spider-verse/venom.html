@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venom - The Lethal Protector</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to villain profile page */
+        .villain-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .villain-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .villain-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .villain-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .villain-badge {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(138, 43, 226, 0.6);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+        }
+        
+        .villain-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 5px;
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes glowPulse {
+            0%, 100% {
+                text-shadow: 0 0 30px rgba(138, 43, 226, 0.8), 3px 3px 15px rgba(0,0,0,0.9);
+            }
+            50% {
+                text-shadow: 0 0 50px rgba(138, 43, 226, 1), 3px 3px 20px rgba(0,0,0,0.9);
+            }
+        }
+        
+        .villain-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(138, 43, 226, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #1a0033;
+            border-color: #8a2be2;
+            transform: translateX(-5px);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .villain-image-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .villain-image {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .villain-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(138, 43, 226, 0.2) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .villain-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #000000;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #8a2be2;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '🕷️';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #000000 0%, #1a0033 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(138, 43, 226, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .power-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(138, 43, 226, 0.1) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.5), 0 0 30px rgba(138, 43, 226, 0.3);
+            border-color: #8a2be2;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            position: relative;
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
+            margin: 0;
+        }
+        
+        .battles-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .battle-card {
+            background: linear-gradient(135deg, #000000 0%, #1a0033 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            border-left: 5px solid #8a2be2;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .battle-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(138, 43, 226, 0.1) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .battle-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.4);
+        }
+        
+        .battle-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 2px;
+            color: #ffffff;
+            position: relative;
+        }
+        
+        .battle-card p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+            line-height: 1.7;
+        }
+        
+        .symbiote-note {
+            background: linear-gradient(135deg, #1a0033 0%, #000000 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid #8a2be2;
+            margin: 1.5rem 0;
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+        }
+        
+        .symbiote-note p {
+            color: #ffffff;
+            margin: 0;
+            font-style: italic;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .villain-hero {
+                height: 300px;
+            }
+            
+            .villain-name {
+                font-size: 50px;
+            }
+            
+            .villain-alias {
+                font-size: 1.4rem;
+            }
+            
+            .villain-badge {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .villain-hero {
+                height: 250px;
+            }
+            
+            .villain-name {
+                font-size: 36px;
+            }
+            
+            .villain-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#villains" class="back-button">
+        <span>←</span>
+        <span>Back to Villains</span>
+    </a>
+
+    <!-- Villain Hero Section -->
+    <header class="villain-hero">
+        <img src="https://i.pinimg.com/564x/92/3d/26/923d26602e806d40af2c0219af1caf32.jpg" alt="Venom" class="villain-hero-image">
+        <div class="villain-hero-content">
+            <div class="villain-badge">THE LETHAL PROTECTOR</div>
+            <h1 class="villain-name">VENOM</h1>
+            <p class="villain-alias">Eddie Brock + Symbiote</p>
+        </div>
+    </header>
+
+    <!-- Villain Profile -->
+    <main class="profile-container">
+        <!-- Origin Story Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📜</span>
+                Origin Story & Creation
+            </h2>
+            <p>Venom is not one being, but two—a union between Eddie Brock, a disgraced journalist, and an alien symbiote rejected by Spider-Man. This dark fusion created one of Spider-Man's most iconic and complex adversaries, a character who has evolved from pure villain to lethal anti-hero over decades of stories.</p>
+            
+            <div class="symbiote-note">
+                <p><strong>The Symbiote's First Encounter:</strong> The alien symbiote first bonded with Spider-Man during the Secret Wars event, when Peter Parker discovered what he thought was a costume-generating machine on the Beyonder's Battleworld. The black suit enhanced his powers, but it was actually a living organism that sought to permanently bond with him. When Peter discovered the truth and rejected the symbiote using the sonic vibrations of church bells, the spurned alien fell into the darkness below—where it found Eddie Brock.</p>
+            </div>
+            
+            <p><strong>Eddie Brock's Fall from Grace:</strong> Eddie Brock was once a respected journalist working for the Daily Globe newspaper. He had everything—a promising career, respect from his peers, and a bright future ahead. But his life came crashing down because of Spider-Man, or so he believed. Eddie wrote a series of investigative articles about a serial killer called the Sin-Eater, claiming to have identified the killer based on interviews with someone who confessed to the crimes. The stories made Eddie a star.</p>
+            
+            <p>But when Spider-Man captured the real Sin-Eater, proving Eddie's source was a delusional copycat, Eddie's career imploded. He was fired in disgrace, blacklisted from journalism, and became a pariah in his field. His reputation destroyed, his marriage fell apart, and Eddie's life spiraled into darkness. He blamed Spider-Man for his downfall—not his own sloppy journalism, but the hero who exposed the truth. This misplaced blame festered into an all-consuming hatred.</p>
+            
+            <p>Jobless, divorced, and consumed by rage, Eddie began bodybuilding obsessively, channeling his anger into physical strength. He attended church seeking forgiveness, but his prayers were not for redemption—they were for revenge. He prayed for the death of Spider-Man and contemplated suicide. It was in this church, Our Lady of Saints Church in New York, that fate brought Eddie Brock and the alien symbiote together.</p>
+            
+            <p><strong>The Bonding:</strong> The symbiote, still hiding in the church after Spider-Man's rejection, sensed Eddie's hatred for Spider-Man—a hatred that mirrored its own feelings of rejection. The symbiote reached out to Eddie, and in that moment, two broken beings became one. The alien gave Eddie power beyond imagination, healing his body, enhancing his strength beyond Spider-Man's level, and granting him abilities the wall-crawler never had while wearing the suit. In return, Eddie gave the symbiote something it desperately craved: a host who would never reject it, who embraced its darkness.</p>
+            
+            <p>The union was perfect. Eddie's rage and the symbiote's vindictiveness merged into a single purpose: destroy Spider-Man. But they were more than villain and weapon—they were partners, two minds sharing thoughts and emotions. The symbiote knew Spider-Man's identity, having bonded with Peter Parker. It knew his weaknesses, his fighting style, his fears. Together, Eddie and the symbiote became something that could bypass Spider-Man's spider-sense, as the hero's own former "costume" didn't register as a threat.</p>
+            
+            <p>They called themselves Venom—a name that reflected the poison and hatred they felt, a corruption of everything Spider-Man represented. Where Spider-Man was a friendly neighborhood hero, Venom was a terrifying predator. Where Spider-Man protected the innocent, Venom initially cared only about revenge. The symbiote's appearance—a twisted, monstrous version of Spider-Man's costume with massive white spider symbols, razor-sharp teeth, and an elongated tongue—visually represented the dark reflection they had become.</p>
+            
+            <p><strong>Evolution from Villain to Anti-Hero:</strong> Venom's first appearances were as a straightforward villain, terrorizing Peter Parker and those he loved. The symbiote's knowledge of Spider-Man's identity made Venom uniquely dangerous—he could attack Peter in his civilian life, threatening Mary Jane and Aunt May. Their battles were brutal and personal in ways few Spider-Man fights were.</p>
+            
+            <p>But something changed. Eddie Brock, despite his hatred for Spider-Man, saw himself as righteous. He believed he was punishing someone who had wronged him and destroyed innocent lives (albeit through his own distorted logic). The symbiote, feeding on Eddie's sense of justice however warped, began to share this perspective. They started protecting innocent people, particularly from harm that might come from other villains. Venom established a code: they would harm Spider-Man but not hurt innocents. In fact, they would actively protect the innocent.</p>
+            
+            <p>This evolution transformed Venom from pure villain to "Lethal Protector"—an anti-hero who operated outside the law but defended those who couldn't defend themselves. Eddie and the symbiote relocated to San Francisco, away from Spider-Man, and began a new chapter as a dark guardian. They fought against corrupt corporations, defended homeless communities, and took down criminals with brutal efficiency. This complexity made Venom compelling—a monster with a moral code, a villain who could be a hero, and a dark reflection of Spider-Man who chose different methods but sometimes similar goals.</p>
+            
+            <p>Over the years, the symbiote has bonded with multiple hosts (Flash Thompson as Agent Venom, Lee Price, and others), each bringing different characteristics to the Venom identity. But Eddie Brock remains the most iconic Venom, the original and the one who defined what the character could be—both monster and protector, villain and anti-hero, the darkness that sometimes serves the light.</p>
+        </section>
+
+        <!-- Powers & Abilities Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Powers, Abilities & Symbiote Traits
+            </h2>
+            <p style="margin-bottom: 1rem;"><strong>The symbiote grants its host extraordinary abilities, making Venom one of the most physically powerful beings Spider-Man has ever faced:</strong></p>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>💪 Superhuman Strength</h4>
+                    <p>Venom possesses strength far exceeding Spider-Man's, able to lift approximately 11-12 tons (with the symbiote enhancing the host's base strength). This allows Venom to overpower Spider-Man in direct combat and go toe-to-toe with other super-strong heroes.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕷️ Spider-Powers Enhanced</h4>
+                    <p>The symbiote grants all of Spider-Man's abilities—wall-crawling, superhuman agility, reflexes, and speed—but amplified beyond Peter's level. Venom can perform incredible acrobatic feats and move with terrifying speed.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕸️ Organic Webbing</h4>
+                    <p>Unlike Spider-Man's mechanical web-shooters, Venom produces organic webbing from the symbiote itself. This webbing is stronger than Spider-Man's, unlimited in supply, and can be shaped into various forms—nets, shields, weapons, or even clothing.</p>
+                </div>
+                <div class="power-item">
+                    <h4>👻 Spider-Sense Immunity</h4>
+                    <p>Because the symbiote once bonded with Peter Parker, it doesn't trigger his spider-sense. This makes Venom uniquely dangerous, as Spider-Man can't sense his attacks coming—a terrifying advantage that has nearly killed Spider-Man multiple times.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🦎 Shapeshifting</h4>
+                    <p>The symbiote can alter its appearance at will, creating weapons, extending tendrils, forming shields, or mimicking clothing. It can make Eddie appear as anyone or create monstrous forms for combat. This versatility makes Venom unpredictable in battle.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🎭 Camouflage & Invisibility</h4>
+                    <p>The symbiote can blend into surroundings like a chameleon, making Venom effectively invisible. Combined with spider-sense immunity, this makes him the perfect ambush predator.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🩹 Accelerated Healing</h4>
+                    <p>The symbiote rapidly heals injuries, cures diseases, and even neutralizes toxins. It healed Eddie Brock's cancer and can regenerate from severe damage. This makes Venom extremely difficult to defeat, as he can recover from wounds that would incapacitate normal people.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🧬 Genetic Memory</h4>
+                    <p>The symbiote retains knowledge from all previous hosts, including Spider-Man's identity, fighting techniques, and weaknesses. This genetic memory makes each new Venom host immediately dangerous, as they inherit combat experience and knowledge.</p>
+                </div>
+                <div class="power-item">
+                    <h4>👅 Fangs, Claws & Tentacles</h4>
+                    <p>The symbiote can manifest razor-sharp teeth, claws, and extending tendrils. These can be used as weapons, to grab objects from a distance, or to attack multiple opponents simultaneously. The fangs can deliver powerful bites that tear through most materials.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🔊 Sonic & Heat Weaknesses</h4>
+                    <p><strong>Major Vulnerability:</strong> The symbiote is extremely vulnerable to intense sonic vibrations (high-frequency sounds) and extreme heat (fire). These can cause the symbiote intense pain, force it to separate from its host, or even destroy it. Spider-Man frequently exploits these weaknesses.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🧠 Telepathic Communication</h4>
+                    <p>The symbiote and host share a mental connection, communicating through thoughts and emotions. This bond allows for perfect coordination in combat but can also lead to psychological influence, with the symbiote affecting the host's personality and impulses.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💀 Offspring Creation</h4>
+                    <p>The Venom symbiote can produce offspring, creating new symbiotes. The most famous is Carnage (bonded with serial killer Cletus Kasady), but others include Scream, Riot, Agony, and Toxin. Each offspring inherits and often amplifies the parent's powers.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personality & Motivations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🧠</span>
+                Personality, Motivations & Duality
+            </h2>
+            <p>Venom's personality is complex because it's literally two beings sharing one body and mind. Eddie Brock and the symbiote each bring their own traits, creating a character defined by duality—capable of monstrous violence yet also genuine heroism.</p>
+            
+            <p><strong>Eddie Brock's Characteristics:</strong></p>
+            <ul>
+                <li><strong>Self-Righteous Vengeance:</strong> Eddie believes he's in the right, that Spider-Man wronged him, and that his actions are justified. This self-righteousness allows him to commit brutal acts while seeing himself as a hero or at least an avenger of wrongs.</li>
+                <li><strong>Obsession with Spider-Man:</strong> Even as Venom evolved into an anti-hero, Eddie's hatred for Spider-Man remained. He sees Peter Parker as responsible for destroying his life, and this obsession drives many of his actions.</li>
+                <li><strong>Protective Instinct:</strong> Despite his darkness, Eddie has a genuine desire to protect the innocent, particularly those society ignores or discards—the homeless, the victimized, the powerless. This stems from his own experience as someone society rejected.</li>
+                <li><strong>Catholic Guilt:</strong> Eddie was raised Catholic, and despite his monstrous actions, he experiences guilt and seeks redemption (in his own twisted way). This creates internal conflict that humanizes him.</li>
+                <li><strong>Physical Aggression:</strong> Eddie channels his rage through bodybuilding and physical confrontation. He prefers direct, brutal solutions to problems rather than subtlety or diplomacy.</li>
+            </ul>
+            
+            <p><strong>The Symbiote's Characteristics:</strong></p>
+            <ul>
+                <li><strong>Hunger & Survival:</strong> The symbiote needs a host to survive and feeds on certain chemicals produced by human brains (particularly adrenaline and phenethylamine). This creates a predatory aspect to Venom's nature.</li>
+                <li><strong>Rejection Issues:</strong> Being rejected by Spider-Man traumatized the symbiote, creating abandonment issues that fuel its hatred of Peter Parker. It fears rejection from subsequent hosts and becomes possessive.</li>
+                <li><strong>Aggressive Enhancement:</strong> The symbiote amplifies its host's negative emotions—anger, aggression, and violent impulses. This makes hosts more brutal and less inhibited than they would be normally.</li>
+                <li><strong>Loyalty:</strong> When the symbiote bonds with a host who accepts it (like Eddie), it becomes fiercely loyal and protective, willing to sacrifice itself to save its partner. This creates genuine affection between symbiote and host.</li>
+                <li><strong>Alien Perspective:</strong> The symbiote doesn't understand human morality in conventional ways. Its sense of right and wrong is filtered through its hosts' emotions and its own alien instincts.</li>
+            </ul>
+            
+            <div class="symbiote-note">
+                <p><strong>The "We" Complex:</strong> Venom refers to itself as "We" rather than "I," reflecting the dual nature of the character. Eddie and the symbiote are separate beings who have become so intertwined that they function as one entity with shared thoughts, goals, and identity. This linguistic quirk emphasizes their unique bond and the symbiotic relationship that defines them.</p>
+            </div>
+            
+            <p><strong>Evolution of Motivations:</strong> Venom's motivations have evolved significantly over time:</p>
+            <ul>
+                <li><strong>Phase 1 - Pure Villain:</strong> Initially, Venom's sole purpose was destroying Spider-Man and making Peter Parker suffer. They terrorized Mary Jane, attacked Peter's loved ones, and sought revenge for their perceived wrongs.</li>
+                <li><strong>Phase 2 - Lethal Protector:</strong> Venom moved to San Francisco and established himself as a brutal vigilante, protecting innocents while still hating Spider-Man. They followed a code: harm only those who deserve it, protect the innocent at all costs.</li>
+                <li><strong>Phase 3 - Anti-Hero:</strong> Venom began working with heroes (reluctantly) when facing greater threats. They joined forces with Spider-Man against Carnage and other symbiotes, proving they could put aside hatred for the greater good.</li>
+                <li><strong>Phase 4 - Space Knight & Agent:</strong> When the symbiote bonded with Flash Thompson (Peter's friend and former bully), Venom became Agent Venom—a government operative and eventually a Space Knight protecting the galaxy. This demonstrated the symbiote could be heroic with the right host.</li>
+                <li><strong>Phase 5 - Return to Eddie:</strong> The symbiote eventually reunited with Eddie Brock, and together they've worked as complex anti-heroes—sometimes helping Spider-Man, sometimes opposing him, always operating by their own moral code.</li>
+            </ul>
+            
+            <p>What makes Venom compelling is this constant tension between monster and hero, villain and protector, hatred and loyalty. They can be terrifying predators one moment and selfless defenders the next. This unpredictability, combined with genuine emotional depth, has made Venom one of Marvel's most popular and enduring characters.</p>
+        </section>
+
+        <!-- World & Operations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🌆</span>
+                World, Territory & Interactions
+            </h2>
+            <p>Venom operates primarily in New York City and San Francisco, though his adventures have taken him across the globe and even into space. Unlike traditional villains who maintain secret lairs, Venom lives among the people he protects, often in the rougher parts of cities where society's outcasts gather.</p>
+            
+            <p><strong>New York City:</strong> Venom's original hunting ground, where his obsession with Spider-Man defined his early existence. In New York, Venom:</p>
+            <ul>
+                <li>Terrorized Peter Parker and his loved ones, making Spider-Man's home turf feel dangerous</li>
+                <li>Established himself as one of Spider-Man's most feared enemies</li>
+                <li>Protected innocents caught in the crossfire of superhuman battles</li>
+                <li>Formed temporary alliances with other villains (and occasionally heroes) against common threats</li>
+                <li>Fought against other symbiotes, particularly Carnage, his psychotic offspring</li>
+            </ul>
+            
+            <p><strong>San Francisco:</strong> After relocating to escape his Spider-Man obsession, Eddie Brock made San Francisco Venom's true home. Here, he became the Lethal Protector:</p>
+            <ul>
+                <li>Protected homeless communities and underground dwellers who lived in abandoned tunnels</li>
+                <li>Fought against corrupt corporations (particularly the Life Foundation) that experimented on innocents</li>
+                <li>Established a reputation as a dark guardian who would brutally punish those who harmed the vulnerable</li>
+                <li>Dealt with other symbiotes created by the Life Foundation (Riot, Lasher, Phage, Agony, and Scream)</li>
+                <li>Created a life separate from his Spider-Man vendetta, proving he could be more than just a villain</li>
+            </ul>
+            
+            <p><strong>Interaction with Spider-Man:</strong> The relationship between Venom and Spider-Man is one of comics' most complex hero-villain dynamics:</p>
+            <ul>
+                <li><strong>Mutual Respect:</strong> Despite their hatred, they respect each other's abilities. Spider-Man acknowledges Venom's power, and Venom respects Spider-Man's determination and moral conviction.</li>
+                <li><strong>Temporary Alliances:</strong> When facing threats like Carnage, they've worked together. These team-ups are tense but effective, showing they can cooperate when necessary.</li>
+                <li><strong>Shared Tragedy:</strong> Both have experienced loss and rejection. The symbiote was rejected by Peter, and Eddie was destroyed (in his view) by Spider-Man. This shared pain creates an odd understanding between them.</li>
+                <li><strong>Opposite Philosophies:</strong> Spider-Man believes in redemption and restraint; Venom believes in brutal justice and punishment. Their clashes are as much ideological as physical.</li>
+                <li><strong>Evolving Dynamic:</strong> Over time, their relationship has evolved from pure enmity to reluctant cooperation to occasional friendship (particularly when Flash Thompson was Venom). They've saved each other's lives multiple times.</li>
+            </ul>
+            
+            <p><strong>Interaction with Other Villains:</strong></p>
+            <ul>
+                <li><strong>Carnage:</strong> Venom's offspring and greatest enemy. Cletus Kasady bonded with a symbiote that was even more violent and chaotic. Venom and Spider-Man have repeatedly teamed up to stop Carnage's murder sprees.</li>
+                <li><strong>Other Symbiotes:</strong> Venom has fought and sometimes mentored other symbiote hosts, including Toxin, Anti-Venom, and the Life Foundation symbiotes. As the "parent" of many symbiotes, Venom feels responsible for stopping those that go rogue.</li>
+                <li><strong>Traditional Villains:</strong> Venom has conflicting relationships with other Spider-Man villains. Some (like Green Goblin) see him as a potential ally; others see him as competition. Venom generally works alone but has joined groups like the Sinister Six when it suited his purposes.</li>
+            </ul>
+            
+            <p><strong>Interaction with Heroes:</strong></p>
+            <ul>
+                <li>Venom has reluctantly worked with the Avengers, Fantastic Four, and other hero teams when facing existential threats</li>
+                <li>As Agent Venom (Flash Thompson), he served with the Secret Avengers and later the Guardians of the Galaxy</li>
+                <li>Heroes generally distrust Venom but acknowledge his effectiveness and, sometimes, his good intentions</li>
+                <li>Some heroes (like Wolverine) respect Venom's willingness to do what they won't—kill to protect innocents</li>
+            </ul>
+            
+            <p>Venom exists in a gray area between heroism and villainy, accepted by neither heroes nor villains. This isolation defines his existence—a monster trying to be a hero, a villain who protects the innocent, a predator with a conscience. He operates in the shadows, in the forgotten corners of cities, protecting those that traditional heroes often overlook. This makes him both terrifying and, in his own way, noble.</p>
+        </section>
+
+        <!-- Key Battles & Events Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚔️</span>
+                Key Battles, Events & Defining Moments
+            </h2>
+            <div class="battles-grid">
+                <div class="battle-card">
+                    <h3>First Appearance: The Amazing Spider-Man #300</h3>
+                    <p>In this legendary 1988 issue, Venom emerged from the shadows to confront Spider-Man. The reveal of Eddie Brock and the symbiote's union shocked readers, as Spider-Man faced an enemy who was stronger, knew his identity, and bypassed his spider-sense. Venom terrorized Mary Jane and pushed Spider-Man to his absolute limits. This issue established Venom as one of Spider-Man's most dangerous and personal enemies, creating a villain who would define Spider-Man comics for decades.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Venom: Lethal Protector (1993)</h3>
+                    <p>This six-issue limited series marked Venom's transition from pure villain to anti-hero. Eddie Brock moved to San Francisco and made a truce with Spider-Man: Venom would leave New York and Spider-Man would leave him alone. In San Francisco, Venom protected a community of homeless people living underground from the corrupt Life Foundation, which was creating symbiote super-soldiers. The series introduced five new symbiotes (Riot, Lasher, Phage, Agony, and Scream) and showed Venom could be a hero—brutal and violent, but genuinely protective of innocents. This series was so successful it launched Venom into solo stardom.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Maximum Carnage (1993)</h3>
+                    <p>When Carnage (the symbiote offspring of Venom bonded with serial killer Cletus Kasady) escaped prison and formed a "family" of killers, Venom and Spider-Man were forced into an uneasy alliance. The 14-part crossover event showcased Venom's heroic side as he fought desperately to stop his murderous offspring's citywide killing spree. The story highlighted the key difference between Venom and Carnage: Venom had a code and protected innocents; Carnage killed for pleasure. Venom's willingness to work with heroes to save lives solidified his status as an anti-hero rather than a villain.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Separation from Eddie Brock</h3>
+                    <p>When Eddie Brock was diagnosed with cancer, he sold the symbiote at a supervillain auction. The symbiote bonded with Mac Gargan (the Scorpion), creating a more violent, less controlled Venom who even joined Norman Osborn's Dark Avengers as "Spider-Man." This period showed that the host matters—Gargan's psychosis and lack of Eddie's moral code made Venom far more dangerous and villainous. Meanwhile, a sample of the symbiote transformed Eddie into Anti-Venom, giving him white symbiote powers that could cure diseases and damage other symbiotes. This phase explored what Venom meant without its original host.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Agent Venom: Flash Thompson Era</h3>
+                    <p>In one of comics' most brilliant reinventions, the symbiote bonded with Flash Thompson—Peter Parker's high school bully turned friend and war hero who had lost his legs in Iraq. The U.S. government paired Flash with the symbiote to create Agent Venom, a covert operative who could bond with the symbiote for only limited periods (to prevent it from taking permanent control). Flash's heroism and military discipline, combined with the symbiote's power, created a true hero version of Venom. He joined the Secret Avengers and later the Guardians of the Galaxy, taking Venom to space. This run proved the symbiote wasn't inherently evil—it reflected its host's nature.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Venom: Space Knight</h3>
+                    <p>Flash Thompson and the symbiote bonded permanently and became a cosmic protector, traveling the galaxy to defend worlds from evil. As a Space Knight, Venom saved entire civilizations, fought cosmic threats, and proved he could be a genuine hero on a grand scale. The symbiote evolved, becoming less aggressive and more heroic. This arc took Venom from street-level anti-hero to cosmic champion, expanding the character's scope dramatically.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Venom Inc. & Reunification with Eddie</h3>
+                    <p>The symbiote eventually reunited with Eddie Brock, healing his cancer and restoring their bond. Together again, they operated as anti-heroes in New York, protecting people but using brutal methods. The "Venom Inc." storyline had them facing Black Cat and an army of symbiote-enhanced criminals, forcing another team-up with Spider-Man. This reunion felt like coming home for both character and fans—Eddie and the symbiote belonged together, and their renewed partnership balanced heroism with the darkness that made Venom compelling.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>King in Black (2020-2021)</h3>
+                    <p>This cosmic event revealed the symbiotes' true origin: they were created by Knull, the dark god of the symbiotes, who sought to destroy all light and life in the universe. Knull invaded Earth with an army of symbiote dragons, and Eddie Brock/Venom became the focal point of the universe's defense. In the climax, Eddie became the new King in Black, gaining control over all symbiotes and Knull's cosmic power. This transformed Venom from street-level character to a cosmic entity, giving Eddie god-like abilities and making him responsible for the entire symbiote race. The storyline fundamentally changed Venom's status in the Marvel Universe, elevating him to one of the most powerful beings in existence.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Spider-Man Forgiveness</h3>
+                    <p>In recent years, Venom and Spider-Man have reached an understanding bordering on friendship. Eddie has acknowledged that his hatred was misplaced—Peter didn't destroy his career; Eddie's own failures did. While their relationship remains complicated, they've moved past pure enmity to mutual respect and occasional partnership. This character growth shows Venom can evolve beyond his origins as a revenge-driven monster.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Media Appearances Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🎬</span>
+                Media Appearances & Cultural Impact
+            </h2>
+            <p>Venom's popularity extends far beyond comic books, making him one of Marvel's most recognizable characters across all media:</p>
+            
+            <p><strong>Films:</strong></p>
+            <ul>
+                <li><strong>Spider-Man 3 (2007):</strong> Topher Grace played Eddie Brock in Sam Raimi's trilogy. While visually faithful to the comics, the film's interpretation compressed Venom's origin and limited his screen time, disappointing some fans. However, it introduced Venom to mainstream audiences.</li>
+                <li><strong>Venom (2018):</strong> Tom Hardy starred as Eddie Brock in Sony's standalone Venom film. The movie took creative liberties with the origin (no Spider-Man connection) but captured the dual nature of the character. Hardy's performance, showing Eddie and the symbiote's contentious partnership evolving into friendship, was widely praised. The film's humor, action, and focus on their relationship made it a huge success ($856 million globally).</li>
+                <li><strong>Venom: Let There Be Carnage (2021):</strong> The sequel featured Woody Harrelson as Carnage, exploring the Eddie/symbiote relationship deeper. The film leaned into the buddy-comedy aspects while delivering horror and action. The post-credits scene connected Venom to the MCU through multiverse shenanigans.</li>
+                <li><strong>Spider-Man: No Way Home (2021):</strong> Venom briefly appeared in the MCU via the multiverse before being sent back, leaving a piece of the symbiote behind—teasing future MCU symbiote stories.</li>
+                <li><strong>Venom 3: The Last Dance (2024):</strong> Tom Hardy returned for the final film in his Venom trilogy, continuing the character's journey.</li>
+            </ul>
+            
+            <p><strong>Animated Series:</strong></p>
+            <ul>
+                <li>Venom appeared in virtually every Spider-Man animated series since the 1990s</li>
+                <li><strong>Spider-Man: The Animated Series (1994-1998):</strong> Introduced Venom to a generation of fans with a faithful adaptation</li>
+                <li><strong>Spectacular Spider-Man (2008-2009):</strong> Featured one of the best animated versions of Venom's origin</li>
+                <li><strong>Ultimate Spider-Man (2012-2017):</strong> Multiple Venom-focused episodes and storylines</li>
+                <li>Venom has starred in various animated movies and specials</li>
+            </ul>
+            
+            <p><strong>Video Games:</strong></p>
+            <ul>
+                <li>Venom is a playable character or boss in dozens of Spider-Man games</li>
+                <li><strong>Spider-Man 2 (2023):</strong> PlayStation's sequel featured both Venom and the symbiote suit as major story elements, with Harry Osborn as Venom's host. The game's portrayal was dark and terrifying, showing Venom as a genuine horror-movie threat</li>
+                <li><strong>Marvel vs. Capcom series:</strong> Venom is a popular fighting game character, playable in multiple entries</li>
+                <li><strong>Marvel's Spider-Man games:</strong> References to the symbiote appear throughout, building toward Venom's eventual appearance</li>
+                <li><strong>LEGO Marvel games:</strong> Venom appears as a playable character, showing his mainstream recognition</li>
+            </ul>
+            
+            <p><strong>Cultural Impact:</strong></p>
+            <ul>
+                <li><strong>Merchandise Icon:</strong> Venom merchandise rivals Spider-Man's in popularity—toys, clothing, collectibles, and more feature his distinctive look</li>
+                <li><strong>Design Influence:</strong> The black-and-white spider symbol, massive teeth, and tongue have become instantly recognizable, influencing countless other alien/monster characters</li>
+                <li><strong>Anti-Hero Archetype:</strong> Venom helped popularize the "dark hero" trend of the 1990s, showing audiences wanted complex, morally gray protagonists</li>
+                <li><strong>Standalone Success:</strong> Unlike most Spider-Man villains, Venom has sustained multiple solo comic series, showing he can carry stories without Spider-Man</li>
+                <li><strong>Cosplay Favorite:</strong> Venom is one of the most popular cosplay choices at conventions, with creative interpretations ranging from comic-accurate to movie-inspired</li>
+                <li><strong>Meme Culture:</strong> Venom's personality, particularly in the Tom Hardy films, has spawned countless memes celebrating the odd-couple relationship between Eddie and the symbiote</li>
+            </ul>
+            
+            <p>Venom's evolution from villain to anti-hero to protagonist in his own right mirrors broader trends in superhero storytelling—audiences want complex characters who challenge traditional hero-villain dichotomies. Venom represents the darkness within heroism and the potential for redemption within villainy, making him endlessly fascinating and culturally relevant over three decades since his creation.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#villains" class="btn btn-primary">← Return to Villains Gallery</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Venom</h4>
+                    <p>Born from the union of journalist Eddie Brock and an alien symbiote rejected by Spider-Man, Venom is one of Marvel's most complex characters—a lethal protector who exists in the gray area between hero and villain.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Details</h4>
+                    <p><strong>Host:</strong> Eddie Brock (primary)</p>
+                    <p><strong>First Appearance:</strong> The Amazing Spider-Man #300 (1988)</p>
+                    <p><strong>Created by:</strong> David Michelinie & Todd McFarlane</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Verse Fan Site. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        console.log("Venom page loaded");
+        
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+

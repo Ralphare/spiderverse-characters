@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingpin - The Crime Lord of New York</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to villain profile page */
+        .villain-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .villain-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .villain-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .villain-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .villain-badge {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+        }
+        
+        .villain-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 5px;
+        }
+        
+        .villain-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .back-button:hover {
+            background: #000000;
+            border-color: #ffffff;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(255,255,255,0.3);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .villain-image-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .villain-image {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .villain-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.3) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .villain-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #000000;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #1a1a2e;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '👔';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .power-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            border-color: #ffffff;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            position: relative;
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
+            margin: 0;
+        }
+        
+        .battles-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .battle-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #000000 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            border-left: 5px solid #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .battle-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .battle-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        .battle-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 2px;
+            color: #ffffff;
+            position: relative;
+        }
+        
+        .battle-card p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.9);
+            margin: 0;
+            line-height: 1.7;
+        }
+        
+        .power-note {
+            background: linear-gradient(135deg, #1a1a2e 0%, #000000 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid #ffffff;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .power-note p {
+            color: #ffffff;
+            margin: 0;
+            font-style: italic;
+            font-weight: 500;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .villain-hero {
+                height: 300px;
+            }
+            
+            .villain-name {
+                font-size: 50px;
+            }
+            
+            .villain-alias {
+                font-size: 1.4rem;
+            }
+            
+            .villain-badge {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .villain-hero {
+                height: 250px;
+            }
+            
+            .villain-name {
+                font-size: 36px;
+            }
+            
+            .villain-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#villains" class="back-button">
+        <span>←</span>
+        <span>Back to Villains</span>
+    </a>
+
+    <!-- Villain Hero Section -->
+    <header class="villain-hero">
+        <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/10/marvels-spider-man-kingpin.jpg" alt="Kingpin" class="villain-hero-image">
+        <div class="villain-hero-content">
+            <div class="villain-badge">THE CRIME LORD OF NEW YORK</div>
+            <h1 class="villain-name">KINGPIN</h1>
+            <p class="villain-alias">Wilson Fisk</p>
+        </div>
+    </header>
+
+    <!-- Villain Profile -->
+    <main class="profile-container">
+        <!-- Origin Story Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📜</span>
+                Origin Story & Rise to Power
+            </h2>
+            <p>The Kingpin is not a costumed supervillain in the traditional sense—he's something far more dangerous and insidious. Wilson Fisk is the ultimate crime lord, a man who built an empire from nothing through intelligence, ruthlessness, and sheer physical dominance. Unlike villains who rob banks or seek world domination, Fisk controls the very infrastructure of organized crime in New York City and beyond. He is the shadow government of the underworld, the man who makes heroes' victories feel temporary because the system itself is corrupt. The Kingpin represents power in its purest, most uncompromising form.</p>
+            
+            <p><strong>Wilson Fisk: From Poverty to Power</strong></p>
+            <p>Wilson Fisk was born into abject poverty in New York City's Hell's Kitchen neighborhood. His childhood was defined by violence, hunger, and humiliation. His father was an abusive criminal who regularly beat young Wilson and his mother. The family lived in a cramped, rat-infested tenement where meals were uncertain and safety was nonexistent. Wilson grew up watching his mother suffer, watching his father's failures, and learning that in their world, weakness meant victimization.</p>
+            
+            <p>What separated Wilson from other children in similar circumstances was his intelligence and ambition. He was a naturally brilliant student who excelled academically despite chaotic home life. But Wilson also learned early that intelligence alone wasn't enough—the world respected power, particularly physical power. As a overweight child, he was bullied relentlessly. Rather than accept victimization, Wilson made a decision that would define his life: he would become stronger than anyone who might hurt him.</p>
+            
+            <p>Wilson began obsessively training his body. He lifted weights, practiced fighting, and transformed his bulk from fat into muscle through iron discipline. By his teenage years, Wilson Fisk was a physical powerhouse—massive, imposing, and capable of breaking grown men with his bare hands. When his father's criminal associates tried to bully or cheat the family, young Wilson responded with violence so brutal it sent a clear message: the Fisk family was no longer prey.</p>
+            
+            <p>But Wilson's ambitions extended beyond mere survival. He studied the criminal organizations around him with the analytical mind of a scholar. He saw how the mob operated, identified its weaknesses, and understood that organized crime was a business—one that could be run more efficiently by someone with vision and discipline. Wilson began working for various criminal organizations, not as simple muscle but as an enforcer with strategic insight. He was smart enough to advise bosses, strong enough to intimidate rivals, and ruthless enough to eliminate threats without hesitation.</p>
+            
+            <p><strong>Building the Empire</strong></p>
+            <p>Wilson Fisk's rise through the criminal underworld was methodical and brutal. He didn't challenge bosses directly—he made himself indispensable, took on the most dangerous assignments, and slowly built a network of loyal subordinates. When the time was right, he moved against his superiors with such overwhelming force and strategic precision that resistance was futile. One by one, the old mob families either swore allegiance to Fisk or were destroyed.</p>
+            
+            <p>What made Fisk different from previous crime lords was his vision of organized crime as a business empire. He didn't just run traditional rackets—he integrated criminal operations with legitimate businesses, creating a vast network where legal and illegal money flowed together indistinguishably. Fisk owned construction companies, real estate developments, import/export firms, and countless other legitimate enterprises that served as fronts for money laundering, smuggling, and influence-peddling.</p>
+            
+            <p>Fisk also understood public perception. He cultivated an image as a legitimate businessman and philanthropist, donating to charities, attending high-society events, and maintaining relationships with politicians and police. To the public, Wilson Fisk was a self-made man who'd pulled himself from poverty to become a pillar of New York business community. Only those in the underworld—and heroes who fought crime at street level—knew the truth: Wilson Fisk was the Kingpin, the single most powerful crime lord in New York, possibly in the entire country.</p>
+            
+            <div class="power-note">
+                <p><strong>The Name "Kingpin":</strong> The title came from his role as the linchpin holding all of New York's criminal operations together. Remove the Kingpin, and theoretically the entire criminal infrastructure would collapse. In practice, Fisk made himself so integral to so many operations, had so many failsafes and loyal subordinates, that removing him proved nearly impossible. He didn't just control crime—he WAS crime in New York, the nexus point where every criminal operation ultimately connected.</p>
+            </div>
+            
+            <p><strong>Vanessa: The One Weakness</strong></p>
+            <p>For all his power and ruthlessness, Wilson Fisk had one genuine human connection: his wife, Vanessa. He met her before his full ascension to power, and she saw in Wilson something beyond the criminal—an intelligent, ambitious man who protected those he loved with absolute devotion. Vanessa became the only person Wilson truly cared about, the only thing that could make the Kingpin vulnerable.</p>
+            
+            <p>Vanessa knew what Wilson was—she wasn't naive about his criminal empire—but she loved him nonetheless, or perhaps loved what he could have been in different circumstances. For Wilson, Vanessa represented everything he'd fought to achieve: legitimacy, refinement, beauty, and acceptance by the society that had once rejected him. He would do anything to protect her, including attempting to go legitimate or making truces with enemies. But Vanessa was also his greatest weakness—threaten her, and even the most powerful crime lord in America would burn the world to save her.</p>
+            
+            <p><strong>Conflicts with Heroes</strong></p>
+            <p>Kingpin's criminal empire inevitably brought him into conflict with superheroes, particularly Daredevil and Spider-Man. Unlike costumed supervillains who personally committed crimes, Fisk rarely got his hands dirty—he had subordinates for that. This made him frustratingly difficult to stop: heroes could defeat his agents, disrupt his operations, but Fisk himself remained insulated behind layers of legitimate business and legal protection.</p>
+            
+            <p>His conflicts with Daredevil were particularly personal and destructive. Fisk learned Daredevil's secret identity (Matt Murdock) and systematically destroyed the lawyer's life—ruining his reputation, getting him disbarred, even having him declared mentally incompetent. The psychological warfare between Kingpin and Daredevil became legendary, with both men pushing each other to moral and ethical limits.</p>
+            
+            <p>With Spider-Man, Fisk's interactions were different. He viewed Spider-Man as an annoyance—a pest disrupting his operations—rather than a personal nemesis. However, when Spider-Man became problematic enough, Fisk demonstrated he was perfectly willing to target Peter Parker's loved ones, order his death, or use his vast resources to make the web-slinger's life miserable. The Kingpin taught Spider-Man that some enemies couldn't simply be webbed up and handed to police—they required systemic solutions beyond punching.</p>
+            
+            <p>Wilson Fisk represents the ultimate challenge for street-level heroes: how do you fight someone who controls the system itself? Defeating Kingpin physically is possible—he's been beaten multiple times—but he always returns because the criminal infrastructure he built is so entrenched, so protected by money and influence, that one man's defeat is merely temporary. The Kingpin is both individual villain and systemic problem, making him one of the most dangerous and enduring antagonists in Marvel Comics.</p>
+        </section>
+
+        <!-- Powers & Abilities Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Powers, Abilities & Criminal Empire
+            </h2>
+            <p style="margin-bottom: 1rem;"><strong>Kingpin has no superhuman powers, but his combination of peak human physical capability and vast criminal/business empire makes him extraordinarily formidable:</strong></p>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>💪 Peak Human Strength</h4>
+                    <p>Despite appearing obese, Fisk's massive 400+ pound frame is approximately 90% muscle. Through decades of intense training, he achieved peak human strength—capable of lifting over 650 pounds, crushing bones with his grip, and matching or overpowering most superheroes in close combat. His physical power is genuinely superhuman-level despite being technically human.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🥋 Master Combatant</h4>
+                    <p>Expert in multiple martial arts including sumo, judo, and street fighting. His fighting style combines technique with overwhelming physical power, making him one of the most dangerous hand-to-hand combatants in Marvel's street-level universe. He's defeated Daredevil, Captain America (briefly), and numerous other skilled fighters through combination of skill and raw strength.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🧠 Genius-Level Intellect</h4>
+                    <p>Brilliant strategic mind with exceptional business acumen. Fisk built a criminal empire through intelligence as much as violence, understanding economics, politics, psychology, and organizational management at expert levels. His IQ and strategic thinking rival Tony Stark's in business matters and exceed most villains in tactical planning.</p>
+                </div>
+                <div class="power-item">
+                    <h4>👔 Criminal Empire</h4>
+                    <p>Controls vast organized crime network spanning New York and extending nationally and internationally. His empire includes drug trafficking, weapons smuggling, prostitution, gambling, extortion, and murder-for-hire. This network provides unlimited resources, information, and manpower. When Kingpin wants someone found, killed, or ruined, his organization has the reach to accomplish it.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💼 Legitimate Business Holdings</h4>
+                    <p>Owns numerous legitimate businesses—real estate developments, construction companies, import/export firms, and financial institutions. These provide money laundering, legal protection, and legitimate wealth. His business empire makes him a billionaire with social and political influence extending far beyond criminal underworld.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕵️ Intelligence Network</h4>
+                    <p>Maintains sophisticated intelligence-gathering operation with informants in law enforcement, government, criminal organizations, and even superhero communities. Fisk often knows heroes' secret identities, their vulnerabilities, and their plans before they act. Information is power, and Kingpin has more information than almost anyone.</p>
+                </div>
+                <div class="power-item">
+                    <h4>⚖️ Political & Legal Influence</h4>
+                    <p>Through corruption, blackmail, and strategic donations, Fisk influences politicians, judges, and law enforcement. He can have charges dropped, investigations stopped, or warrants issued against enemies. His political influence makes him nearly untouchable through legal means—arresting him rarely sticks because he controls enough of the system to escape consequences.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💰 Vast Wealth</h4>
+                    <p>Multi-billionaire with resources comparable to Tony Stark or Bruce Wayne. His wealth allows him to hire the best lawyers, buy any weapon or technology, fund private armies, and outlast opponents through war of attrition. Money is power, and Fisk has enough to wage economic warfare against anyone who opposes him.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🎯 Strategic Planning</h4>
+                    <p>Master strategist who plans operations with multiple contingencies and long-term thinking. Fisk doesn't act impulsively—he carefully analyzes opponents' weaknesses, identifies leverage points, and executes plans with precise timing. His strategic mind makes him dangerous even when physically defeated, as he's always planning the next move.</p>
+                </div>
+                <div class="power-item">
+                    <h4>😈 Ruthless Psychology</h4>
+                    <p>Understands human psychology and uses it ruthlessly—identifying what people fear, love, or desire, then exploiting those vulnerabilities. He's destroyed heroes by attacking their families, reputations, or psychological weaknesses rather than fighting them directly. This psychological warfare is often more devastating than physical combat.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🛡️ Personal Security</h4>
+                    <p>Protected by layers of bodyguards, secure locations, and surveillance systems. His offices and residences are fortresses with cutting-edge security. Getting close to Fisk physically requires overcoming significant defenses, and even then, he's dangerous enough in combat to defeat most attackers personally.</p>
+                </div>
+                <div class="power-item">
+                    <h4>❤️ Vanessa: The Vulnerability</h4>
+                    <p><strong>Major Weakness:</strong> His wife Vanessa is his only genuine weakness. Fisk loves her absolutely, and threats to her can force him into actions against his strategic interests. Heroes have used this vulnerability against him, though it's a dangerous tactic—threatening Vanessa can transform Fisk from calculating crime lord into rage-driven destroyer willing to burn everything to protect her. His love for Vanessa is simultaneously his greatest weakness and most dangerous trigger.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personality & Motivations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🧠</span>
+                Personality, Motivations & Criminal Philosophy
+            </h2>
+            <p>Kingpin's personality is defined by contradictions: he's brutal yet cultured, savage yet sophisticated, criminal yet desiring legitimacy. These contradictions make him one of Marvel's most psychologically complex villains.</p>
+            
+            <p><strong>Core Personality Traits:</strong></p>
+            <ul>
+                <li><strong>Ruthless Pragmatism:</strong> Fisk makes decisions based on cold calculation of costs and benefits. He'll kill subordinates who fail him, torture enemies for information, or sacrifice allies if strategically necessary. Morality and compassion are luxuries he can't afford in his position—showing weakness invites challenges to his authority.</li>
+                <li><strong>Ambition & Pride:</strong> Fisk's rise from poverty to power defines his identity. He takes immense pride in his achievements and views himself as superior to those born into privilege. His ambition extends beyond mere wealth—he wants respect, legitimacy, and recognition as a man of substance and power.</li>
+                <li><strong>Sophisticated Refinement:</strong> Despite his criminal nature, Fisk appreciates fine art, classical music, gourmet cuisine, and high culture. He sees himself as a Renaissance man—powerful in body and mind, capable of appreciating beauty while commanding fear. This sophistication sets him apart from crude mob bosses.</li>
+                <li><strong>Strategic Patience:</strong> Unlike impulsive villains, Fisk thinks long-term. He'll wait years to execute revenge, build influence gradually, and sacrifice short-term gains for long-term strategic advantages. This patience makes him dangerous—his defeats are temporary setbacks in decades-long plans.</li>
+                <li><strong>Absolute Control:</strong> Fisk needs control over his environment, his organization, and those around him. This need stems from childhood powerlessness—he was once helpless against his father's abuse and poverty's degradations. Now, he ensures he's never powerless again by controlling everything he can reach.</li>
+                <li><strong>Capacity for Love:</strong> Vanessa proves Fisk is capable of genuine love and emotional vulnerability. With her, he's not the Kingpin—he's Wilson, a man who wants peaceful retirement and legitimate life. This capacity for love humanizes him but also creates his greatest vulnerability.</li>
+                <li><strong>Contempt for Weakness:</strong> Having clawed his way from poverty, Fisk despises weakness—in himself and others. He views heroes' moral codes as weakness, subordinates' failures as inexcusable, and any limitation on his power as intolerable. This contempt drives him to ever-greater displays of strength.</li>
+                <li><strong>Desire for Legitimacy:</strong> Despite building his fortune on crime, Fisk desperately wants legitimate acceptance by high society. He craves the respect given to legitimate billionaires and resents that his criminal reputation limits his social acceptance. This desire for legitimacy creates internal conflict—he's built everything on crime but wishes he hadn't needed to.</li>
+            </ul>
+            
+            <div class="power-note">
+                <p><strong>The Duality of Wilson Fisk:</strong> The Kingpin is a performance—a persona Wilson Fisk created to survive and dominate. But Wilson is trapped inside his own creation, unable to escape the role he's built. He wants legitimacy but can't abandon the criminal empire that gave him power. He wants peace but can't stop being the Kingpin because stepping down would invite assassination. He's simultaneously the most powerful man in New York and a prisoner of his own success.</p>
+            </div>
+            
+            <p><strong>Motivations Across His Career:</strong></p>
+            <ul>
+                <li><strong>Survival & Power:</strong> Initially motivated by survival in Hell's Kitchen's brutal environment. As he gained power, motivation shifted to maintaining and expanding that power. Power became its own justification—he accumulated it because power meant safety and respect.</li>
+                <li><strong>Building Empire:</strong> Fisk wanted to create something permanent, an organization that would outlast him. His criminal empire is his legacy, proof that the poor kid from Hell's Kitchen became history's greatest crime lord. Each expansion of his empire validates his life's work.</li>
+                <li><strong>Legitimacy & Respect:</strong> Despite his power, Fisk craves legitimate respect. He wants to be remembered as a great man, not just a great criminal. This drives his attempts at going legitimate, his philanthropy, and his cultivation of relationships with politicians and business leaders.</li>
+                <li><strong>Protection of Vanessa:</strong> Much of Fisk's criminal activity aims to protect Vanessa—ensuring she's safe, comfortable, and able to enjoy life without fear. When threats emerge against her, his motivation becomes purely protective, with all other considerations secondary.</li>
+                <li><strong>Revenge & Dominance:</strong> When crossed, Fisk's motivation becomes revenge executed with overwhelming force. Heroes who humiliate him, subordinates who betray him, or rivals who challenge him must be destroyed completely. Partial victories aren't enough—he needs total dominance to maintain his position.</li>
+                <li><strong>Control of New York:</strong> Fisk views New York as his city. Every criminal operation, every corrupt official, every shadow deal should ultimately answer to him. This territorial possessiveness drives conflicts with other crime lords and heroes who threaten his control.</li>
+            </ul>
+            
+            <p><strong>Relationship with Heroes:</strong></p>
+            <p>Fisk's interactions with heroes reveal his complexity:</p>
+            <ul>
+                <li><strong>Daredevil:</strong> His most personal enemy. Their conflicts are intimate psychological warfare where both men push each other to moral limits. Fisk has destroyed Matt Murdock's life multiple times, while Daredevil has cost Fisk his criminal empire and even his freedom. They're locked in eternal struggle neither can definitively win.</li>
+                <li><strong>Spider-Man:</strong> Views Spider-Man as annoying but potentially dangerous pest. Fisk respects Spider-Man's power but dismisses him as naive child-hero. However, when Spider-Man becomes serious threat, Fisk responds with full force—he's arranged assassination attempts, targeted Peter's loved ones, and used his influence to make Spider-Man's life difficult.</li>
+                <li><strong>Punisher:</strong> Mutual professional respect between Fisk and Frank Castle—both recognize each other as killers without illusions about morality. Fisk sometimes hires Punisher for jobs, and Castle occasionally leaves Fisk alone if their interests align. Both operate outside conventional morality, creating strange understanding.</li>
+                <li><strong>Other Heroes:</strong> Fisk generally views costumed heroes as powerful pieces on chess board—obstacles to navigate around or tools to manipulate. He's worked with heroes against common enemies, hired heroes for "legitimate" security work, and corrupted heroes through blackmail or temptation. He understands heroes' psychology and exploits their weaknesses ruthlessly.</li>
+            </ul>
+            
+            <p>Wilson Fisk is ultimately a tragic figure—a man of genuine brilliance and capacity for love who chose power over morality and now can't escape the consequences of that choice. He built an empire but lost his soul. He achieved power but remains trapped. He wants legitimacy but can never fully have it. The Kingpin is both everything Wilson Fisk dreamed of becoming and the prison he built for himself, a monument to what one man can achieve through ruthless ambition and a warning about the cost of such achievement.</p>
+        </section>
+
+        <!-- World & Operations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🌆</span>
+                World, Criminal Network & Influence
+            </h2>
+            <p>Kingpin's domain is New York City itself—not just specific neighborhoods or territories, but the entire city's criminal infrastructure and significant portions of its legitimate power structure. His influence makes him one of the most powerful men in America, criminal or otherwise.</p>
+            
+            <p><strong>Criminal Operations & Revenue Sources:</strong></p>
+            <ul>
+                <li><strong>Drug Trafficking:</strong> Controls majority of drug distribution in New York—heroin, cocaine, synthetic drugs, and pharmaceuticals. This generates billions annually and provides leverage over addicts, dealers, and corrupt officials involved in drug trade.</li>
+                <li><strong>Weapons Smuggling:</strong> Major supplier of illegal weapons to criminal organizations, terrorist groups, and foreign militaries. His network includes cutting-edge technology stolen from legitimate sources, making him arms dealer on international scale.</li>
+                <li><strong>Human Trafficking:</strong> Involved in prostitution, forced labor, and human smuggling operations. This is among his most morally reprehensible activities, showing how far from any moral center Fisk operates.</li>
+                <li><strong>Extortion & Protection Rackets:</strong> Thousands of businesses pay Kingpin's organization for "protection" (protection from his own men). This generates steady income and extends his influence throughout New York's business community.</li>
+                <li><strong>Money Laundering:</strong> Operates sophisticated money laundering through his legitimate businesses, cleaning billions in criminal proceeds and making them available for legal use. This financial expertise is crucial to maintaining his empire.</li>
+                <li><strong>Contract Killing:</strong> Employs assassins for hire operations, eliminating targets for clients willing to pay premium prices. His assassin roster includes some of Marvel's deadliest killers, making him the go-to contractor for impossible hits.</li>
+                <li><strong>Gambling & Vice:</strong> Controls illegal gambling operations, unlicensed bars, and various vice-related businesses generating steady income while creating blackmail opportunities as powerful people become indebted to his operations.</li>
+            </ul>
+            
+            <p><strong>Legitimate Business Front:</strong></p>
+            <ul>
+                <li><strong>Fisk Industries:</strong> His primary legitimate corporation, involved in real estate development, construction, and international trade. This conglomerate is worth billions and provides legal income while facilitating criminal operations.</li>
+                <li><strong>Real Estate Empire:</strong> Owns significant portions of New York real estate, including office buildings, residential complexes, and commercial properties. This gives him physical control of city space and rental income while appreciating in value.</li>
+                <li><strong>Construction Companies:</strong> Controls construction firms that build his real estate projects, provide jobs for criminals needing legitimate employment, and give access to city infrastructure for criminal purposes.</li>
+                <li><strong>Import/Export Businesses:</strong> Shipping companies that facilitate international trade (legitimate and otherwise), moving goods through customs while smuggling drugs, weapons, and contraband in the same shipments.</li>
+                <li><strong>Financial Institutions:</strong> Owns banks, investment firms, and financial services companies that launder money, provide loans to criminals and legitimate businesses, and give him access to financial information useful for blackmail or investment.</li>
+                <li><strong>Charitable Foundations:</strong> Operates foundations that donate to worthy causes, building his public image as philanthropist while gaining tax advantages and creating relationships with politicians and society figures.</li>
+            </ul>
+            
+            <p><strong>Political & Social Influence:</strong></p>
+            <ul>
+                <li><strong>Corrupt Officials:</strong> Controls judges, police officers, prosecutors, and politicians through bribery, blackmail, or mutual benefit. This corruption extends from beat cops to high-ranking officials, creating layers of protection for his operations.</li>
+                <li><strong>Political Donations:</strong> Major campaign contributor whose money influences elections and policy. Politicians who receive his donations often owe him favors, creating political leverage across party lines.</li>
+                <li><strong>High Society Access:</strong> Moves in elite social circles, attending charity galas, serving on corporate boards, and associating with New York's wealthiest citizens. This social access provides intelligence, business opportunities, and veneer of respectability.</li>
+                <li><strong>Media Influence:</strong> Through ownership stakes and advertising revenue, influences media coverage of his activities and shapes public perception. Negative stories about Fisk mysteriously get killed or buried while positive coverage is promoted.</li>
+            </ul>
+            
+            <p><strong>Organizational Structure:</strong></p>
+            <ul>
+                <li><strong>Underbosses:</strong> Trusted lieutenants who manage different aspects of criminal operations—each controlling specific territories or activities while reporting to Kingpin</li>
+                <li><strong>Enforcers:</strong> Criminals with enhanced abilities or exceptional skills who eliminate threats, intimidate enemies, and handle situations requiring violence</li>
+                <li><strong>Lawyers:</strong> Army of attorneys who defend his operations, attack enemies through lawsuits, and ensure he's insulated from legal consequences</li>
+                <li><strong>Intelligence Network:</strong> Informants, hackers, and surveillance specialists providing constant flow of information about rivals, law enforcement, and heroes</li>
+                <li><strong>Financial Experts:</strong> Accountants, bankers, and financial advisors who manage his wealth, launder money, and ensure his financial empire runs efficiently</li>
+            </ul>
+            
+            <p><strong>Impact on New York City:</strong></p>
+            <ul>
+                <li>Crime rates influenced by his policies—when Kingpin wants peace (to facilitate business), crime decreases; when he's at war with rivals, violence escalates</li>
+                <li>Economic impact through legitimate businesses that employ thousands and contribute to city economy while exploiting workers and engaging in wage theft</li>
+                <li>Political corruption undermining democratic processes and rule of law</li>
+                <li>Social damage from drug epidemics, gang violence, and community destruction caused by his criminal operations</li>
+                <li>Psychological impact of knowing one man controls so much of city's dark underbelly, creating cynicism about justice and law enforcement</li>
+            </ul>
+            
+            <p>Kingpin's New York is a city where power matters more than justice, where money and influence can override law, and where one man's ambition shapes millions of lives. Heroes can defeat his agents, disrupt his operations, but the system Fisk built is so entrenched that removing him temporarily only creates power vacuum filled by chaos or his return. He's not just a criminal—he's an institution, and institutions are far harder to destroy than individuals.</p>
+        </section>
+
+        <!-- Key Battles & Events Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚔️</span>
+                Key Battles, Events & Defining Moments
+            </h2>
+            <div class="battles-grid">
+                <div class="battle-card">
+                    <h3>First Appearance: The Amazing Spider-Man #50 (1967)</h3>
+                    <p>Created by Stan Lee and John Romita Sr., Kingpin debuted as a Spider-Man villain before becoming more prominently associated with Daredevil. His first appearance established him as crime lord of unprecedented power and physical capability. Spider-Man initially underestimated Fisk due to his appearance, only to discover the massive man was nearly impossible to defeat in close combat. The story introduced Fisk's criminal empire, sophisticated operations, and the challenge he represented—a villain who couldn't simply be punched into submission but required dismantling an entire criminal organization. Kingpin's visual design—massive build, white suit, diamond-tipped cane—made him instantly iconic and immediately recognizable as figure of power and menace.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Daredevil: Born Again (1986)</h3>
+                    <p>Frank Miller's legendary storyline where Kingpin discovered Daredevil's secret identity (Matt Murdock) and systematically destroyed his life. Fisk didn't just fight Daredevil—he eliminated everything Matt cared about: got him disbarred from practicing law, destroyed his reputation by framing him for crimes, had him declared mentally incompetent, and drove him to homelessness and madness. The storyline showed Kingpin at his most terrifying—not physically fighting but using his wealth, influence, and intelligence to break a hero psychologically. Matt's eventual recovery and revenge demonstrated that Kingpin could be beaten, but "Born Again" remains definitive Kingpin story, showing his capacity for systematic, patient destruction of those who oppose him. The psychological warfare and moral complexity of the story elevated both characters beyond typical hero-villain dynamics.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Death of Vanessa</h3>
+                    <p>Various storylines featured Vanessa Fisk's death (circumstances varying by continuity), fundamentally changing Wilson. Without Vanessa, his anchor to humanity and motivation for attempting legitimacy disappeared. Her death transformed Kingpin from crime lord who might be redeemed into man with nothing left to lose. Some versions show him becoming even more ruthless and destructive; others show him attempting to honor her memory by going legitimate, only to be pulled back into crime. Vanessa's death proved she was more than plot device—she was what made Wilson Fisk still partially human. Without her, the Kingpin consumed Wilson entirely.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Spider-Man: Back in Black</h3>
+                    <p>After Civil War events where Peter Parker publicly revealed his identity, Kingpin hired assassin who shot Aunt May. Peter, enraged and wearing black costume, invaded Rikers Island prison where Fisk was incarcerated and beat him nearly to death in front of other inmates. Spider-Man's attack was brutal, personal, and showed that even heroes have breaking points when families are threatened. The beating humiliated Kingpin—he was defeated in his own domain (prison) where he'd maintained power and respect. Peter's promise—"If she dies, you die, wherever you are"—hung over Fisk with credible threat. The storyline demonstrated that even Kingpin's power couldn't protect him from determined hero who'd abandoned restraint. The humiliation damaged Fisk's reputation among criminals, showing vulnerability he'd carefully avoided revealing.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Mayor Fisk</h3>
+                    <p>In recent comics, Wilson Fisk was elected Mayor of New York City, achieving ultimate legitimacy while maintaining criminal empire. As mayor, he had legal authority to direct police, influence policy, and operate openly while claiming to reform. This storyline explored fascinating questions: Can crime lord govern legitimately? Does his business expertise make him effective mayor despite criminal past? How do heroes oppose someone with democratic mandate? Mayor Fisk represented Kingpin's ambitions realized—respect, power, and legitimacy combined. Heroes had to navigate complex territory: opposing him meant opposing elected official, yet allowing him unchecked power endangered the city. The storyline demonstrated Fisk's evolution and showed him achieving something no other crime lord managed: legal control of the city he'd always controlled illegally.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Spider-Man: Into the Spider-Verse (2018)</h3>
+                    <p>Liev Schreiber voiced Kingpin in this acclaimed animated film, giving the character mainstream prominence and memorable visual redesign. This version was motivated by grief—he'd lost his wife and son in accident after Spider-Man fight, driving him to build super-collider to access alternate dimensions where they still lived. The film's Kingpin was massive, imposing, and surprisingly sympathetic—a grieving husband and father whose dangerous obsession threatened reality itself. His design emphasized his size with exaggerated proportions making him physically dominating presence. The climax featured Miles Morales and Peter B. Parker defeating Fisk despite his superior strength, but the film humanized him through genuine grief and love for his family. This portrayal introduced Kingpin to new generation of fans and demonstrated the character's adaptability—whether motivated by power or grief, he remained compelling villain.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Shadowland</h3>
+                    <p>Storyline where Daredevil, possessed by demon, took over Kingpin's criminal operations and built fortress called Shadowland in Hell's Kitchen. Fisk found himself displaced from his empire by his greatest enemy. Rather than accept defeat, Fisk worked with heroes to stop demonic Daredevil, demonstrating his pragmatism—he'd ally with enemies against greater threats. After Daredevil's defeat, Fisk reclaimed his empire, showing his resilience and ability to capitalize on chaos. The story demonstrated Kingpin's empire's stability—even when he lost direct control, infrastructure remained, ready for his return.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Daredevil Netflix Series (2015-2018)</h3>
+                    <p>Vincent D'Onofrio's portrayal of Wilson Fisk in Netflix's Daredevil series became definitive live-action version and widely acclaimed performance. The show depicted Fisk's rise to power, relationship with Vanessa, and conflicts with Matt Murdock across three seasons. D'Onofrio brought vulnerability and menace to role—his Fisk was socially awkward, emotionally volatile, and capable of explosive violence. The series explored his childhood trauma, showed his genuine love for Vanessa, and depicted him as man trying to save Hell's Kitchen through brutal methods. Key moments included his prison arc in season 3 where he manipulated entire system from inside, his courtroom marriage to Vanessa while in custody, and finale where he reclaimed power through intimidation and strategy. D'Onofrio's performance humanized Fisk while maintaining his menace, creating complex villain audience could almost sympathize with while recognizing his monstrosity.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Hawkeye Series & Echo (2021-2024)</h3>
+                    <p>D'Onofrio returned as Kingpin in Disney+ Marvel series, expanding his MCU presence. In Hawkeye, Fisk was revealed as power behind Maya Lopez (Echo), controlling New York criminal operations and manipulating events. The series showed his continued influence and physical prowess in action sequences. Echo series further explored his relationship with Maya and his criminal empire. These appearances confirmed Kingpin as major MCU villain moving forward, with implications he'll oppose multiple street-level heroes including Daredevil in upcoming projects. His return demonstrated Marvel's commitment to serious, grounded villains alongside cosmic threats.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Gang Wars & Criminal Conflicts</h3>
+                    <p>Numerous storylines featured Kingpin at war with rival crime lords—Hammerhead, Silvermane, the Hand, and others. These gang wars devastated New York, with civilians caught in crossfire as criminal organizations battled for territory and power. Fisk typically emerged victorious through combination of superior strategy, resources, and ruthlessness. These conflicts demonstrated that even other criminals feared Kingpin—he wasn't just powerful; he was systematically more effective than any rival. Gang wars also showed collateral damage of his ambitions, with innocents suffering as criminals fought for dominance. Heroes intervening in these wars often found themselves choosing lesser evils—sometimes Kingpin's victory meant less bloodshed than protracted conflict.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Attempts at Redemption</h3>
+                    <p>Various storylines explored Fisk attempting to go legitimate—usually motivated by Vanessa's wishes or his own desire for respectability. These attempts consistently failed because Fisk couldn't fully abandon power, rivals wouldn't let him retire peacefully, or circumstances forced him back into crime. These redemption arcs demonstrated tragedy of his character—he genuinely wants legitimacy but is trapped by choices he's made and enemies he's created. Each failed redemption hardens him further, making true change increasingly impossible. The cycle of attempted reform and inevitable return to crime shows that some transformations require not just will but circumstances that allow change—circumstances Kingpin's position and personality make impossible to achieve.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Legacy & Impact Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🏆</span>
+                Legacy, Themes & Cultural Impact
+            </h2>
+            <p>Kingpin, created by Stan Lee and John Romita Sr. in 1967, has evolved from Spider-Man villain into one of Marvel's most essential and complex antagonists. His influence extends across multiple heroes' stories and represents challenges heroes face that can't be solved through physical combat alone.</p>
+            
+            <p><strong>Thematic Significance:</strong></p>
+            <ul>
+                <li><strong>Systemic vs. Individual Evil:</strong> Kingpin represents systemic corruption—he's not just one criminal but entire corrupt system. Heroes can defeat him physically, but the infrastructure he built remains, raising questions about whether individual heroism can overcome systemic problems.</li>
+                <li><strong>Power & Corruption:</strong> Fisk's story explores how power corrupts and absolute power corrupts absolutely. He started with understandable motivations (escaping poverty, protecting himself) but power transformed him into tyrant who perpetuates suffering he once experienced.</li>
+                <li><strong>American Dream Corrupted:</strong> Fisk embodies dark side of American Dream—he rose from poverty to power through determination and intelligence, but his path involved crime, violence, and exploitation. He achieved success but destroyed his soul in process, questioning what success means if it requires abandoning morality.</li>
+                <li><strong>Physical vs. Intellectual Threat:</strong> Unlike pure physical threats, Kingpin combines overwhelming physical power with genius intellect and vast resources. He represents complete package—brain, brawn, and institutional power—making him more dangerous than villains with only one attribute.</li>
+                <li><strong>Love & Vulnerability:</strong> Vanessa's role shows that even monsters can love and that love creates vulnerability. Fisk's devotion to her humanizes him while also being his exploitable weakness, exploring tension between emotional connection and survivalist instinct.</li>
+                <li><strong>Class & Economics:</strong> Particularly in modern interpretations, Kingpin represents how economic systems create crime—poverty drove him to criminality, and his empire thrives on economic inequality and desperation. He's both victim and perpetrator of class-based oppression.</li>
+            </ul>
+            
+            <p><strong>Visual & Cultural Impact:</strong></p>
+            <ul>
+                <li>Distinctive visual design—massive build in immaculate white suit with diamond-headed cane—makes him instantly recognizable across all media</li>
+                <li>Appeared in numerous animated series, always as major crime lord and primary antagonist for street-level heroes</li>
+                <li>Vincent D'Onofrio's acclaimed Netflix portrayal redefined character for modern audiences, influencing how Kingpin is written in comics</li>
+                <li>Into the Spider-Verse introduced character to younger mainstream audience with memorable visual redesign and emotionally resonant motivation</li>
+                <li>Video games frequently feature Kingpin as crime lord players must defeat, often requiring dismantling his organization rather than simple boss fight</li>
+                <li>Merchandise and collectibles regularly feature Kingpin, with his imposing presence making for striking display pieces</li>
+            </ul>
+            
+            <p><strong>Character Evolution:</strong></p>
+            <ul>
+                <li><strong>Spider-Man Villain:</strong> Initially created as Spider-Man antagonist, powerful crime lord who could physically match web-slinger</li>
+                <li><strong>Daredevil's Nemesis:</strong> Frank Miller's Daredevil run made Fisk primarily DD's enemy, creating legendary conflict that defined both characters</li>
+                <li><strong>Psychological Depth:</strong> Later stories added complexity—childhood trauma, love for Vanessa, desire for legitimacy—making him three-dimensional rather than simple villain</li>
+                <li><strong>Systemic Threat:</strong> Modern portrayals emphasize him as systemic problem rather than individual criminal, reflecting contemporary understanding of how institutional corruption functions</li>
+                <li><strong>Sympathetic Monster:</strong> Recent interpretations (Netflix series, Into the Spider-Verse) make him somewhat sympathetic while maintaining his monstrosity, creating moral complexity</li>
+            </ul>
+            
+            <p><strong>Influence on Marvel Universe:</strong></p>
+            <ul>
+                <li>Established template for crime lord villains in comics—intelligent, physically powerful, and systemically entrenched</li>
+                <li>Created model for villains who can't be defeated through simple punching—requiring heroes to think strategically and dismantle organizations</li>
+                <li>His conflicts with Daredevil produced some of comics' greatest stories and defined what street-level Marvel storytelling could achieve</li>
+                <li>Influence extends beyond direct confrontations—many Marvel crime stories reference Kingpin's empire even when he doesn't appear</li>
+                <li>Represents challenge all street-level heroes face: fighting individual criminals is temporary; fighting corruption and poverty requires systemic change beyond one hero's capability</li>
+            </ul>
+            
+            <p><strong>Why Kingpin Endures:</strong></p>
+            <ul>
+                <li><strong>Complex Morality:</strong> Not pure evil but man shaped by circumstances who made terrible choices, creating moral complexity that resonates</li>
+                <li><strong>Physical & Mental Threat:</strong> Combines multiple types of danger—physical combat prowess, strategic genius, and institutional power—making him versatile villain</li>
+                <li><strong>Relatable Origins:</strong> His poverty-to-power story is twisted version of American Dream that anyone can understand, even if they reject his methods</li>
+                <li><strong>Systemic Relevance:</strong> In age of increasing awareness about systemic injustice and corruption, Kingpin represents these issues in personal form</li>
+                <li><strong>Adaptation Friendly:</strong> Core concept works across different interpretations—whether motivated by power, grief, or ambition, Kingpin remains compelling</li>
+            </ul>
+            
+            <p>Wilson Fisk represents something profoundly important in superhero narratives: the villain who can't be punched into submission. He's the crime lord whose defeat requires dismantling systems, the corrupt businessman who operates within laws he helped write, the physical powerhouse with genius intellect and unlimited resources. He's everything heroes struggle to fight—morally complex, systemically protected, and genuinely dangerous on every level.</p>
+            
+            <p>More than that, Kingpin is a tragedy—a brilliant man with capacity for love who could have been legitimate success but chose power over morality and now cannot escape consequences of that choice. He's trapped in role he created, unable to be Wilson Fisk the man because Kingpin the crime lord consumed him. His story is cautionary tale about ambition without ethics, power without responsibility, and price of losing yourself to your own darkness.</p>
+            
+            <p>In an era where discussions about systemic corruption, economic inequality, and institutional power dominate public discourse, the Kingpin's relevance only grows. He's the one percent who got there through ruthlessness, the corruption that makes systems fail, the institutional power that shields wrongdoers from consequences. He's what happens when one man gains so much power that even heroes struggle to stop him—and that makes him not just great villain but important one, forcing audiences to confront questions about power, justice, and whether individual heroes can truly overcome systemic evil.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#villains" class="btn btn-primary">← Return to Villains Gallery</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Kingpin</h4>
+                    <p>Wilson Fisk, the crime lord who controls New York's underworld through combination of peak human strength, genius intellect, and vast criminal empire—proving that the most dangerous villains aren't always the ones with superpowers.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Details</h4>
+                    <p><strong>Real Name:</strong> Wilson Grant Fisk</p>
+                    <p><strong>First Appearance:</strong> The Amazing Spider-Man #50 (1967)</p>
+                    <p><strong>Created by:</strong> Stan Lee & John Romita Sr.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Verse Fan Site. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        console.log("Kingpin page loaded");
+        
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+

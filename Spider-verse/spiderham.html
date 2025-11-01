@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider-Ham - Peter Porker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to character profile page */
+        .character-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .character-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .character-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .character-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .character-universe {
+            display: inline-block;
+            background: rgba(227, 30, 36, 0.9);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+        
+        .character-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+        
+        .character-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(227, 30, 36, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #e31e24;
+            border-color: #e31e24;
+            transform: translateX(-5px);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .character-image-section {
+            display: none;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #e31e24;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #ff69b4;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '🐷';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #e31e24 0%, #ff69b4 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 105, 180, 0.3);
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px) rotate(2deg);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+            border-color: #ffff00;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #ffff00;
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+        }
+        
+        .power-item.cartoon {
+            background: linear-gradient(135deg, #1e3a8a 0%, #ff69b4 100%);
+        }
+        
+        .allies-grid,
+        .villains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .character-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: #ff69b4;
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
+        }
+        
+        .character-card h4 {
+            font-size: 1.3rem;
+            color: #0f1729;
+            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+        
+        .character-card .actor {
+            color: #e31e24;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .character-card p {
+            font-size: 1rem;
+            color: #6c757d;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .villain-card-profile {
+            background: linear-gradient(135deg, #e31e24 0%, #1e3a8a 100%);
+            color: white;
+        }
+        
+        .villain-card-profile h4 {
+            color: #ffff00;
+        }
+        
+        .villain-card-profile .actor {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .villain-card-profile p {
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .functions-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .function-badge {
+            background: linear-gradient(135deg, #e31e24 0%, #ff69b4 100%);
+            padding: 1.2rem;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .function-badge:hover {
+            transform: scale(1.05) rotate(-2deg);
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.4);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .character-hero {
+                height: 300px;
+            }
+            
+            .character-name {
+                font-size: 50px;
+            }
+            
+            .character-alias {
+                font-size: 1.4rem;
+            }
+            
+            .character-universe {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .character-hero {
+                height: 250px;
+            }
+            
+            .character-name {
+                font-size: 36px;
+            }
+            
+            .character-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid,
+            .allies-grid,
+            .villains-grid,
+            .functions-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#versions" class="back-button">
+        <span>←</span>
+        <span>Back to Spider-Verse</span>
+    </a>
+
+    <!-- Character Hero Section -->
+    <section class="character-hero">
+        <img src="https://static0.cbrimages.com/wordpress/wp-content/uploads/2023/11/spider-ham.jpg" alt="Spider-Ham" class="character-hero-image">
+        <div class="character-hero-content">
+            <div class="character-universe">EARTH-8311 • CARTOON ANIMAL UNIVERSE</div>
+            <h1 class="character-name">PETER PORKER</h1>
+            <p class="character-alias">The Spectacular Spider-Ham!</p>
+        </div>
+    </section>
+
+    <!-- Character Profile -->
+    <div class="profile-container">
+        <!-- Character Image -->
+        <div class="character-image-section">
+            <div class="character-image">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUFoWCY8k--9V4JUjfbkPJbAM9rq1qYDKojQ&s" alt="Spider-Ham">
+            </div>
+        </div>
+
+        <!-- Universe/World Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🎪</span>
+                Universe & Origins
+            </h2>
+            <p><strong>Universe:</strong> Earth-8311 (Cartoon Animal Universe / "Larval Earth")</p>
+            <p><strong>Real Name:</strong> Peter Porker</p>
+            <p><strong>Alias:</strong> Spider-Ham, The Spectacular Spider-Ham, The Amazing Spider-Ham</p>
+            <p><strong>Species:</strong> Anthropomorphic Pig</p>
+            <p><strong>Occupation:</strong> Superhero, Photographer</p>
+            <p><strong>First Appearance:</strong> Marvel Tails Starring Peter Porker, the Spectacular Spider-Ham #1 (1983) - Comics</p>
+            <p><strong>Voiced by:</strong> John Mulaney (Spider-Man: Into the Spider-Verse)</p>
+            <p>Spider-Ham comes from Earth-8311, also known as "Larval Earth," a universe where everyone is an anthropomorphic animal living in a cartoon world. This is a reality where the laws of physics are suggestions, cartoon logic reigns supreme, and comedy is as powerful as any superpower. In this zany universe filled with puns, sight gags, and slapstick humor, Peter Porker stands as the mightiest—and silliest—superhero protecting New York from evil animals with bad intentions.</p>
+        </section>
+
+        <!-- Story/Background Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📚</span>
+                Story & Background
+            </h2>
+            <p>Peter Porker's origin is perhaps the most absurd of all Spider-People—and that's saying something! In the original comics, Peter Porker wasn't always a pig. He was actually a <strong>spider</strong> living happily in his web until a bizarre accident changed everything.</p>
+            
+            <p>May Porker, an eccentric scientist (and anthropomorphic pig), was working on an atomic-powered hairdryer when it exploded. The radioactive blast transformed her into a bizarre, unstable creature. In her confusion, she bit Peter the spider. This radioactive pig bite didn't kill Peter—instead, through cartoon logic and atomic science, it transformed him into an anthropomorphic pig with all the proportionate abilities of a spider!</p>
+            
+            <p>Yes, that's right: while Peter Parker was a man bitten by a radioactive spider, Peter Porker was a <em>spider bitten by a radioactive pig</em>. It's a completely inverted origin that perfectly captures the absurdist humor of his universe.</p>
+            
+            <p>After his transformation, Peter adopted the name Peter Porker and decided to use his newfound abilities to fight crime in New York City. He became Spider-Ham, the Spectacular Spider-Ham, wearing a costume similar to Spider-Man's but adapted for his porcine physique. He even got a job as a photographer at the <em>Daily Beagle</em>, run by J. Jonah Jackal, who—like his human counterpart—constantly publishes headlines condemning Spider-Ham as a menace.</p>
+            
+            <p>In his cartoon universe, Spider-Ham faces off against animal versions of classic Spider-Man villains. He's battled Ducktor Doom, Hogzilla, Raven the Hunter, and many others, all while cracking jokes and defying the laws of physics through cartoon powers. His adventures are filled with puns, visual gags, breaking the fourth wall, and all the chaos you'd expect from a Looney Tunes-style superhero.</p>
+            
+            <p>In <strong>Spider-Man: Into the Spider-Verse</strong>, voiced by comedian John Mulaney, Spider-Ham is pulled into Miles Morales' universe by the super-collider. Despite his cartoonish appearance and comedic nature, Spider-Ham proves himself a capable hero and valuable teammate. His ability to pull items from "hammerspace" (the cartoon physics phenomenon where characters can produce any object from nowhere) and his cartoon resilience make him surprisingly effective in combat. While other characters question whether he's real or having hallucinations, Spider-Ham remains cheerfully oblivious to how strange he appears in their more realistic world.</p>
+        </section>
+
+        <!-- Functions/Roles Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🦸</span>
+                Functions & Roles
+            </h2>
+            <div class="functions-list">
+                <div class="function-badge">Cartoon Superhero</div>
+                <div class="function-badge">Spider-Verse Ally</div>
+                <div class="function-badge">Comic Relief</div>
+                <div class="function-badge">Photographer</div>
+                <div class="function-badge">Protector of Larval Earth</div>
+                <div class="function-badge">Multiversal Hero</div>
+            </div>
+            <p style="margin-top: 1.5rem;">As Spider-Ham, Peter Porker serves as the primary protector of his cartoon animal universe, fighting crime with a combination of spider-powers and cartoon physics. While he's often the comic relief in team-ups with other Spider-People, Spider-Ham is genuinely heroic and takes his responsibility seriously (even if he does it while cracking jokes). His unique cartoon perspective and abilities often provide solutions to problems that more "realistic" heroes can't solve. He proves that even in the silliest of universes, a hero can make a real difference.</p>
+        </section>
+
+        <!-- Powers Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Superpowers & Abilities
+            </h2>
+            <p style="margin-bottom: 1rem;"><strong>Spider-Ham possesses all the standard spider-powers PLUS the reality-defying abilities of cartoon physics:</strong></p>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>🧗 Wall-Crawling</h4>
+                    <p>Can stick to any surface, often in defiance of physics or logic. He can run up walls, across ceilings, and sometimes just float if it's funnier.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕸️ Web-Shooting</h4>
+                    <p>Produces organic webbing that can take any shape needed for comedic or practical purposes. His webs work exactly as the plot demands.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕷️ Spider-Sense</h4>
+                    <p>Warns him of danger, though it sometimes seems to work based on comedic timing rather than actual threats. Often illustrated with exclamation points appearing above his head.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💪 Proportionate Pig Strength</h4>
+                    <p>Has the proportionate strength of a pig combined with a spider, which in cartoon logic means he's incredibly strong—especially when it's funny.</p>
+                </div>
+                <div class="power-item cartoon">
+                    <h4>🎪 Cartoon Physics</h4>
+                    <p><strong>UNIQUE:</strong> Subject to cartoon logic—can survive enormous falls, get flattened and pop back into shape, and defy physics when narratively convenient or hilarious.</p>
+                </div>
+                <div class="power-item cartoon">
+                    <h4>🎒 Hammerspace</h4>
+                    <p><strong>UNIQUE:</strong> Can pull any object out of nowhere (typically from behind his back), including mallets, anvils, signs, and whatever else the situation requires. Classic cartoon ability.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🤸 Enhanced Agility</h4>
+                    <p>Superhuman agility that allows for impossible acrobatic feats. Can bounce, flip, and contort in ways that defy anatomy.</p>
+                </div>
+                <div class="power-item cartoon">
+                    <h4>🧱 Fourth Wall Awareness</h4>
+                    <p><strong>UNIQUE:</strong> Frequently breaks the fourth wall, acknowledging the audience and making meta-commentary about being in a story. He knows he's a cartoon character.</p>
+                </div>
+                <div class="power-item cartoon">
+                    <h4>😂 Comedy Combat</h4>
+                    <p><strong>UNIQUE:</strong> Can weaponize humor and cartoon gags in combat. Pie throwing, banana peels, and comedic timing are legitimate fighting techniques.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notable Allies Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🤝</span>
+                Notable Allies
+            </h2>
+            <div class="allies-grid">
+                <div class="character-card">
+                    <h4>The Spider-Verse Team</h4>
+                    <p class="actor">Into the Spider-Verse</p>
+                    <p>Including Miles Morales, Peter B. Parker, Spider-Gwen, Spider-Man Noir, and Peni Parker. Spider-Ham teams up with them to stop Kingpin's super-collider, providing comic relief and cartoon solutions to serious problems.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Captain Americat</h4>
+                    <p class="actor">Comics - Earth-8311</p>
+                    <p>An anthropomorphic cat version of Captain America who fights alongside Spider-Ham. A patriotic feline with a shield and star-spangled costume who leads animal superheroes.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Ducktor Strange</h4>
+                    <p class="actor">Comics - Earth-8311</p>
+                    <p>Wait, this one's usually a villain! But in some stories, the duck sorcerer has helped Spider-Ham against greater threats. A master of mystic arts who happens to be a duck.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Goose Rider</h4>
+                    <p class="actor">Comics - Earth-8311</p>
+                    <p>An anthropomorphic goose bonded with a spirit of vengeance. The animal universe's version of Ghost Rider, complete with flaming skull and motorcycle (or sometimes a flaming bicycle).</p>
+                </div>
+                <div class="character-card">
+                    <h4>TheLarval Avengers</h4>
+                    <p class="actor">Comics - Earth-8311</p>
+                    <p>Animal versions of the Avengers including Iron Mouse, Hulk-Bunny, Hawkeye (a literal hawk), and others who team up with Spider-Ham to protect their cartoon world.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Villains Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">💀</span>
+                Main Villains
+            </h2>
+            <div class="villains-grid">
+                <div class="character-card villain-card-profile">
+                    <h4>Ducktor Doom</h4>
+                    <p class="actor">Comics - Earth-8311</p>
+                    <p>An anthropomorphic duck supervillain and monarch of Ducktoria (Latveria's animal universe equivalent). A brilliant scientist and sorcerer with a metal mask who seeks to conquer the world—and is constantly foiled by Spider-Ham.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Hogzilla</h4>
+                    <p class="actor">Comics - Earth-8311</p>
+                    <p>A giant radioactive pig monster who rampages through New York City. The animal universe's version of Godzilla, but as a hog. Represents the kaiju-sized threats Spider-Ham faces.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Raven the Hunter</h4>
+                    <p class="actor">Comics - Earth-8311</p>
+                    <p>A predatory raven who hunts Spider-Ham as the ultimate prey. The animal version of Kraven the Hunter, complete with hunting gear and an obsession with proving himself the greatest hunter.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>The Buzzard</h4>
+                    <p class="actor">Comics - Earth-8311</p>
+                    <p>An elderly buzzard villain who flies around causing trouble. The animal universe's version of the Vulture, using his natural flying abilities enhanced with technology.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>The Kingpin</h4>
+                    <p class="actor">Comics & Films - Various Versions</p>
+                    <p>Animal versions of the crime lord appear in various forms. In <em>Into the Spider-Verse</em>, Spider-Ham helps fight against Kingpin's plot to access other dimensions.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Bull-Frog</h4>
+                    <p class="actor">Comics - Earth-8311</p>
+                    <p>A combination bull and frog villain who possesses incredible jumping abilities and strength. One of many hybrid animal villains in Spider-Ham's bizarre rogues gallery.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Eelectro</h4>
+                    <p class="actor">Comics - Earth-8311</p>
+                    <p>An electric eel villain with the power to generate and control electricity. The animal universe's version of Electro, posing a shocking threat to Spider-Ham.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What Makes Spider-Ham Unique Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⭐</span>
+                What Makes Spider-Ham Unique
+            </h2>
+            <p>Spider-Ham is unlike any other Spider-Person in several hilarious and important ways:</p>
+            <ul>
+                <li><strong>Inverted Origin:</strong> A spider bitten by a radioactive pig (not a person bitten by a spider) is the most absurd origin story in the Spider-Verse</li>
+                <li><strong>Cartoon Physics:</strong> Subject to Looney Tunes-style reality where comedy trumps physics and anything can happen if it's funny enough</li>
+                <li><strong>Hammerspace Mastery:</strong> Can pull any object from nowhere, a power unique to cartoon characters that proves surprisingly useful</li>
+                <li><strong>Fourth Wall Breaking:</strong> Regularly acknowledges being a comic book/cartoon character and directly addresses the audience</li>
+                <li><strong>Anthropomorphic Animal:</strong> The only non-human Spider-Person in most team-ups (Peni's spider aside), making him stand out visually</li>
+                <li><strong>Comic Relief with Heart:</strong> While funny, Spider-Ham genuinely cares about helping others and takes heroism seriously despite his silly demeanor</li>
+                <li><strong>Cartoon Immortality:</strong> Can survive anything through cartoon logic—getting flattened, blown up, or dropped from skyscrapers only to pop back into shape</li>
+                <li><strong>Pun-Based Combat:</strong> Uses wordplay and visual puns as legitimate tactics in battle</li>
+                <li><strong>Self-Aware:</strong> Knows exactly how ridiculous he is and leans into it, making him endearing rather than annoying</li>
+            </ul>
+        </section>
+
+        <!-- Spider-Verse Appearance Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🎬</span>
+                Into the Spider-Verse Appearance
+            </h2>
+            <p>In <strong>Spider-Man: Into the Spider-Verse</strong>, Spider-Ham is voiced by comedian <strong>John Mulaney</strong>, whose deadpan delivery of absurd lines makes the character even funnier. Mulaney's performance captures the perfect balance of sincerity and ridiculousness that makes Spider-Ham work.</p>
+            
+            <p>Spider-Ham's animation style is distinctly different from the other characters—he's rendered in a more exaggerated, classic cartoon style with more elastic movements and traditional animation techniques. His expressions squash and stretch, his eyes pop out of his head, and he moves with the bouncy energy of golden age cartoons.</p>
+            
+            <p>His dialogue is pure comedic gold. He delivers lines like "I'm a cartoon pig! I can do this all day!" with complete earnestness. When asked how long he's been Spider-Ham, he responds "It's been about an hour," highlighting the surreal time-dilation of his cartoon universe. He freely admits to being a cartoon and makes meta-commentary about his situation.</p>
+            
+            <p>Despite being comic relief, Spider-Ham has genuine emotional moments. When the team is discussing their losses and tragedies, Spider-Ham mentions losing someone too (Uncle Frankfurter), showing that even in his silly universe, heroism comes with real pain and sacrifice.</p>
+            
+            <p>During the final battle, Spider-Ham demonstrates his cartoon abilities to great effect. He pulls a giant hammer from hammerspace to fight enemies, uses an oversized mallet to defend himself, and his cartoon durability means he can take hits that would seriously injure other heroes. His contribution to the team isn't just comedy—he's genuinely useful in combat.</p>
+            
+            <p>One of the film's most memorable moments is Spider-Ham breaking the fourth wall in the credits sequence, delivering his catchphrase: "That's all, folks!"—a reference to classic Warner Bros. cartoons. It's the perfect ending for a character who exists in the space between parody and genuine heroism.</p>
+        </section>
+
+        <!-- Cultural Impact Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🏆</span>
+                Cultural Impact & Legacy
+            </h2>
+            <p>Spider-Ham was created by Tom DeFalco and Mark Armstrong in 1983 as a one-shot parody in <em>Marvel Tails</em>, but the character proved so popular that he received his own ongoing series. In the 1980s, Spider-Ham comics offered lighter, more humorous alternatives to the increasingly serious superhero stories of that era.</p>
+            
+            <p>The character represented Marvel's willingness to experiment with different tones and audiences. Spider-Ham comics were accessible to younger readers while still entertaining adults with clever wordplay, satirical takes on superhero tropes, and legitimate character development (despite the absurdist setting).</p>
+            
+            <p>After his original run ended, Spider-Ham became a cult favorite, appearing in various multiversal events and team-ups. Fans appreciated the character as proof that superhero stories don't always have to be dark and gritty—sometimes they can be fun, silly, and still meaningful.</p>
+            
+            <p><strong>John Mulaney's portrayal</strong> in <em>Spider-Man: Into the Spider-Verse</em> introduced Spider-Ham to mainstream audiences who had never heard of the character. His inclusion in the film was a risk—would general audiences accept a cartoon pig superhero in a serious superhero movie? The answer was an overwhelming yes. Spider-Ham became a fan-favorite character, with his merchandise flying off shelves and his scenes being among the most quoted from the film.</p>
+            
+            <p>The success of Spider-Ham in <em>Into the Spider-Verse</em> demonstrated that audiences are hungry for variety in superhero media. Not every hero needs to be brooding or realistic. Sometimes, a cartoon pig who pulls mallets from nowhere and breaks the fourth wall is exactly what a movie needs to remind us why we love superhero stories—they're supposed to be fun.</p>
+            
+            <p>Spider-Ham's legacy is proving that superhero stories can embrace absurdity and humor without losing heart or meaning. He shows that even the silliest character can teach us about responsibility, sacrifice, and heroism. In a multiverse filled with dark, complex versions of Spider-Man, Spider-Ham stands out by simply being joyful—and sometimes, that's the most powerful superpower of all.</p>
+            
+            <p>The character continues to appear in comics, video games, and animated projects, always bringing his unique brand of chaos and comedy. In a world that often takes superheroes too seriously, Spider-Ham reminds us that it's okay to laugh, have fun, and enjoy the inherent absurdity of people (or pigs) in tights fighting crime.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#versions" class="btn btn-primary">← Return to Spider-Verse</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Spider-Ham</h4>
+                    <p>Peter Porker, the Spectacular Spider-Ham! A cartoon pig with spider-powers from a universe where cartoon logic reigns supreme.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Details</h4>
+                    <p><strong>Voice Actor:</strong> John Mulaney</p>
+                    <p><strong>Created by:</strong> Tom DeFalco & Mark Armstrong</p>
+                    <p><strong>First Appearance:</strong> 1983 (Comics)</p>
+                    <p><strong>Universe:</strong> Earth-8311 (Larval Earth)</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Man Fan Hub. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment and Sony Pictures.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        <a href="spiderversions.html" 
+   style="color:#00aaff; 
+          display:block; 
+          margin-top:40px; 
+          text-align:center; 
+          font-size:18px; 
+          text-decoration:none;">
+  ← Back to Spider-Man Versions
+</a>
+
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+

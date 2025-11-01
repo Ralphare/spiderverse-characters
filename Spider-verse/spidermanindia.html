@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider-Man India - Pavitr Prabhakar</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to character profile page */
+        .character-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .character-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .character-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .character-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .character-universe {
+            display: inline-block;
+            background: rgba(227, 30, 36, 0.9);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+        
+        .character-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+        
+        .character-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(227, 30, 36, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #e31e24;
+            border-color: #e31e24;
+            transform: translateX(-5px);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .character-image-section {
+            display: none;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #e31e24;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #ff9933;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '🕷️';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #e31e24 0%, #ff9933 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 153, 51, 0.3);
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(227, 30, 36, 0.4);
+            border-color: #1e3a8a;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+        }
+        
+        .allies-grid,
+        .villains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .character-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff9933;
+            box-shadow: 0 10px 25px rgba(255, 153, 51, 0.3);
+        }
+        
+        .character-card h4 {
+            font-size: 1.3rem;
+            color: #0f1729;
+            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+        
+        .character-card .actor {
+            color: #e31e24;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .character-card p {
+            font-size: 1rem;
+            color: #6c757d;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .villain-card-profile {
+            background: linear-gradient(135deg, #000000 0%, #1e3a8a 100%);
+            color: white;
+        }
+        
+        .villain-card-profile h4 {
+            color: #ff9933;
+        }
+        
+        .villain-card-profile .actor {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .villain-card-profile p {
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .functions-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .function-badge {
+            background: linear-gradient(135deg, #e31e24 0%, #ff9933 100%);
+            padding: 1.2rem;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .function-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 153, 51, 0.4);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .character-hero {
+                height: 300px;
+            }
+            
+            .character-name {
+                font-size: 50px;
+            }
+            
+            .character-alias {
+                font-size: 1.4rem;
+            }
+            
+            .character-universe {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .character-hero {
+                height: 250px;
+            }
+            
+            .character-name {
+                font-size: 36px;
+            }
+            
+            .character-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid,
+            .allies-grid,
+            .villains-grid,
+            .functions-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#versions" class="back-button">
+        <span>←</span>
+        <span>Back to Spider-Verse</span>
+    </a>
+
+    <!-- Character Hero Section -->
+    <section class="character-hero">
+        <img src="https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/12858/production/_130346857_capture.png" alt="Spider-Man India" class="character-hero-image">
+        <div class="character-hero-content">
+            <div class="character-universe">EARTH-50101 • MUMBATTAN</div>
+            <h1 class="character-name">PAVITR PRABHAKAR</h1>
+            <p class="character-alias">Spider-Man India</p>
+        </div>
+    </section>
+
+    <!-- Character Profile -->
+    <div class="profile-container">
+        <!-- Character Image -->
+        <div class="character-image-section">
+            <div class="character-image">
+                <img src="https://sm.ign.com/ign_in/screenshot/default/whatsapp-image-2023-04-04-at-132142_am1a.jpg" alt="Spider-Man India">
+            </div>
+        </div>
+
+        <!-- Universe/World Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🇮🇳</span>
+                Universe & Origins
+            </h2>
+            <p><strong>Universe:</strong> Earth-50101 (Spider-Man India Universe)</p>
+            <p><strong>Real Name:</strong> Pavitr Prabhakar</p>
+            <p><strong>Alias:</strong> Spider-Man India, Spider-Man of Mumbattan</p>
+            <p><strong>Location:</strong> Mumbai / Mumbattan (in Spider-Verse films)</p>
+            <p><strong>Heritage:</strong> Indian</p>
+            <p><strong>First Appearance:</strong> Spider-Man: India #1 (2004) - Comics</p>
+            <p><strong>Voiced by:</strong> Karan Soni (Spider-Man: Across the Spider-Verse)</p>
+            <p>Pavitr Prabhakar is Spider-Man India, a unique version of the web-slinger who protects Mumbai (or "Mumbattan" in the Spider-Verse films—a vibrant fusion of Mumbai and Manhattan). Unlike most Spider-People whose powers come from science, Pavitr's origin has mystical roots connected to ancient Indian spirituality. His story celebrates Indian culture, bringing desi representation to the Spider-Verse with colorful visuals, cultural authenticity, and a fresh perspective on what it means to be a hero.</p>
+        </section>
+
+        <!-- Story/Background Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📖</span>
+                Story & Background
+            </h2>
+            <p><strong>Comics Origin (2004):</strong> Pavitr Prabhakar was a poor, simple village boy who moved to Mumbai with his Aunt Maya and Uncle Bhim. In the big city, Pavitr faced bullying and struggled to fit in at his new school. Everything changed when an ancient yogi appeared to him, explaining that Pavitr had been chosen to receive the powers of a mystical spider totem to fight evil and protect India.</p>
+            
+            <p>The yogi granted Pavitr incredible spider-like abilities through mystical means, not through a radioactive spider bite. This mystical origin tied Pavitr to India's ancient spiritual traditions, making him distinct from the science-based Spider-People. With his newfound powers, Pavitr became Spider-Man India, using his abilities to fight crime and protect Mumbai from various threats.</p>
+            
+            <p>His origin story follows familiar Spider-Man beats—struggling with power and responsibility, facing a villain who kills his beloved Uncle Bhim, and learning that "with great power must also come great responsibility." However, these universal themes are filtered through an Indian cultural lens, featuring Indian villains, settings, and sensibilities.</p>
+            
+            <p><strong>Spider-Verse Film Version:</strong> In <em>Spider-Man: Across the Spider-Verse</em> (2023), Pavitr Prabhakar is portrayed as an incredibly upbeat, confident, and charismatic Spider-Man who has only been operating for six months. Unlike many Spider-People who are burdened by tragedy, Pavitr is refreshingly optimistic, living his best life as a superhero.</p>
+            
+            <p>Voiced brilliantly by Karan Soni, this version of Pavitr is enthusiastic about showing Miles Morales around "Mumbattan"—his vibrant, colorful city that beautifully blends Mumbai's architecture and culture with Spider-Man's typical urban landscape. The animation during his sequence is stunning, featuring a color palette inspired by Indian art and culture, with warm oranges, vibrant blues, and rich purples.</p>
+            
+            <p>Pavitr is in a relationship with Gayatri Singh and has a positive relationship with her father, Inspector Singh of the Mumbai police. This marks a refreshing change from the typical "police hunt Spider-Man" dynamic, as Inspector Singh actually respects and works with Spider-Man. Pavitr's life seems perfect—until the Spot's attack on Mumbattan threatens to take it all away, testing whether Pavitr can maintain his optimism when facing real tragedy.</p>
+            
+            <p>The film shows that Pavitr hasn't experienced his "Uncle Ben" moment yet—his origin was different, and he hasn't faced the defining tragedy that shapes most Spider-People. When disaster strikes during the Spot's attack and Inspector Singh's life hangs in the balance, Pavitr faces the possibility of his universe's "canon event," joining the other Spider-People in understanding the weight of responsibility that comes with being Spider-Man.</p>
+        </section>
+
+        <!-- Functions/Roles Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🦸</span>
+                Functions & Roles
+            </h2>
+            <div class="functions-list">
+                <div class="function-badge">Superhero</div>
+                <div class="function-badge">Protector of Mumbattan</div>
+                <div class="function-badge">Spider-Society Member</div>
+                <div class="function-badge">Student</div>
+                <div class="function-badge">Cultural Ambassador</div>
+                <div class="function-badge">Multiversal Hero</div>
+            </div>
+            <p style="margin-top: 1.5rem;">As Spider-Man India, Pavitr serves as the primary protector of Mumbai/Mumbattan, defending his city from threats both mundane and extraordinary. He's a member of Miguel O'Hara's Spider-Society, connecting with other Spider-People across dimensions while representing Indian culture and perspective in the multiversal Spider-family. Pavitr brings optimism, energy, and a fresh outlook to the often-tragic Spider-Man legacy, proving that being Spider-Man doesn't always have to come with crushing guilt and loss—at least not at first.</p>
+        </section>
+
+        <!-- Powers Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Superpowers & Abilities
+            </h2>
+            <p style="margin-bottom: 1rem;"><strong>Pavitr possesses the standard spider-powers, granted through mystical rather than scientific means:</strong></p>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>🧗 Wall-Crawling</h4>
+                    <p>Can adhere to any surface, allowing him to scale the tall buildings of Mumbai and navigate the city's unique architectural landscape with ease.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕸️ Web-Shooting</h4>
+                    <p>Produces organic webbing from his wrists (mystically generated). His webs are strong, versatile, and used for swinging through Mumbattan's colorful skyline.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🕷️ Spider-Sense</h4>
+                    <p>A precognitive danger warning system that alerts him to threats. Pavitr's spider-sense is tied to his mystical connection to the spider totem.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💪 Superhuman Strength</h4>
+                    <p>Enhanced strength allowing him to lift heavy objects, overpower opponents, and perform incredible physical feats during his acrobatic fights.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🤸 Enhanced Agility</h4>
+                    <p>Superhuman agility, flexibility, and acrobatic abilities. Pavitr's fighting style is fluid and dynamic, incorporating his natural athleticism with his powers.</p>
+                </div>
+                <div class="power-item">
+                    <h4>⚡ Enhanced Speed & Reflexes</h4>
+                    <p>Lightning-fast reflexes and movement speed that allow him to dodge attacks, catch falling objects, and react faster than humanly possible.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🛡️ Enhanced Durability</h4>
+                    <p>Increased resistance to physical damage, allowing him to withstand impacts and continue fighting even after taking significant hits.</p>
+                </div>
+                <div class="power-item">
+                    <h4>✨ Mystical Connection</h4>
+                    <p>Unlike most Spider-People, Pavitr's powers have a mystical origin, potentially connecting him to ancient Indian spiritual forces and the spider totem tradition.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notable Allies Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🤝</span>
+                Notable Allies
+            </h2>
+            <div class="allies-grid">
+                <div class="character-card">
+                    <h4>Gayatri Singh</h4>
+                    <p class="actor">Voiced by Shubham Kumar (Across the Spider-Verse)</p>
+                    <p>Pavitr's girlfriend who is supportive of his dual identity as Spider-Man. Their relationship represents a healthier dynamic than the typical "secret identity causes problems" trope in Spider-Man stories.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Inspector Singh</h4>
+                    <p class="actor">Gayatri's father (Across the Spider-Verse)</p>
+                    <p>A police inspector who, unlike most Spider-Man universes, actually respects and works with Spider-Man. His life becomes threatened during the Spot's attack, creating Pavitr's potential "canon event."</p>
+                </div>
+                <div class="character-card">
+                    <h4>Miles Morales</h4>
+                    <p class="actor">Voiced by Shameik Moore</p>
+                    <p>Pavitr befriends Miles during the Mumbattan incident, enthusiastically showing him around the city and bonding over their shared experiences as young Spider-People. Their friendship represents the international nature of the Spider-Verse.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Hobie Brown (Spider-Punk)</h4>
+                    <p class="actor">Voiced by Daniel Kaluuya</p>
+                    <p>A fellow Spider-Person and friend who, along with Miles, helps Pavitr during the crisis in Mumbattan. Their team-up showcases the diversity of the Spider-Society.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Gwen Stacy (Spider-Gwen)</h4>
+                    <p class="actor">Voiced by Hailee Steinfeld</p>
+                    <p>A fellow Spider-Society member who works alongside Pavitr. Their interactions show the camaraderie among young Spider-People across dimensions.</p>
+                </div>
+                <div class="character-card">
+                    <h4>Aunt Maya & Uncle Bhim</h4>
+                    <p class="actor">Comics</p>
+                    <p>In the comics, Pavitr's guardians who raised him in Mumbai. Uncle Bhim's death at the hands of a villain became Pavitr's defining tragedy, similar to Uncle Ben in other universes.</p>
+                </div>
+                <div class="character-card">
+                    <h4>The Spider-Society</h4>
+                    <p class="actor">Multiversal Spider-People</p>
+                    <p>Pavitr is a member of Miguel O'Hara's Spider-Society, connecting him with countless other Spider-People across dimensions and involving him in multiversal protection efforts.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Villains Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">💀</span>
+                Main Villains
+            </h2>
+            <div class="villains-grid">
+                <div class="character-card villain-card-profile">
+                    <h4>Nalin Oberoi</h4>
+                    <p class="actor">Comics - Green Goblin Equivalent</p>
+                    <p>A wealthy businessman who becomes the Indian version of the Green Goblin. In the comics, Oberoi killed Uncle Bhim, creating Pavitr's origin tragedy. He represents corporate greed and corruption in modern India.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>The Spot</h4>
+                    <p class="actor">Voiced by Jason Schwartzman (Across the Spider-Verse)</p>
+                    <p>A multiversal villain who attacks Mumbattan, creating dimensional holes that threaten to tear the city apart. His assault on Pavitr's universe nearly kills Inspector Singh, threatening to give Pavitr his first major tragedy.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Doctor Octopus (Indian Version)</h4>
+                    <p class="actor">Comics</p>
+                    <p>An Indian scientist with mechanical tentacles who serves as one of Pavitr's recurring villains in the comics, adapted to fit the Indian setting.</p>
+                </div>
+                <div class="character-card villain-card-profile">
+                    <h4>Various Local Criminals</h4>
+                    <p class="actor">Comics & Films</p>
+                    <p>Pavitr faces street-level crime in Mumbai, dealing with local criminals, gang violence, and threats specific to his city and culture.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What Makes Pavitr Unique Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⭐</span>
+                What Makes Pavitr Unique
+            </h2>
+            <p>Spider-Man India brings several distinctive elements to the Spider-Verse:</p>
+            <ul>
+                <li><strong>Mystical Origin:</strong> Powers granted by an ancient yogi through spiritual means rather than science, connecting him to Indian mysticism</li>
+                <li><strong>Cultural Representation:</strong> First major Indian Spider-Man, bringing authentic desi representation and perspective to the Spider-family</li>
+                <li><strong>Mumbattan Setting:</strong> His city beautifully blends Mumbai's culture, architecture, and energy with the superhero cityscape aesthetic</li>
+                <li><strong>Refreshing Optimism:</strong> Unlike many Spider-People burdened by tragedy from the start, Pavitr initially experiences being Spider-Man as pure joy</li>
+                <li><strong>Positive Police Relations:</strong> Works with Inspector Singh rather than being hunted, showing a healthier institutional relationship</li>
+                <li><strong>Hair Physics:</strong> In Across the Spider-Verse, Pavitr's flowing hair became iconic—he even proudly explains his hair care routine!</li>
+                <li><strong>No Major Tragedy (Yet):</strong> Hasn't experienced his "Uncle Ben moment" when we meet him, making his potential loss more poignant</li>
+                <li><strong>Youth and Energy:</strong> Only six months into being Spider-Man in the films, representing the early honeymoon phase of superheroism</li>
+                <li><strong>Visual Style:</strong> His sequences feature distinctive animation inspired by Indian art, using warm, vibrant colors</li>
+            </ul>
+        </section>
+
+        <!-- Spider-Verse Appearance Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🎬</span>
+                Across the Spider-Verse Appearance
+            </h2>
+            <p>In <strong>Spider-Man: Across the Spider-Verse</strong>, Pavitr Prabhakar steals every scene he's in. Voiced by comedian Karan Soni (known for Deadpool's Dopinder), Pavitr brings infectious enthusiasm and genuine joy to being Spider-Man. His introduction during the Mumbattan sequence is one of the film's visual highlights.</p>
+            
+            <p>The animation of Mumbattan is breathtaking—a vibrant city that blends Mumbai's distinctive architecture, crowded streets, auto-rickshaws, and colorful aesthetics with Manhattan's superhero cityscape. The color palette shifts to warm oranges, rich purples, and deep blues, creating a distinctly Indian visual flavor. The sequence captures the energy and chaos of Mumbai while maintaining the Spider-Verse's stylized animation.</p>
+            
+            <p>Pavitr's personality is wonderfully refreshing. He's completely confident, upbeat, and living his best life. When Miles asks if he's doing okay, Pavitr enthusiastically responds that everything is great—he has a girlfriend, gets along with her cop father, and is only six months into being Spider-Man, so nothing bad has happened yet. This optimism becomes tragically ironic when disaster strikes.</p>
+            
+            <p>His iconic moment discussing his hair is both hilarious and humanizing: "I use [coconut] oil to maintain the perfect luster and shine. You should try it sometime." This detail became instantly meme-worthy while also being culturally authentic—hair oil is indeed common in Indian grooming. It shows Pavitr's confidence and self-care, making him relatable and distinct.</p>
+            
+            <p>During the Spot's attack on Mumbattan, Pavitr teams up with Miles, Gwen, and Hobie to stop the villain. The action sequences showcase his spider-powers with a fluid, dance-like fighting style. When the Spot creates a black hole that threatens to destroy part of the city, Pavitr faces the possibility of losing Inspector Singh—his potential "Uncle Ben moment."</p>
+            
+            <p>Miles' decision to save Inspector Singh, defying the "canon event" that Miguel O'Hara insists must happen, shows the bond between these young Spider-People. Pavitr is grateful but visibly shaken, suddenly understanding what other Spider-People mean when they talk about loss and responsibility. His character arc in the film—from carefree optimism to confronting real stakes—represents the loss of innocence that defines Spider-Man.</p>
+            
+            <p>Pavitr's inclusion in the film represents important South Asian representation in mainstream superhero media. His character isn't a stereotype but a fully realized person whose culture is celebrated, not exoticized. The love and detail put into depicting Mumbattan and Pavitr's character resonated deeply with Indian audiences worldwide.</p>
+        </section>
+
+        <!-- Cultural Impact Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🏆</span>
+                Cultural Impact & Legacy
+            </h2>
+            <p>Spider-Man India was created as part of Marvel's "Spider-Man: India" limited series in 2004, written by Sharad Devarajan, Gotham Chopra, and Suresh Seetharaman with art by Jeevan Kang. The series was an attempt to create an authentically Indian Spider-Man story, not just transplanting Peter Parker to India but creating something that felt genuinely connected to Indian culture and mythology.</p>
+            
+            <p>The original comics received praise for their cultural authenticity and willingness to adapt the Spider-Man mythos to an Indian context. However, the series was relatively short-lived, and Pavitr remained a cult favorite rather than a mainstream character—until <em>Across the Spider-Verse</em>.</p>
+            
+            <p><strong>Karan Soni's portrayal</strong> in the film brought Pavitr to worldwide prominence. His energetic voice work, combined with the stunning animation of Mumbattan, made Spider-Man India an instant fan favorite. South Asian audiences especially celebrated seeing themselves represented in a major blockbuster superhero film, not as a side character or stereotype, but as a cool, confident hero.</p>
+            
+            <p>The character became a cultural phenomenon in India and among the Indian diaspora. Pavitr's hair care routine became a meme, his costume was popular at conventions, and his representation sparked conversations about diversity in superhero media. The care taken to authentically depict Indian culture—from the city's architecture to small details like chai and auto-rickshaws—showed Hollywood could do cultural representation right when given proper attention.</p>
+            
+            <p>Pavitr's popularity has led to increased interest in South Asian superheroes and calls for more diverse Spider-People in future films. He proves that Spider-Man's core themes—responsibility, sacrifice, and using power to help others—are universal and can be adapted to any culture while maintaining authenticity.</p>
+            
+            <p>Beyond representation, Pavitr's character arc—from carefree optimism to confronting real stakes—resonates with anyone who's experienced the loss of innocence that comes with growing up. His journey from thinking being Spider-Man is all fun and games to understanding the weight of responsibility makes him one of the most emotionally complex characters in <em>Across the Spider-Verse</em>.</p>
+            
+            <p>As the Spider-Verse continues to expand, Pavitr Prabhakar has secured his place as an essential Spider-Person, representing not just India but the universal truth that anyone, from any culture, can be Spider-Man.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#versions" class="btn btn-primary">← Return to Spider-Verse</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Spider-Man India</h4>
+                    <p>Pavitr Prabhakar is Spider-Man India, bringing Indian culture, mystical origins, and infectious optimism to the Spider-Verse.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Details</h4>
+                    <p><strong>Voice Actor:</strong> Karan Soni</p>
+                    <p><strong>Created by:</strong> Sharad Devarajan, Gotham Chopra, Suresh Seetharaman, Jeevan Kang</p>
+                    <p><strong>First Appearance:</strong> 2004 (Comics)</p>
+                    <p><strong>City:</strong> Mumbai / Mumbattan</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Man Fan Hub. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment and Sony Pictures.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        <a href="spiderversions.html" 
+   style="color:#00aaff; 
+          display:block; 
+          margin-top:40px; 
+          text-align:center; 
+          font-size:18px; 
+          text-decoration:none;">
+  ← Back to Spider-Man Versions
+</a>
+
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+

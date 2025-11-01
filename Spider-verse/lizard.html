@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lizard - The Reptilian Menace</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to villain profile page */
+        .villain-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .villain-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .villain-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .villain-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .villain-badge {
+            display: inline-block;
+            background: rgba(45, 80, 22, 0.95);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(74, 124, 46, 0.6);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+        
+        .villain-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 5px;
+        }
+        
+        .villain-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(45, 80, 22, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(74, 124, 46, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #2d5016;
+            border-color: #4a7c2e;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(45,80,22,0.6);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .villain-image-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .villain-image {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .villain-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(74, 124, 46, 0.2) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .villain-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #2d5016;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #4a7c2e;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '🦎';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #2d5016 0%, #1a3d0a 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(74, 124, 46, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .power-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(74, 124, 46, 0.2) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(45, 80, 22, 0.6);
+            border-color: #7cfc00;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #7cfc00;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+        }
+        
+        .battles-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .battle-card {
+            background: linear-gradient(135deg, #1a3d0a 0%, #2d5016 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            border-left: 5px solid #4a7c2e;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .battle-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(74, 124, 46, 0.2) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .battle-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(45, 80, 22, 0.5);
+        }
+        
+        .battle-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 2px;
+            color: #7cfc00;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .battle-card p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+            line-height: 1.7;
+        }
+        
+        .tragedy-note {
+            background: linear-gradient(135deg, #4a7c2e 0%, #2d5016 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid #7cfc00;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(45, 80, 22, 0.4);
+        }
+        
+        .tragedy-note p {
+            color: #ffffff;
+            margin: 0;
+            font-style: italic;
+            font-weight: 500;
+        }
+        
+        .duality-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .duality-card {
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .connors-side {
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+            border: 3px solid #4682b4;
+        }
+        
+        .lizard-side {
+            background: linear-gradient(135deg, #2d5016 0%, #1a3d0a 100%);
+            border: 3px solid #7cfc00;
+            color: white;
+        }
+        
+        .duality-card h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+        
+        .connors-side h3 {
+            color: #4682b4;
+        }
+        
+        .lizard-side h3 {
+            color: #7cfc00;
+        }
+        
+        .duality-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .duality-card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        .connors-side li::before {
+            content: '👨‍🔬';
+            position: absolute;
+            left: 0;
+        }
+        
+        .lizard-side li::before {
+            content: '🦎';
+            position: absolute;
+            left: 0;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .villain-hero {
+                height: 300px;
+            }
+            
+            .villain-name {
+                font-size: 50px;
+            }
+            
+            .villain-alias {
+                font-size: 1.4rem;
+            }
+            
+            .villain-badge {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .duality-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .villain-hero {
+                height: 250px;
+            }
+            
+            .villain-name {
+                font-size: 36px;
+            }
+            
+            .villain-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#villains" class="back-button">
+        <span>←</span>
+        <span>Back to Villains</span>
+    </a>
+
+    <!-- Villain Hero Section -->
+    <header class="villain-hero">
+        <img src="https://images2.alphacoders.com/133/1338685.jpeg" alt="Lizard" class="villain-hero-image">
+        <div class="villain-hero-content">
+            <div class="villain-badge">THE REPTILIAN MENACE</div>
+            <h1 class="villain-name">LIZARD</h1>
+            <p class="villain-alias">Dr. Curt Connors</p>
+        </div>
+    </header>
+
+    <!-- Villain Profile -->
+    <main class="profile-container">
+        <!-- Origin Story Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📜</span>
+                Origin Story & Tragic Transformation
+            </h2>
+            <p>The Lizard represents one of the most tragic figures in Spider-Man's rogues gallery—a brilliant scientist and good man transformed into a savage, reptilian monster by his own desperate attempt to heal himself. Unlike villains driven by greed, madness, or ambition, Dr. Curt Connors never wanted to hurt anyone. His transformation into the Lizard was an accident, a scientific miscalculation with devastating consequences that created a Jekyll-and-Hyde nightmare where a compassionate human struggles for control against a primal, predatory intelligence.</p>
+            
+            <p><strong>Dr. Curt Connors: The Man Before the Monster</strong></p>
+            <p>Dr. Curtis "Curt" Connors was born to be a healer. Brilliant, compassionate, and driven by a genuine desire to help others, he pursued medicine and science with equal passion. Curt earned his doctorate and became a gifted surgeon, one of the most promising medical professionals of his generation. He married his college sweetheart, Martha, and together they had a son, William (Billy). By all accounts, Curt Connors had achieved the American dream—a loving family, a respected career, and a bright future.</p>
+            
+            <p>Then war came. Curt served as an army surgeon, saving countless lives on the battlefield through his skill and dedication. But during a catastrophic explosion, Curt's right arm was blown off below the elbow. The injury that ended many soldiers' careers ended Curt's ability to perform surgery—the delicate work required two steady hands, and prosthetics of the era couldn't provide the precision needed for medical procedures.</p>
+            
+            <p>Curt was devastated. Not only had he lost his arm, but he'd lost his purpose. He couldn't practice surgery, couldn't fulfill his calling to heal. The psychological trauma was as severe as the physical loss. Curt fell into depression, struggling with phantom limb pain, the loss of his identity as a surgeon, and fears that he was now incomplete, less of a man and father. Martha stood by him, but Curt's self-worth had been shattered.</p>
+            
+            <p><strong>The Reptilian Regeneration Serum</strong></p>
+            <p>Unable to practice surgery, Curt turned to research, specifically studying reptilian biology at Empire State University in New York. He became fascinated by lizards' ability to regenerate lost limbs—a tail severed by a predator would simply grow back, fully functional. If this regenerative capability could be understood, replicated, and applied to humans, the implications were staggering. Not just for Curt himself, but for amputees worldwide, for burn victims, for anyone who'd lost part of themselves to injury or disease.</p>
+            
+            <p>Curt threw himself into the research obsessively. His work became brilliant and groundbreaking, earning respect in the scientific community. But beneath the professional dedication lurked personal desperation. Curt wasn't just researching limb regeneration academically—he was searching for a cure for himself, a way to become whole again. This conflict of interest, this personal stake that compromised his objectivity, would prove catastrophic.</p>
+            
+            <p>After years of research, Curt developed a serum derived from reptilian DNA that, in theory, could trigger regeneration in mammalian tissue. His animal trials showed promise—rats and other test subjects regenerated damaged tissue. But the results were inconsistent, and strange side effects occasionally appeared. The ethical and professional course would be years more testing, peer review, clinical trials. But Curt was desperate, and desperation makes people reckless.</p>
+            
+            <div class="tragedy-note">
+                <p><strong>The Fatal Decision:</strong> Late one night in his lab, overwhelmed by frustration, depression, and desperate hope, Dr. Curt Connors made the decision that would destroy his life. He injected himself with his experimental regeneration serum. It was unethical, dangerous, and violated every scientific protocol. But Curt couldn't wait any longer. He needed to be whole again.</p>
+            </div>
+            
+            <p><strong>The Transformation</strong></p>
+            <p>At first, the serum seemed to work. Curt watched in amazement as his arm began to regenerate—flesh, bone, nerves growing from his stump. It was a miracle, the scientific breakthrough of the century. For a few glorious moments, Dr. Curt Connors was whole again, his arm restored, his career and life about to return to what they'd been before the war.</p>
+            
+            <p>But then the serum kept working. The regeneration didn't stop at restoring his human arm—it continued, transforming it. His skin hardened into green scales. His fingers elongated and grew claws. His teeth sharpened into fangs. Curt screamed as his entire body underwent horrific metamorphosis. His body mass increased, muscles bulging with reptilian strength. His spine extended into a powerful tail. His eyes changed, becoming cold and predatory. His mind—his brilliant, compassionate human mind—was overwhelmed by primal, reptilian instincts.</p>
+            
+            <p>Dr. Curt Connors, family man and healer, disappeared. In his place stood the Lizard—a seven-foot-tall reptilian monster with superhuman strength, savage instincts, and an inhuman intelligence that retained fragments of Connors' knowledge but none of his compassion. The Lizard's first instinct was survival and dominance, operating on pure reptilian brain function: hunt, feed, defend territory, and spread.</p>
+            
+            <p>The most terrifying aspect of the transformation was that somewhere deep inside the Lizard's mind, Curt Connors remained conscious—trapped in his own body, watching helplessly as the monster committed acts of violence using his hands, hearing his own voice growl threats, unable to stop himself. It was a living nightmare, and it would become a recurring horror as Curt repeatedly lost control to the Lizard over the years.</p>
+            
+            <p><strong>The Lizard's Agenda: Reptilian Supremacy</strong></p>
+            <p>Unlike Curt Connors, who wanted to heal and help, the Lizard operated on cold, predatory logic. In the Lizard's worldview, reptiles were the superior species—they had dominated the Earth for millions of years before mammals arose. Humanity was an evolutionary mistake, warm-blooded weaklings who had usurped the rightful rulers of the planet. The Lizard dreamed of a world where reptiles once again reigned supreme, where the sewers of New York teemed with reptilian creatures serving him as their king.</p>
+            
+            <p>This ideology drove many of the Lizard's schemes: attempts to transform humans into reptilian creatures using Connors' serum, plans to flood New York with reptilian mutants, and attacks on humanity itself. The Lizard viewed people with contempt—they were prey at best, obstacles to be eliminated at worst. Even Martha and Billy, Curt's beloved family, were barely recognized by the Lizard except as vestiges of his hated human weakness.</p>
+            
+            <p><strong>The Eternal Struggle</strong></p>
+            <p>What makes the Lizard truly tragic is the ongoing battle between Connors and the monster within. Spider-Man and others have repeatedly developed antidotes that restore Curt's human form, allowing him to return to his family and research. But the transformation is never permanent. Stress, injury, or sometimes Curt's own desperate desire to use the serum "correctly" this time triggers the transformation again. Each time, Curt promises it won't happen again. Each time, he's wrong.</p>
+            
+            <p>The psychological toll is immense. Curt must live with the knowledge of what he's done as the Lizard—the people he's hurt, the destruction he's caused, the terror he's inflicted on his own family. He's attacked his wife and son multiple times while transformed. The guilt is crushing, yet Curt continues his research, hoping to find a permanent cure not just for himself but for the condition he's inadvertently created. He's driven by redemption but cursed by repetition, forever cycling between man and monster.</p>
+        </section>
+
+        <!-- Powers & Abilities Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Powers, Abilities & Reptilian Traits
+            </h2>
+            <p style="margin-bottom: 1rem;"><strong>The Lizard's reptilian physiology grants extraordinary abilities that make him one of Spider-Man's most physically dangerous foes:</strong></p>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>💪 Superhuman Strength</h4>
+                    <p>The Lizard possesses strength far exceeding human limits, able to lift approximately 12 tons. This allows him to overpower Spider-Man in direct combat, tear through concrete and steel, and flip vehicles. His strength comes from enhanced musculature and reptilian physiology optimized for predatory power.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🦎 Reptilian Physiology</h4>
+                    <p>His entire body structure is transformed—scales provide natural armor, a powerful tail serves as a weapon and balance aid, claws can tear through most materials, and fangs deliver powerful bites. His cold-blooded nature makes him highly efficient and resistant to certain forms of attack.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🩹 Accelerated Healing & Regeneration</h4>
+                    <p>The Lizard can heal from injuries at an accelerated rate and can regenerate lost limbs, even growing back his tail if severed. This makes him extremely difficult to defeat through conventional physical damage. He's recovered from gunshot wounds, severe burns, and trauma that would kill normal beings.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🏃 Superhuman Speed & Agility</h4>
+                    <p>Despite his size and bulk, the Lizard can move with incredible speed and agility, running on all fours to reach speeds over 45 mph. His reflexes are enhanced, and his tail provides balance for acrobatic maneuvers. He can leap great distances and change direction instantly.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🧗 Wall-Crawling & Climbing</h4>
+                    <p>Like many reptiles, the Lizard can scale walls, ceilings, and any surface using microscopic hooks on his hands and feet. This ability mirrors Spider-Man's wall-crawling but through natural reptilian adaptation rather than spider-based powers. He's perfectly at home in vertical environments.</p>
+                </div>
+                <div class="power-item">
+                    <h4>👃 Enhanced Senses</h4>
+                    <p>The Lizard possesses enhanced reptilian senses—acute smell for tracking prey, heat-sensing capabilities (thermoreception) to detect warm-blooded creatures in darkness, and enhanced vision that functions well in low-light conditions. These predatory senses make him an effective hunter.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🛡️ Armored Scales & Durability</h4>
+                    <p>His thick reptilian scales act as natural armor, providing significant protection against physical attacks, small arms fire, and cutting weapons. The scales are tough enough to deflect blades and resist most conventional weapons, making the Lizard highly durable in combat.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💦 Aquatic Adaptation</h4>
+                    <p>The Lizard is an excellent swimmer, able to hold his breath for extended periods and move through water with ease. His tail serves as a powerful propeller, and his physiology allows him to survive in sewers, swamps, and underwater environments where mammalian foes struggle.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🦎 Reptile Telepathy & Control</h4>
+                    <p>One of his most dangerous abilities—the Lizard can mentally communicate with and control reptiles of all kinds within a certain radius. He's used this to command snakes, alligators, and other reptiles as an army, creating swarms of attacking creatures to overwhelm opponents or guard his territory in the sewers.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🧪 Retained Scientific Knowledge</h4>
+                    <p>The Lizard retains fragments of Dr. Connors' brilliant scientific mind, particularly knowledge related to chemistry, biology, and genetics. This allows him to create more of the serum, devise plans that combine animal cunning with human intelligence, and understand complex situations beyond normal animal comprehension.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🌡️ Tail Weapon</h4>
+                    <p>His powerful muscular tail is a devastating weapon—he can use it to smash through walls, sweep opponents off their feet, maintain balance during acrobatic combat, or deliver crushing blows. The tail also aids in swimming and can regenerate if severed.</p>
+                </div>
+                <div class="power-item">
+                    <h4>❄️ Cold Temperature Vulnerability</h4>
+                    <p><strong>Major Weakness:</strong> As a cold-blooded reptile, the Lizard's metabolism and abilities are severely compromised by cold temperatures. Extreme cold slows him down, makes him lethargic, and can force him into dormancy. Spider-Man has exploited this weakness using freezing weapons or luring him to cold environments.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personality & Duality Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🧠</span>
+                The Duality: Dr. Connors vs. The Lizard
+            </h2>
+            <p>The Lizard's most defining characteristic is the constant struggle between two distinct personalities inhabiting one body—the compassionate human Dr. Curt Connors and the savage reptilian intelligence of the Lizard. This duality creates one of comics' most psychologically complex villains, a true Jekyll-and-Hyde scenario where neither personality is fully in control.</p>
+            
+            <div class="duality-section">
+                <div class="duality-card connors-side">
+                    <h3>Dr. Curt Connors (Human Personality)</h3>
+                    <ul>
+                        <li><strong>Compassionate Healer:</strong> Dedicated to helping others, driven by desire to cure disease and injury. Became a scientist to save lives.</li>
+                        <li><strong>Loving Family Man:</strong> Devoted husband to Martha and father to Billy. His family is his anchor to humanity and his primary motivation to find a cure.</li>
+                        <li><strong>Brilliant Scientist:</strong> Genius-level intellect in biology, chemistry, and genetics. Respected researcher and professor at ESU. His work on regeneration is groundbreaking.</li>
+                        <li><strong>Guilt-Ridden:</strong> Tormented by the actions of his Lizard persona. Carries crushing guilt for attacking loved ones and innocent people while transformed.</li>
+                        <li><strong>Desperate for Redemption:</strong> Continuously works to find a permanent cure, both to save himself and to prevent the Lizard from hurting others. This desperation sometimes leads to reckless decisions.</li>
+                        <li><strong>Physically Incomplete:</strong> The loss of his arm (when human) defines much of his self-image. Feels broken and less capable, which drove his initial experimentation.</li>
+                        <li><strong>Trusting & Ethical:</strong> Believes in the scientific method, peer collaboration, and doing things the right way. His one great sin was injecting himself without proper protocols.</li>
+                    </ul>
+                </div>
+                
+                <div class="duality-card lizard-side">
+                    <h3>The Lizard (Reptilian Personality)</h3>
+                    <ul>
+                        <li><strong>Savage & Predatory:</strong> Operates on pure reptilian instinct—hunt, kill, dominate. Views humans as prey or obstacles. No compassion or mercy.</li>
+                        <li><strong>Reptilian Supremacist:</strong> Believes reptiles are evolutionarily superior to mammals. Dreams of a world where reptiles rule and humans are extinct or enslaved.</li>
+                        <li><strong>Territorial & Aggressive:</strong> Claims the sewers of New York as his domain. Attacks anything that threatens his territory with extreme violence.</li>
+                        <li><strong>Cunning Intelligence:</strong> Not merely a beast—possesses intelligence that combines animal cunning with fragments of Connors' knowledge. Plans attacks and schemes.</li>
+                        <li><strong>Contempt for Humanity:</strong> Sees human civilization as a disease, warm-blooded creatures as weak and inferior. Particularly hates the weak, human Connors persona.</li>
+                        <li><strong>Physically Complete:</strong> Unlike Connors, the Lizard is whole—powerful, armored, deadly. Represents what Connors wanted (physical wholeness) twisted into something monstrous.</li>
+                        <li><strong>Desire for Propagation:</strong> Wants to spread his reptilian transformation to others, creating an army of lizard-creatures. Sees this as evolution's correction of a mistake.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tragedy-note">
+                <p><strong>The Internal War:</strong> The tragedy intensifies because Connors is often conscious during transformations, trapped as a passenger in his own body, screaming internally while the Lizard commits atrocities. He feels every action, hears every word, but cannot control the body. This psychological torture—being forced to watch yourself harm innocent people and attack your own family—has pushed Connors to the edge of sanity multiple times.</p>
+            </div>
+            
+            <p><strong>The Struggle for Control:</strong></p>
+            <p>The balance of power between Connors and the Lizard shifts depending on various factors:</p>
+            <ul>
+                <li><strong>Stress & Emotion:</strong> Extreme stress, anger, or fear can trigger transformation or strengthen the Lizard's control. Curt must constantly manage his emotions, making his life a tightrope walk.</li>
+                <li><strong>Injury:</strong> Physical injury sometimes triggers the regeneration serum in his system, causing transformation as the body "heals" by becoming the Lizard.</li>
+                <li><strong>Voluntary Transformation:</strong> In desperate situations, Curt has deliberately transformed into the Lizard to use his powers for good (fighting greater threats), gambling that he can maintain control or that Spider-Man can change him back before he hurts innocents.</li>
+                <li><strong>Connors' Consciousness:</strong> Sometimes Connors' human mind fights through during Lizard episodes, creating moments where the creature hesitates before attacking loved ones or makes decisions that contradict pure reptilian logic.</li>
+                <li><strong>The Lizard's Dominance:</strong> In some transformations, the Lizard completely dominates, and Connors' consciousness is buried so deep he has no memory of actions taken while transformed—a mercy that also means he wakes up to discover atrocities he committed without any memory of them.</li>
+            </ul>
+            
+            <p><strong>Philosophical Questions:</strong></p>
+            <p>The Connors/Lizard duality raises profound questions about identity, responsibility, and the nature of humanity:</p>
+            <ul>
+                <li>If Connors commits crimes while the Lizard is in control, is he responsible? Where does culpability lie when a second personality literally takes over your body?</li>
+                <li>Is the Lizard a separate being, or is it Connors' repressed primal nature given form—his id unleashed, representing the savage instincts civilization forces humans to suppress?</li>
+                <li>Can Connors ever be fully human again, or has the experience of being the Lizard permanently changed him? Once you've experienced being a predator, can you ever fully return to being just a man?</li>
+                <li>What does it mean to be human? Is it the physical form, or the mind and morality? Connors loses his human body but tries to retain his humanity; the Lizard has intelligence but rejects human values entirely.</li>
+            </ul>
+            
+            <p>These questions make the Lizard far more than a simple monster villain. He's a walking tragedy, a good man cursed with a second nature he never wanted, fighting a battle for his own soul that he can never fully win.</p>
+        </section>
+
+        <!-- World & Operations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🌆</span>
+                World, Territory & Interactions
+            </h2>
+            <p>The Lizard operates primarily in New York City, but his domain is the city's underbelly—the sewers, swamps, abandoned subway tunnels, and waterways where reptiles thrive and humans fear to tread. This subterranean territory perfectly suits his reptilian nature and provides refuge from the surface world that rejected him.</p>
+            
+            <p><strong>Primary Territories:</strong></p>
+            <ul>
+                <li><strong>New York Sewers:</strong> The Lizard's primary domain. The vast sewer system provides darkness, moisture, abundant prey (rats and other creatures), and countless hiding places. He's built lairs deep in the sewers where he conducts experiments and plots. The sewers also house communities of reptiles he controls telepathically.</li>
+                <li><strong>Florida Everglades:</strong> In some storylines, the Lizard has fled to the Everglades, where the swampy environment and abundance of reptilian life make him nearly unstoppable. The tropical climate suits his cold-blooded nature, and the isolation allows him to build strength away from heroes.</li>
+                <li><strong>Abandoned Subway Tunnels:</strong> Old, forgotten sections of New York's subway system provide shelter and pathways through the city. The Lizard uses these to move unseen, occasionally emerging to attack trains or surface locations.</li>
+                <li><strong>Connors' Laboratory (ESU):</strong> When in human form, Curt works at Empire State University. His lab contains his research, antidotes, and equipment. Ironically, this is also a target when the Lizard emerges—he's attacked his own lab multiple times, destroying research that might cure him as if the Lizard wants to make the transformation permanent.</li>
+                <li><strong>Waterfront & Docks:</strong> The Lizard is drawn to water, making waterfront areas dangerous during his transformations. He's attacked ships, warehouses, and industrial complexes near water.</li>
+            </ul>
+            
+            <p><strong>Interaction with Spider-Man:</strong></p>
+            <p>The relationship between the Lizard and Spider-Man is uniquely complex because it's really two relationships—Spider-Man's interactions with both Connors and the creature:</p>
+            <ul>
+                <li><strong>Spider-Man & Dr. Connors:</strong> Peter Parker has deep respect and sympathy for Curt Connors. They've worked together on scientific problems, and Peter understands that Connors is a victim of his own serum, not a willing villain. Spider-Man has helped Connors multiple times, developing antidotes and trying to find permanent cures. Peter sees saving Connors as part of his responsibility.</li>
+                <li><strong>Spider-Man & The Lizard:</strong> The Lizard views Spider-Man as a threat to be eliminated—another warm-blooded pest interfering with reptilian superiority. Their battles are brutal and savage, with the Lizard's physical power often overwhelming Spider-Man, forcing the hero to use agility, webbing, and environmental tactics to survive.</li>
+                <li><strong>Tragic Necessity:</strong> Spider-Man must stop the Lizard while trying not to harm Connors permanently. He fights to incapacitate, not kill, always seeking the antidote that will restore Curt. This restraint puts Spider-Man at a disadvantage against a creature with no such compunctions.</li>
+                <li><strong>Mutual Respect:</strong> On some level, even the Lizard recognizes Spider-Man as a worthy adversary—not prey, but a rival predator. This has led to rare moments where the Lizard has hesitated or even aided Spider-Man against greater threats.</li>
+            </ul>
+            
+            <p><strong>Interaction with Family:</strong></p>
+            <ul>
+                <li><strong>Martha Connors:</strong> Curt's wife has endured incredible trauma—watching her husband transform into a monster repeatedly, being attacked by him, protecting their son, and standing by Curt despite knowing he could turn again at any moment. Her loyalty is both heartbreaking and admirable. The Lizard personality has minimal recognition of Martha, seeing her mainly as a vestige of Connors' weakness, though some stories show momentary hesitation before attacking her.</li>
+                <li><strong>Billy Connors:</strong> Curt's son has been attacked by his own father multiple times while in Lizard form. The psychological damage is severe—Billy loves his father but fears him, creating a tragic dynamic. Some storylines show Billy as the only person who can reach through to Connors' consciousness when the Lizard is in control, his voice triggering paternal protective instincts that momentarily override reptilian aggression.</li>
+                <li><strong>Family as Anchor:</strong> Martha and Billy represent Curt's strongest connection to humanity. His desire to be a good husband and father motivates his search for a cure and gives him the will to fight the Lizard's control.</li>
+            </ul>
+            
+            <p><strong>Interaction with Other Villains:</strong></p>
+            <ul>
+                <li>The Lizard is unpredictable in team-ups. His savage nature and contempt for mammals make him a difficult ally for other human villains.</li>
+                <li>He's been forced into the Sinister Six in some storylines, but always as an unreliable member—his reptilian instincts make him likely to attack teammates if they annoy him or show weakness.</li>
+                <li>Some villains (like Doctor Octopus) have tried to control the Lizard or use him as muscle, usually with disastrous results when the Lizard inevitably turns on them.</li>
+                <li>Other animal-based villains (Vulture, Rhino) sometimes show more success working with him, as the Lizard's animal instincts recognize them as less repulsive than purely human villains.</li>
+            </ul>
+            
+            <p><strong>Interaction with Heroes:</strong></p>
+            <ul>
+                <li>Most heroes understand that the Lizard is Curt Connors transformed and try to capture rather than kill him.</li>
+                <li>Reed Richards (Mr. Fantastic) has worked with Connors on scientific solutions to his condition.</li>
+                <li>The X-Men's Beast (Hank McCoy) particularly empathizes with Connors' struggle—both are brilliant scientists transformed into bestial forms, though Beast maintains his humanity while Connors loses his.</li>
+                <li>When Connors is human, he's worked with hero teams on scientific problems, always carrying the shame of what he becomes.</li>
+            </ul>
+        </section>
+
+        <!-- Key Battles & Events Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚔️</span>
+                Key Battles, Events & Defining Moments
+            </h2>
+            <div class="battles-grid">
+                <div class="battle-card">
+                    <h3>First Appearance: The Amazing Spider-Man #6 (1963)</h3>
+                    <p>Created by Stan Lee and Steve Ditko, the Lizard debuted in one of Spider-Man's earliest and most memorable adventures. The story introduced Dr. Curt Connors, his transformation, and the tragic duality that would define the character. Spider-Man traveled to Florida to confront the Lizard, discovering that the creature retained fragments of Connors' intelligence and that beneath the monster was a man desperate to be saved. The issue established the template for all future Lizard stories—Spider-Man must defeat the creature while preserving Connors' life, always seeking the antidote that will restore humanity. The Lizard's visual design—reptilian, powerful, yet somehow pitiable—made him instantly iconic.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Shed: The Death of Billy Connors</h3>
+                    <p>In one of the darkest Spider-Man stories ever told, the "Shed" arc saw the Lizard evolve beyond Connors' control. The Lizard grew stronger, more intelligent, and more savage, developing the ability to "shed" his human consciousness entirely like a snake shedding its skin. In a horrifying climax, the Lizard killed and ate Billy Connors, Curt's young son, eliminating what the reptilian mind saw as the last vestige of weak human sentiment. This act shocked readers and fundamentally changed the character. When Curt was eventually restored to human form, the knowledge that he had killed his own son while transformed drove him to the edge of complete breakdown. Though later storylines revealed Billy might have survived in some form, the trauma of believing he'd murdered his child remained, adding layers of guilt and horror to Connors' already tragic existence.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Lizard's Regeneration Army</h3>
+                    <p>In various storylines, the Lizard has attempted to spread his serum to create an army of reptilian creatures. One memorable arc involved him releasing the formula into New York's water supply or sewer system, threatening to transform large segments of the population into lizard-people. Spider-Man had to race against time to develop and distribute an antidote before the transformation became permanent. These stories emphasized the Lizard's ideology—that humanity is a mistake to be corrected through forced evolution back to reptilian supremacy.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Sewer Showdowns</h3>
+                    <p>Many of the most memorable Lizard battles occur in the sewers of New York, where the creature has home-field advantage. In darkness, surrounded by water, with armies of mind-controlled reptiles as backup, the Lizard becomes nearly unstoppable. Spider-Man has had to use all his ingenuity—web-traps, environmental hazards, and exploitation of the Lizard's cold-blooded vulnerability—to survive these encounters. One iconic battle saw Spider-Man webbing up hundreds of snakes and alligators while dodging the Lizard's attacks, showcasing both the horror and the spectacular nature of their conflicts.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Amazing Spider-Man (2012 Film)</h3>
+                    <p>Rhys Ifans portrayed Dr. Curt Connors/Lizard in Marc Webb's <em>The Amazing Spider-Man</em>, bringing the character to mainstream cinema. The film portrayed Connors sympathetically—a brilliant scientist working under pressure from his corporate employer, Oscorp, to develop human regeneration technology. His transformation was motivated by desperation to prove his research worked and by manipulation from corporate forces. The film's Lizard retained intelligence and could speak, making him a more complex antagonist than a mindless beast. His plan to spread the serum across New York via a dispersal device created large-scale stakes. The climax, where Peter Parker appealed to Connors' humanity and the scientist fought back against his reptilian nature to help stop the dispersal, emphasized the Jekyll-Hyde duality. Though the film received mixed reviews, Ifans' performance captured Connors' tragedy effectively.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Voluntary Transformation</h3>
+                    <p>In several storylines, Curt Connors has deliberately transformed into the Lizard to fight even greater threats. During invasions or city-wide catastrophes where his human form would be useless, Curt has injected himself with the serum, gambling that his enhanced strength could save lives and that heroes like Spider-Man could change him back before he hurt innocents. These moments show Connors' heroism—he's willing to become the monster he fears in order to protect others. However, they're also tinged with tragedy and addiction metaphors, as each voluntary transformation makes it easier for the Lizard personality to take permanent control.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Lizard & Kraven</h3>
+                    <p>Kraven the Hunter has repeatedly targeted the Lizard as the ultimate prey—a savage predator that tests Kraven's hunting skills. These encounters are particularly brutal because both operate on primal, predatory instincts. Kraven respects the Lizard as a worthy adversary and has refused to kill him several times, preferring to hunt him again in the future. From the Lizard's perspective, Kraven represents a rival apex predator encroaching on his territory, triggering savage territorial battles in the sewers and swamps.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Connor's Temporary Cures</h3>
+                    <p>Numerous storylines have featured Curt developing antidotes that restore his human form—temporarily. Each time, hope rises that this might be the permanent cure. Curt reconnects with his family, returns to his research, and tries to rebuild his life. But inevitably, stress, injury, or scientific curiosity about "improving" the formula leads to another transformation. This cyclical pattern mirrors addiction relapses, with Connors fighting a condition he can never fully escape. The repeated failures add psychological depth—each relapse crushes Curt's hope a little more, pushing him toward despair.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Spider-Man: No Way Home Multiverse Appearance</h3>
+                    <p>Though primarily featuring the Raimi trilogy Lizard, the multiverse storyline acknowledged the character's enduring appeal. Seeing Connors/Lizard alongside other Spider-Man villains from different universes emphasized his status as a quintessential Spider-Man antagonist. The film's theme of redemption and curing villains rather than simply defeating them particularly resonated with the Lizard's character—he's one of the villains most deserving of a cure rather than punishment.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Psychological Breaking Point</h3>
+                    <p>Various storylines have explored Curt Connors reaching psychological breaking points where he considers suicide to prevent future transformations. The knowledge that he might kill someone he loves as the Lizard creates unbearable pressure. Spider-Man and other heroes have had to talk Connors down from these moments, emphasizing that his life has value beyond his curse and that giving up means the Lizard wins permanently. These dark moments showcase the mental health toll of Connors' condition and add tragic weight to his character beyond simple monster-fighting narratives.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Legacy & Significance Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🏆</span>
+                Legacy, Themes & Cultural Impact
+            </h2>
+            <p>The Lizard, created by Stan Lee and Steve Ditko in 1963, stands as one of Spider-Man's most enduring and thematically rich villains. For over six decades, the character has represented far more than a simple monster—he embodies powerful themes about identity, scientific ethics, disability, and the thin line between humanity and savagery.</p>
+            
+            <p><strong>Thematic Significance:</strong></p>
+            <ul>
+                <li><strong>The Jekyll-Hyde Archetype:</strong> The Lizard is one of comics' purest explorations of dual identity, directly invoking Robert Louis Stevenson's <em>Strange Case of Dr. Jekyll and Mr. Hyde</em>. Connors is the respectable doctor, the Lizard is the monstrous id. This duality explores whether our savage impulses are foreign invaders or our true nature held in check by civilization.</li>
+                <li><strong>Disability & "Cure" Culture:</strong> Connors' missing arm and desperate desire to "fix" himself resonates with disability rights discussions. Was Connors broken and in need of fixing, or was society's treatment of him as incomplete the real problem? His transformation suggests that obsession with physical "wholeness" can lead to losing yourself entirely. The story asks: at what cost do we pursue normalcy?</li>
+                <li><strong>Scientific Ethics & Hubris:</strong> Like Frankenstein, Connors' tale warns against playing God. His decision to self-experiment without proper testing created catastrophe. The story critiques corner-cutting in scientific research and the dangers when personal stakes compromise objectivity.</li>
+                <li><strong>Loss of Control:</strong> The Lizard represents loss of control over one's own body and mind—a primal fear. Connors experiences body horror and psychological horror simultaneously, unable to stop himself from hurting those he loves. This resonates with fears about mental illness, addiction, dementia, or any condition that steals agency.</li>
+                <li><strong>Nature vs. Civilization:</strong> The Lizard embodies rejection of human civilization and return to primal nature. His ideology that reptiles are superior and mammals are evolutionary mistakes inverts human supremacy narratives, asking what makes us think we're special in the animal kingdom.</li>
+                <li><strong>Redemption & Recidivism:</strong> Like Sandman, Connors repeatedly tries and fails to overcome his condition. Each relapse adds tragic weight. The story acknowledges that some battles are never fully won—you can only keep fighting, keep trying, knowing you might fail again.</li>
+            </ul>
+            
+            <p><strong>Visual & Cultural Impact:</strong></p>
+            <ul>
+                <li>The Lizard's design—humanoid reptilian creature with tail, scales, and savage intelligence—influenced countless monster designs in comics, film, and games</li>
+                <li>His transformation sequences, often drawn in horrifying detail, pioneered body horror in mainstream superhero comics</li>
+                <li>The character has appeared in virtually every Spider-Man animated series, always as a major antagonist</li>
+                <li>Video game appearances include featured roles in <em>Ultimate Spider-Man</em>, <em>Spider-Man 2</em>, and many others, often with sewer-based boss battles</li>
+                <li>His appearance in <em>The Amazing Spider-Man</em> film brought him to mainstream consciousness, though the CGI-heavy portrayal received mixed reactions</li>
+                <li>Merchandise, action figures, and collectibles regularly feature the Lizard, testifying to his iconic status</li>
+            </ul>
+            
+            <p><strong>Character Evolution:</strong></p>
+            <p>The Lizard has evolved significantly since 1963:</p>
+            <ul>
+                <li><strong>Early Years:</strong> A relatively straightforward monster-of-the-month, with Connors' personality quickly defeated and restored each appearance</li>
+                <li><strong>Psychological Depth:</strong> Later stories emphasized the internal struggle, showing Connors conscious during transformations, adding psychological horror</li>
+                <li><strong>Intelligence Growth:</strong> The Lizard evolved from savage beast to cunning predator with planning capability and retained scientific knowledge</li>
+                <li><strong>Darker Themes:</strong> Modern stories (like "Shed") pushed into genuinely dark territory, acknowledging that the Lizard is capable of genuine evil, including killing Billy Connors</li>
+                <li><strong>Sympathetic Tragedy:</strong> Contemporary portrayals emphasize Connors as victim of his own desperation, making him more sympathetic than monstrous despite his actions</li>
+            </ul>
+            
+            <p><strong>Influence on Spider-Man Mythology:</strong></p>
+            <ul>
+                <li>The Lizard established that not all Spider-Man villains are criminals by choice—some are victims of circumstance or accident</li>
+                <li>His existence challenges Spider-Man's philosophy: can someone who's committed atrocities while mentally compromised be redeemed? How much responsibility do they bear?</li>
+                <li>The character forces Spider-Man to fight defensively, trying to save both innocents and the villain himself</li>
+                <li>Connors' relationship with Peter Parker (when human) adds personal stakes—Peter isn't just fighting a monster, he's trying to save a friend and colleague</li>
+            </ul>
+            
+            <p><strong>Psychological Complexity:</strong></p>
+            <p>What makes the Lizard endure is psychological sophistication rare in early superhero comics:</p>
+            <ul>
+                <li>The question of identity—is Connors responsible for the Lizard's actions? Where does one personality end and the other begin?</li>
+                <li>The trauma of experiencing your own body committing atrocities you can't prevent</li>
+                <li>The guilt of repeatedly failing to control a condition, knowing each failure might result in tragedy</li>
+                <li>The family dynamics—Martha and Billy loving Curt while fearing the Lizard, unable to leave but living in constant danger</li>
+                <li>The addiction metaphor—Connors knows he shouldn't use the serum again, but desperate circumstances or scientific curiosity always leads to "just one more time"</li>
+            </ul>
+            
+            <p>The Lizard represents something profoundly human despite his reptilian form: the fear that we might not be who we think we are, that beneath our civilized veneer lurks something savage and uncontrollable. Curt Connors is every person who's looked in the mirror and wondered if they recognize themselves, every person who's done something while angry or afraid that their better self would never do, every person fighting a condition that threatens to destroy who they are.</p>
+            
+            <p>In a genre often criticized for simplistic morality, the Lizard offers genuine moral complexity. He's not evil—he's ill. He's not a villain by choice—he's a victim of his own desperate attempt to be whole. And that tragedy, that eternal struggle between man and monster, healing and harm, civilization and savagery, has made the Lizard one of Spider-Man's most psychologically compelling and enduring adversaries for over sixty years.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#villains" class="btn btn-primary">← Return to Villains Gallery</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About The Lizard</h4>
+                    <p>Dr. Curt Connors, transformed into a reptilian monster by his own regeneration serum, represents one of Spider-Man's most tragic villains—a good man cursed with a savage second nature he cannot control.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Details</h4>
+                    <p><strong>Real Name:</strong> Dr. Curtis "Curt" Connors</p>
+                    <p><strong>First Appearance:</strong> The Amazing Spider-Man #6 (1963)</p>
+                    <p><strong>Created by:</strong> Stan Lee & Steve Ditko</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Verse Fan Site. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        console.log("Lizard page loaded");
+        
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+

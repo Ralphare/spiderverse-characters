@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandman - The Shifting Threat</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to villain profile page */
+        .villain-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .villain-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .villain-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .villain-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .villain-badge {
+            display: inline-block;
+            background: rgba(139, 115, 85, 0.9);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(210, 180, 140, 0.6);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .villain-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 5px;
+        }
+        
+        .villain-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(139, 115, 85, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(210, 180, 140, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #8b7355;
+            border-color: #d2b48c;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(139,115,85,0.6);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .villain-image-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .villain-image {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .villain-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(210, 180, 140, 0.2) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .villain-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #8b7355;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #d2b48c;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '🏖️';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #c19a6b 0%, #8b7355 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(210, 180, 140, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .power-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(210, 180, 140, 0.2) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(139, 115, 85, 0.6);
+            border-color: #d2b48c;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+        }
+        
+        .battles-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .battle-card {
+            background: linear-gradient(135deg, #8b7355 0%, #c19a6b 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border-left: 5px solid #d2b48c;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .battle-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(210, 180, 140, 0.2) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .battle-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(139, 115, 85, 0.5);
+        }
+        
+        .battle-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 2px;
+            color: #ffffff;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .battle-card p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+            line-height: 1.7;
+        }
+        
+        .sympathy-note {
+            background: linear-gradient(135deg, #d2b48c 0%, #c19a6b 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid #8b7355;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(139, 115, 85, 0.3);
+        }
+        
+        .sympathy-note p {
+            color: #2c1810;
+            margin: 0;
+            font-style: italic;
+            font-weight: 500;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .villain-hero {
+                height: 300px;
+            }
+            
+            .villain-name {
+                font-size: 50px;
+            }
+            
+            .villain-alias {
+                font-size: 1.4rem;
+            }
+            
+            .villain-badge {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .villain-hero {
+                height: 250px;
+            }
+            
+            .villain-name {
+                font-size: 36px;
+            }
+            
+            .villain-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#villains" class="back-button">
+        <span>←</span>
+        <span>Back to Villains</span>
+    </a>
+
+    <!-- Villain Hero Section -->
+    <header class="villain-hero">
+        <img src="https://static0.colliderimages.com/wordpress/wp-content/uploads/2021/09/spider-man-3-thomas-haden-church-sandman.jpg" alt="Sandman" class="villain-hero-image">
+        <div class="villain-hero-content">
+            <div class="villain-badge">THE SHIFTING THREAT</div>
+            <h1 class="villain-name">SANDMAN</h1>
+            <p class="villain-alias">Flint Marko / William Baker</p>
+        </div>
+    </header>
+
+    <!-- Villain Profile -->
+    <main class="profile-container">
+        <!-- Origin Story Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📜</span>
+                Origin Story & Transformation
+            </h2>
+            <p>Sandman is one of Spider-Man's most unique and sympathetic villains—a man who never wanted to be a monster, but whose desperate circumstances and terrible choices led him down a path from which there was no return. Unlike villains driven by megalomaniacal ambition or psychotic rage, Flint Marko became a criminal out of desperation, and his transformation into Sandman was a tragic accident that sealed his fate.</p>
+            
+            <p><strong>Early Life: William Baker / Flint Marko</strong></p>
+            <p>Born William Baker in Queens, New York, the man who would become Sandman grew up in poverty with an absent father and a struggling single mother. As a child, he was athletic and showed promise, particularly in football, but his family's financial struggles pushed him toward questionable decisions. To help his mother and gain respect from his peers, young William began taking shortcuts—cheating in school, using his athletic abilities to bully others, and eventually turning to petty crime.</p>
+            
+            <p>When William's criminal activities were discovered, he fled New York and assumed the alias "Flint Marko," a name taken from his mother's maiden name. This new identity represented his first major transformation—from William Baker, a kid with potential, to Flint Marko, a career criminal on the run. The decision to abandon his real name symbolized his acceptance that he could never return to a normal life.</p>
+            
+            <p>Flint's criminal career escalated from petty theft to armed robbery, burglary, and working as muscle for organized crime. He wasn't particularly smart or ambitious—he was just strong, tough, and desperate enough to do what others wouldn't. Unlike genius villains like Doctor Octopus or theatrical criminals like Green Goblin, Flint was a blue-collar crook, the kind of criminal who would rob a liquor store or drive a getaway car for a cut of the take. He spent years in and out of prison, each arrest hardening him further and pushing him deeper into the criminal underworld.</p>
+            
+            <div class="sympathy-note">
+                <p><strong>The Tragedy of Flint Marko:</strong> What makes Sandman sympathetic is that his crimes were never about greed or power—they were about survival and, later, about family. Flint had a daughter, Keemia (later revealed in various storylines), whose welfare became his primary motivation. Every robbery, every crime, was committed to provide for her and give her the life he never had. This doesn't excuse his actions, but it explains them and adds tragic depth to his character.</p>
+            </div>
+            
+            <p><strong>The Accident That Changed Everything</strong></p>
+            <p>Flint Marko's transformation occurred during one of his many escapes from custody. After breaking out of prison, he fled law enforcement and found himself at a nuclear testing site on a beach near Savannah, Georgia (some versions place it at other coastal locations). Desperate to evade capture and exhausted from running, Flint hid near an experimental nuclear reactor where atomic particle tests were being conducted.</p>
+            
+            <p>What happened next defied all scientific probability: the reactor malfunctioned or was activated (accounts vary), bathing Flint in massive amounts of radiation just as a beach sandstorm occurred. The combination of intense radiation, molecular disruption, and the sand particles surrounding him triggered an impossible transformation at the atomic level. Flint Marko's molecular structure was fundamentally altered—his body became living sand.</p>
+            
+            <p>When Flint regained consciousness, he discovered that his body was no longer flesh and blood but comprised entirely of sand particles that he could control with his thoughts. He could shift his form, harden himself to diamond-like density, turn into a sandstorm, or disperse completely and reform elsewhere. The transformation should have killed him, but instead it made him something entirely new—something not quite human anymore.</p>
+            
+            <p>The psychological impact was immediate and profound. Flint looked down at his hands and watched them crumble into sand and reform. He was a monster, no longer fully human, no longer able to live a normal life even if he wanted to. Any hope of redemption or going straight died with his humanity. If he was going to be a monster in form, he reasoned, he might as well continue being one in deed.</p>
+            
+            <p><strong>Embracing the Sandman Identity</strong></p>
+            <p>Flint Marko became Sandman—named by the press for his sand-based powers and his tendency to leave victims unconscious (as if putting them to sleep). He embraced this identity because it gave him an advantage he'd never had as a regular criminal: power. For the first time in his life, Flint wasn't at the bottom of the criminal hierarchy. He was formidable, nearly invincible, and valuable to anyone who needed muscle that couldn't be killed by conventional means.</p>
+            
+            <p>Sandman returned to New York and resumed his criminal career with new confidence. His powers made him incredibly effective—he could escape any prison by dispersing into sand and flowing through the tiniest cracks, reform after being shot or beaten, and change his body into weapons. He was the perfect enforcer, the ideal getaway specialist, and an effective solo operator for high-stakes robberies.</p>
+            
+            <p>It was inevitable that Sandman would clash with Spider-Man. Their first encounter (in <em>The Amazing Spider-Man #4</em>, 1963) established a pattern that would define their relationship: Spider-Man would use his agility, intelligence, and web-shooters to counter Sandman's raw power and durability. Where Sandman could overpower Spider-Man in direct confrontation, Spider-Man's speed, wit, and scientific knowledge allowed him to exploit Sandman's weaknesses (water, vacuum cleaners, extreme heat to turn sand to glass, etc.).</p>
+            
+            <p><strong>A Criminal, Not a Psychopath</strong></p>
+            <p>What separates Sandman from villains like Green Goblin or Carnage is that he's fundamentally a criminal, not a psychopath. He robs banks because he needs money; he fights Spider-Man because the hero interferes with his crimes. Flint doesn't enjoy hurting people, doesn't relish chaos, and doesn't have grand ambitions to rule the world or prove his superiority. He's a working-class crook with extraordinary powers, and that mundane criminality makes him oddly relatable despite his monstrous appearance.</p>
+            
+            <p>Over the years, Sandman has repeatedly attempted to go straight. He's tried to reform, tried to use his powers for good, and tried to leave his criminal past behind. Unlike many villains who are defined by their evil, Flint Marko is defined by his struggle between his criminal instincts and his desire for redemption. Sometimes he succeeds for a while—he's even served as an Avenger during periods of reform—but circumstances, old habits, or desperate need always pull him back to crime.</p>
+            
+            <p>This cyclical nature of Sandman's story reflects real-world recidivism and the difficulty of escaping a criminal past. Flint wants to be better, but society won't let him forget what he is, his daughter needs money, or old criminal contacts pull him back in. He's trapped in a cycle as surely as his molecules are trapped in their sandy form—forever shifting between good and evil, human and monster, but never quite able to settle into either state permanently.</p>
+        </section>
+
+        <!-- Powers & Abilities Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Powers, Abilities & Limitations
+            </h2>
+            <p style="margin-bottom: 1rem;"><strong>Sandman's powers are among the most versatile in Spider-Man's rogues gallery, making him a formidable physical threat:</strong></p>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>🏖️ Living Sand Body</h4>
+                    <p>Sandman's entire body is composed of living sand particles that he can control mentally. His consciousness exists within the sand itself, meaning he doesn't have traditional organs, blood, or vulnerabilities of flesh. He can survive being dispersed and reform as long as enough sand particles remain together.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🦎 Shapeshifting & Transformation</h4>
+                    <p>He can alter his physical form at will—growing additional limbs, creating weapons (hammers, spikes, blades) from his body, increasing his size to giant proportions, or shrinking down. He can mimic other people's appearances or create monstrous forms for intimidation and combat.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💨 Sand Dispersal & Reformation</h4>
+                    <p>Sandman can completely disperse his body into loose sand, spreading across large areas or flowing through tiny spaces (under doors, through vents, etc.). He can then reform at will, making him nearly impossible to contain. This ability also makes him immune to most physical attacks—bullets and punches pass harmlessly through dispersed sand.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💪 Superhuman Strength</h4>
+                    <p>By compacting and hardening his sand form, Sandman can lift approximately 85 tons, giving him strength exceeding Spider-Man's by a significant margin. He can create massive fists or weapons of hardened sand that can smash through concrete and steel.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🛡️ Variable Density & Durability</h4>
+                    <p>Sandman can alter his density from light and powdery to diamond-hard. At maximum density, he can withstand extreme impacts, gunfire, and even some energy attacks. He can make parts of his body soft to absorb impacts or rock-hard to deal devastating blows.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🌪️ Sandstorm Creation</h4>
+                    <p>He can generate localized sandstorms, blinding opponents, stripping flesh from bone with high-velocity sand particles, or creating obscuring clouds for escape. These storms can cover entire city blocks and cause significant environmental damage.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🧩 Sand Manipulation & Control</h4>
+                    <p>Sandman can mentally control sand within his body and, to a lesser extent, sand in his immediate environment. He can add beach sand or dirt to his mass, increasing his size and power. He can also separate parts of himself for reconnaissance or simultaneous attacks from multiple directions.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🩹 Regeneration & Resilience</h4>
+                    <p>As long as his consciousness remains in a sufficient mass of sand, Sandman can regenerate from almost any injury. He's been blown apart, melted into glass, scattered across vast distances, and he always reforms. This makes him one of the most difficult villains to actually defeat—at best, he can be temporarily dispersed or contained.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🔨 Weapon Creation</h4>
+                    <p>He can transform his limbs into various weapons—hammers, maces, blades, shields, or even functional tools like shovels or keys. These weapons have the hardness of his densified sand, making them as effective as steel or stone.</p>
+                </div>
+                <div class="power-item">
+                    <h4>💧 Water Vulnerability</h4>
+                    <p><strong>Major Weakness:</strong> Large amounts of water can compromise Sandman's structural integrity, turning him into mud that he struggles to control. He can be washed away, diluted, or temporarily incapacitated by water-based attacks. Spider-Man frequently exploits this weakness using fire hydrants or leading him near bodies of water.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🔥 Heat Vulnerability (Glass Transformation)</h4>
+                    <p><strong>Major Weakness:</strong> Extreme heat can fuse Sandman's sand particles into glass, trapping his consciousness and immobilizing him. This transformation is terrifying for Flint because he remains conscious but unable to move or control his body. Spider-Man has defeated him by exposing him to industrial furnaces or superhero-level heat attacks.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🌀 Suction & Vacuum Vulnerability</h4>
+                    <p><strong>Weakness:</strong> Strong suction or vacuum systems can forcibly disperse Sandman, scattering his particles and temporarily incapacitating him. In early encounters, Spider-Man defeated him using industrial vacuum systems. Sandman can eventually reform, but being forcibly dispersed disrupts his concentration and control.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personality & Motivations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🧠</span>
+                Personality, Motivations & Internal Conflict
+            </h2>
+            <p>Sandman is perhaps the most conflicted of Spider-Man's major villains—a man caught between his criminal past, his monstrous present, and his desperate desire for redemption. Unlike villains defined by madness (Green Goblin), genius (Doctor Octopus), or alien instincts (Venom), Flint Marko is defined by very human struggles: poverty, desperation, family, and the impossibility of escaping one's past.</p>
+            
+            <p><strong>Core Personality Traits:</strong></p>
+            <ul>
+                <li><strong>Desperate Pragmatism:</strong> Flint commits crimes not because he enjoys them but because he sees no other option. He's a pragmatist who takes the path of least resistance—if crime pays better than legitimate work and comes easier given his criminal record, he'll choose crime. This isn't villainy born of evil but of desperation.</li>
+                <li><strong>Family-Driven:</strong> Much of Flint's criminal activity is motivated by his desire to provide for his daughter, Keemia. She represents both his greatest love and his deepest shame—he wants to give her a better life but can only do so through the criminal activities that make him a terrible role model.</li>
+                <li><strong>Self-Loathing:</strong> Flint hates what he's become. He knows he's a monster, a criminal, a bad father. This self-awareness creates a tragic dimension—he's not deluded about his villainy but sees no way out of it. His crimes are accompanied by guilt rather than pride.</li>
+                <li><strong>Short Temper & Physical Approach:</strong> Flint isn't a planner or strategist. When frustrated or cornered, he defaults to violence and brute force. His intelligence is average, so he relies on his powers rather than elaborate schemes, making him a straightforward combatant.</li>
+                <li><strong>Desire for Respect:</strong> Having spent his life at the bottom of society—poor kid, bully victim turned bully, low-level criminal—Flint craves respect and dignity. His powers finally gave him value in the criminal underworld, but he secretly wants legitimate respect, the kind that comes from being a good person rather than a dangerous one.</li>
+                <li><strong>Capacity for Good:</strong> Unlike truly evil villains, Flint has genuine compassion. He won't kill unless necessary, tries to avoid hurting innocents, and has even saved lives when the opportunity arose. This moral complexity makes him redeemable in a way that psychopaths like Carnage or megalomaniacs like Doctor Doom are not.</li>
+            </ul>
+            
+            <div class="sympathy-note">
+                <p><strong>The Tragedy of Reformation:</strong> Sandman has repeatedly tried to go straight—joining the Avengers (briefly), attempting honest work, trying to be a good father. But every attempt fails. His criminal record prevents legitimate employment, his monstrous appearance frightens people, former criminal associates threaten his family if he doesn't help them, or desperate circumstances force him back to crime. He's trapped in a cycle of recidivism that reflects real-world systemic issues—once labeled a criminal and monster, society won't let him be anything else.</p>
+            </div>
+            
+            <p><strong>Motivations Across Different Periods:</strong></p>
+            <ul>
+                <li><strong>Early Criminal Career:</strong> Motivated by basic survival and material needs—money for food, shelter, and eventually for his family. His crimes were practical: rob banks, steal valuables, work as hired muscle for bigger criminals.</li>
+                <li><strong>Post-Transformation:</strong> Initially motivated by revenge against society for making him a monster and by the power his abilities gave him. He used his powers to commit bigger crimes and establish himself in the super-criminal community.</li>
+                <li><strong>Father Period:</strong> Many storylines focus on Flint's relationship with his daughter Keemia. During these arcs, his entire criminal motivation is providing for her—getting enough money to give her a stable life, pay for her education, or simply prove he can be a good father despite his monstrous nature.</li>
+                <li><strong>Redemption Attempts:</strong> Periodically, Flint tries to reform, motivated by genuine desire to be good. He's worked with heroes, tried legitimate employment, and attempted to use his powers for rescue and construction work. These periods show his best self—the man he could have been if circumstances were different.</li>
+                <li><strong>Forced Villainy:</strong> Sometimes Flint returns to crime not by choice but by coercion—other villains threaten his family, his criminal past is leveraged against him, or desperation (medical bills, ransom, etc.) forces him back. These storylines emphasize his lack of agency and the systemic traps that prevent rehabilitation.</li>
+            </ul>
+            
+            <p><strong>Relationship with Spider-Man:</strong></p>
+            <p>Sandman's relationship with Spider-Man is complex and lacks the personal hatred that defines other villain-hero dynamics. Flint doesn't particularly hate Spider-Man; he's just the hero who keeps interfering with his crimes. There's even a measure of mutual respect:</p>
+            <ul>
+                <li>Spider-Man has acknowledged Sandman's attempts at redemption and even helped him during reform periods</li>
+                <li>Sandman has worked alongside Spider-Man against greater threats (particularly against Venom, Carnage, and other murderous villains)</li>
+                <li>Both recognize in each other a fundamental decency—Peter sees that Flint isn't evil, and Flint respects that Spider-Man genuinely tries to help people rather than just fight for glory</li>
+                <li>Their battles often feel more like a cop chasing a robber than hero versus villain—professional rather than personal</li>
+            </ul>
+            
+            <p>This lack of personal enmity makes Sandman unusual among Spider-Man's rogues gallery. He's not trying to destroy Peter Parker or prove his superiority—he's just trying to make a living (illegally) and wishes Spider-Man would stop interfering. If circumstances were different, they might even be friends.</p>
+        </section>
+
+        <!-- World & Operations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🌆</span>
+                World, Territory & Criminal Operations
+            </h2>
+            <p>Sandman operates primarily in New York City, though his activities have taken him across the United States and occasionally international. Unlike villains with elaborate lairs or specific territories, Flint is essentially homeless—his sand form means he doesn't need traditional shelter, and his criminal status prevents him from maintaining a stable residence.</p>
+            
+            <p><strong>Operating Environments:</strong></p>
+            <ul>
+                <li><strong>Urban New York:</strong> Sandman's primary hunting ground. The city provides targets (banks, jewelry stores, armored cars), crowds to disappear into, and infrastructure (sewers, alleys, construction sites) where his powers are most effective. He knows the city's criminal underworld and has contacts among fences, criminal organizers, and other super-villains.</li>
+                <li><strong>Beaches & Coastal Areas:</strong> Given his sand-based nature, Sandman is drawn to beaches where he can easily replenish his mass or hide by blending with natural sand. Coastal areas provide both comfort (surrounded by his element) and strategic advantage (unlimited sand supply for growing to giant sizes).</li>
+                <li><strong>Industrial Areas:</strong> Warehouses, factories, and industrial complexes serve as temporary hideouts and provide targets for theft (equipment, materials, payroll). These locations also offer environmental advantages in combat—lots of sand, dirt, and loose materials he can incorporate.</li>
+                <li><strong>Underground:</strong> Sandman can flow through sewers, subways, and underground infrastructure to move unseen across the city. The underground also provides refuge from law enforcement and hero surveillance.</li>
+                <li><strong>Construction Sites:</strong> Active construction sites provide cover, confusion, and unlimited building materials (sand, dirt, gravel) that Sandman can use. He's used such sites as temporary bases and ambush locations.</li>
+            </ul>
+            
+            <p><strong>Criminal Activities & Operations:</strong></p>
+            <ul>
+                <li><strong>Bank Robberies:</strong> Sandman's most common crime. His abilities make him ideal for breaching vaults (flow through ventilation, harden to break through walls), carrying large amounts of money or valuables, and escaping through unconventional routes.</li>
+                <li><strong>Hired Muscle:</strong> Other criminals and super-villains hire Sandman as enforcement, protection, or heavy lifting for complex operations. His near-invulnerability and raw power make him valuable for any criminal enterprise needing muscle.</li>
+                <li><strong>Smuggling:</strong> Sandman's ability to disperse and carry objects within his sand form makes him effective at smuggling contraband past security, across borders, or into secure facilities.</li>
+                <li><strong>Mercenary Work:</strong> When desperate for cash, Flint has worked as a superpowered mercenary, fighting for whoever pays. These jobs range from corporate espionage to fighting other superhumans on behalf of criminal organizations.</li>
+                <li><strong>Sinister Six Membership:</strong> Sandman has been a recurring member of the Sinister Six, Doctor Octopus's team of Spider-Man villains. These team-ups give him backup, better planning (from Doc Ock), and larger scores than he could achieve solo.</li>
+            </ul>
+            
+            <p><strong>Interaction with the Criminal Underworld:</strong></p>
+            <ul>
+                <li>Unlike brilliant criminals who lead organizations, Sandman occupies a mid-tier position—more powerful than street thugs but lacking the intelligence or ambition to lead</li>
+                <li>He's respected for his power but often manipulated by smarter villains who use his desperation and straightforward nature</li>
+                <li>Criminal organizations value him as an asset but don't trust him fully due to his periodic reform attempts</li>
+                <li>Other super-villains generally consider him reliable but unremarkable—effective muscle without the complications of ego or insanity</li>
+            </ul>
+            
+            <p><strong>Interaction with Heroes:</strong></p>
+            <ul>
+                <li><strong>Spider-Man:</strong> Their relationship is defined by professional opposition rather than hatred. Spider-Man has helped Sandman during reform attempts and acknowledged his capacity for good.</li>
+                <li><strong>The Avengers:</strong> During reform periods, Sandman has actually served as a reserve Avenger, using his powers for rescue operations, disaster relief, and fighting threats too dangerous for him to ignore.</li>
+                <li><strong>Fantastic Four:</strong> The FF's Thing (Ben Grimm) has a particular connection with Sandman—both are monsters by appearance who struggle with their transformations and society's reaction to them. They've worked together during Sandman's heroic periods.</li>
+                <li><strong>Other Heroes:</strong> Most heroes are skeptical of Sandman's reform attempts but willing to give him chances. His track record of trying and failing makes them cautious but not dismissive of his potential for good.</li>
+            </ul>
+            
+            <p>Sandman exists in the liminal space between villain and hero, criminal and victim of circumstance. He operates in the shadows and margins of society—literally living in the cracks and flowing through spaces where normal people can't go. This physical existence mirrors his moral position: neither fully evil nor fully good, neither entirely free nor completely imprisoned, forever shifting between his better and worse natures like the sand that comprises his body.</p>
+        </section>
+
+        <!-- Key Battles & Events Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚔️</span>
+                Key Battles, Events & Story Arcs
+            </h2>
+            <div class="battles-grid">
+                <div class="battle-card">
+                    <h3>First Appearance: The Amazing Spider-Man #4 (1963)</h3>
+                    <p>Sandman debuted as one of Spider-Man's earliest villains, created by Stan Lee and Steve Ditko. His first appearance established him as a formidable physical threat—he easily overpowered Spider-Man in their initial confrontation, forcing the hero to use intelligence and web-fluid tricks to defeat him. The character was immediately popular due to his unique powers, tragic backstory, and visual distinctiveness. His sandy appearance and ability to reshape himself made him instantly iconic, and he became a recurring antagonist throughout Spider-Man's history.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Formation of the Sinister Six</h3>
+                    <p>Sandman was a founding member of the Sinister Six in <em>The Amazing Spider-Man Annual #1</em> (1964). Doctor Octopus organized Spider-Man's greatest foes—Sandman, Vulture, Electro, Mysterio, and Kraven—to attack the hero simultaneously. Each villain would face Spider-Man individually in sequence, wearing him down for the final confrontation. Though the plan failed, Sandman's participation established him as a major-league villain rather than a simple thug. He's returned to the Sinister Six roster numerous times, often as the team's muscle and physical powerhouse.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Drowning Incident</h3>
+                    <p>In an early encounter, Spider-Man defeated Sandman by tricking him into falling into a body of water, where he dissolved into mud and nearly "drowned" (lost coherence). This established water as Sandman's primary weakness and set a pattern for their battles—Spider-Man using environment and science to counter Sandman's overwhelming physical superiority. The incident was traumatic for Flint, as losing coherence meant temporarily losing his sense of self, essentially dying before managing to reconstitute himself.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Reformed Sandman & Avengers Reserve</h3>
+                    <p>In one of his most significant character developments, Sandman genuinely reformed and was accepted as an Avengers reserve member. He worked alongside Captain America, Thor, and other heroes on several missions, using his powers for rescue operations and disaster relief. He proved effective and trustworthy during this period, showing that Flint Marko could be a hero when given the chance and support. However, circumstances eventually pulled him back to villainy—a combination of his daughter's needs, societal rejection, and manipulation by criminal elements who threatened his family unless he returned to crime.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Keemia Storyline</h3>
+                    <p>Various storylines have explored Sandman's relationship with his daughter Keemia, who became central to his character. In one heartbreaking arc, Flint discovers Keemia is living in poverty with her mother. He commits crimes to provide for her but struggles with being a good father while living as a monster and criminal. When child protective services become involved, Flint uses his powers to create an elaborate sand palace where he and Keemia could live together, using his abilities to give her a fantasy life. Spider-Man had to intervene, and the resolution—Keemia being placed in foster care with Flint losing custody—devastated him. This storyline emphasized the tragedy of Sandman: a father who loves his daughter but whose circumstances and choices make him unable to properly care for her.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Glass Transformation</h3>
+                    <p>One of Sandman's most terrifying defeats came when he was exposed to extreme heat (in various versions, from industrial furnaces, Human Torch's flames, or energy weapons), fusing his sand into glass. Transformed into a glass statue, Sandman remained conscious but completely immobilized, unable to move, speak, or control his form. The psychological horror of being trapped in his own body, aware but helpless, was profound. Though he was eventually freed and restored to sand form, the experience left him with a deep fear of glass transformation, making heat-based attacks his nightmare scenario.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Spider-Man 3 (2007 Film)</h3>
+                    <p>Thomas Haden Church portrayed Sandman in Sam Raimi's <em>Spider-Man 3</em>, giving the character his most sympathetic mainstream portrayal. The film revealed Flint as the actual killer of Uncle Ben (a controversial change from the comics), but framed it as a tragic accident—Flint was trying to steal Ben's car to get money for his terminally ill daughter's medical treatment. Peter Parker's discovery of this truth and his eventual forgiveness created one of superhero cinema's most emotionally powerful moments. The film's climax, where Peter forgives Flint and releases him from guilt, resonated deeply with audiences. The portrayal emphasized Sandman's humanity rather than his villainy, making him a tragic figure rather than a monster.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Spider-Man: No Way Home (2021)</h3>
+                    <p>Sandman returned in the MCU through multiverse shenanigans, pulled from the Raimi universe just before his redemption moment. Initially antagonistic toward the MCU's Peter Parker, Flint eventually sided with the heroes once he understood the situation. The film reinforced his pragmatic nature—he wasn't interested in world domination or revenge, just in getting home. Thomas Haden Church's return, even through limited physical appearance and voice work, reminded audiences of the character's enduring appeal and sympathetic nature.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Ends of the Earth</h3>
+                    <p>During Doctor Octopus's "Ends of the Earth" storyline, Sandman was part of the new Sinister Six attempting to hold the world hostage. However, Sandman's participation was reluctant—he was coerced through threats against his family. When given the opportunity, he helped Spider-Man and the Avengers stop Doc Ock's plan, choosing to be a hero when it mattered most. This storyline reinforced that Sandman's villainy is often circumstantial rather than intrinsic.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Marvel Knights Spider-Man: "Venomous"</h3>
+                    <p>This storyline had Sandman captured by the Green Goblin and forced to fight as part of a gauntlet of villains. Flint didn't want to fight Spider-Man but had no choice—Norman Osborn had leverage over him. The story highlighted Sandman's position as a pawn in other villains' schemes, lacking the power or resources to escape manipulation by smarter, more ruthless criminals. Spider-Man recognized Sandman's reluctance and ultimately helped free him from Osborn's control.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Sandman Duplicates</h3>
+                    <p>Several storylines explored the horror of Sandman accidentally or deliberately splitting into multiple independent entities. When he disperses and reforms carelessly, parts of his consciousness can separate, creating duplicate Sandmen with fragments of his personality. These duplicates sometimes act independently, pursuing their own agendas, creating a nightmare scenario where Flint fights versions of himself or deals with crimes committed by his duplicates. The concept explores identity and what it means to be "yourself" when your body can literally split into multiple beings.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Legacy & Character Significance Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🏆</span>
+                Legacy, Impact & Character Significance
+            </h2>
+            <p>Sandman, created by Stan Lee and Steve Ditko in 1963, has endured for over six decades as one of Spider-Man's most essential villains—not because he's the smartest, strongest, or most evil, but because he's one of the most human. In a rogues gallery filled with megalomaniacs, psychopaths, and genius criminals, Flint Marko stands out as a fundamentally ordinary man trapped in extraordinary and tragic circumstances.</p>
+            
+            <p><strong>Character Significance:</strong></p>
+            <ul>
+                <li><strong>The Sympathetic Villain:</strong> Sandman pioneered the concept of the sympathetic super-villain in comics—someone whose villainy stems from desperation and circumstance rather than evil nature. His character asks uncomfortable questions: Are criminals born or made? Can someone with a criminal past ever truly reform? How much blame lies with the individual versus society's failures?</li>
+                <li><strong>Visual Icon:</strong> Sandman's sandy appearance and shapeshifting abilities make him instantly recognizable and visually distinctive. Artists have enjoyed depicting his powers—massive sand fists, flowing transformations, and dramatic dispersals create striking comic panels and memorable movie/animation sequences.</li>
+                <li><strong>Power Set Innovation:</strong> His abilities—transformation, dispersal, near-invulnerability, and reformation—created a template for future shapeshifting villains and heroes. The idea of a character composed of controllable particles influenced numerous subsequent characters across comics, cartoons, and games.</li>
+                <li><strong>Moral Complexity:</strong> Sandman represents moral gray areas rarely explored in early superhero comics. His repeated attempts at reform and inevitable returns to villainy mirror real-world recidivism and systemic failures in rehabilitation. He challenges the simple hero-villain dichotomy, showing that people can be both criminal and compassionate, monstrous in appearance but human in heart.</li>
+                <li><strong>Father Figure Tragedy:</strong> The focus on Flint's relationship with his daughter Keemia adds emotional depth rarely seen in super-villain portrayals. He's not just a criminal—he's a father trying (and failing) to provide for his child, creating pathos that makes readers empathize despite his crimes.</li>
+            </ul>
+            
+            <p><strong>Media Adaptations:</strong></p>
+            <ul>
+                <li>Sandman has appeared in virtually every Spider-Man cartoon since the 1960s, always as a major villain</li>
+                <li>His portrayal in <em>Spider-Man 3</em> (2007) introduced the character to mainstream audiences and is considered one of the film's strongest elements despite the movie's mixed reception</li>
+                <li>He appeared in <em>Spider-Man: No Way Home</em> (2021), showing his continued relevance in the MCU's multiverse saga</li>
+                <li>Video games feature Sandman extensively—he's a boss or playable character in most Spider-Man games, with particularly memorable appearances in the PlayStation <em>Spider-Man 2</em> game and the <em>Ultimate Spider-Man</em> game</li>
+                <li>Merchandise, LEGO sets, action figures, and collectibles regularly feature Sandman, testifying to his enduring popularity</li>
+            </ul>
+            
+            <p><strong>Influence on Spider-Man Mythology:</strong></p>
+            <ul>
+                <li>Sandman established that Spider-Man's villains could be complex, sympathetic figures rather than pure evil</li>
+                <li>His powerset forced Spider-Man to use intelligence and creativity rather than just physical prowess, reinforcing Peter Parker's scientific genius</li>
+                <li>The recurring theme of Sandman's reform attempts and failures adds ongoing dramatic tension—readers never know if this time will be the time he permanently goes straight</li>
+                <li>His working-class criminal perspective grounds the often fantastic world of superheroes in economic and social reality</li>
+            </ul>
+            
+            <p><strong>Thematic Resonance:</strong></p>
+            <p>Sandman embodies several powerful themes that give him lasting significance:</p>
+            <ul>
+                <li><strong>Transformation & Identity:</strong> Flint's literal transformation into sand mirrors his psychological transformation from William Baker to Flint Marko to Sandman. His shifting form reflects his shifting morality and identity—never quite solid, never quite one thing or another.</li>
+                <li><strong>Poverty & Desperation:</strong> His crimes stem from economic desperation, highlighting systemic issues that create criminals. He represents those who turn to crime not from evil but from lack of legitimate opportunities.</li>
+                <li><strong>The Impossibility of Redemption:</strong> Sandman's repeated reform failures raise troubling questions about whether society allows criminals to reform or whether the label "criminal" becomes a self-fulfilling prophecy.</li>
+                <li><strong>Monstrosity vs. Humanity:</strong> Despite his monstrous appearance and criminal actions, Flint retains his humanity—he loves his daughter, feels guilt, desires respect, and tries (however inadequately) to be good. His story asks: What makes someone human? Is it their form or their actions and intentions?</li>
+            </ul>
+            
+            <p>Sandman's enduring appeal lies in this complexity. He's not a villain readers love to hate—he's a villain readers pity, understand, and sometimes root for. His battles with Spider-Man often feel tragic rather than thrilling, two people trapped by circumstances (Spider-Man by responsibility, Sandman by his past) playing out roles neither would choose if given real alternatives. This tragic quality, combined with visually spectacular powers and genuine character depth, has made Sandman not just a great Spider-Man villain but one of comics' most memorable and sympathetic antagonists.</p>
+            
+            <p>In a genre often defined by clear moral lines, Sandman exists in the uncomfortable gray areas where most real people live—neither hero nor monster, but a deeply flawed human being trying and failing to be better, forever shifting like the sand that forms his body, never quite settling into either redemption or damnation.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#villains" class="btn btn-primary">← Return to Villains Gallery</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Sandman</h4>
+                    <p>Flint Marko, transformed into living sand by a nuclear accident, is one of Spider-Man's most sympathetic villains—a desperate criminal trying to provide for his daughter while trapped in a monstrous form and criminal past.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Details</h4>
+                    <p><strong>Real Name:</strong> Flint Marko / William Baker</p>
+                    <p><strong>First Appearance:</strong> The Amazing Spider-Man #4 (1963)</p>
+                    <p><strong>Created by:</strong> Stan Lee & Steve Ditko</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Verse Fan Site. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        console.log("Sandman page loaded");
+        
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+

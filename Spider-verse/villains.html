@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider-Verse Villains</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Hero Section */
+        .villains-hero {
+            position: relative;
+            height: 70vh;
+            min-height: 500px;
+            background: linear-gradient(135deg, #8b0000 0%, #000000 50%, #4a0000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .villains-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="villainweb" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><line x1="50" y1="0" x2="50" y2="100" stroke="rgba(255,0,0,0.1)" stroke-width="1"/><line x1="0" y1="50" x2="100" y2="50" stroke="rgba(255,0,0,0.1)" stroke-width="1"/><circle cx="50" cy="50" r="3" fill="rgba(255,0,0,0.2)"/></pattern></defs><rect width="1200" height="800" fill="url(%23villainweb)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .villains-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .villains-hero h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(255, 0, 0, 0.8), 3px 3px 15px rgba(0,0,0,0.9);
+            letter-spacing: 8px;
+            animation: villainGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes villainGlow {
+            0%, 100% {
+                text-shadow: 0 0 30px rgba(255, 0, 0, 0.8), 3px 3px 15px rgba(0,0,0,0.9);
+            }
+            50% {
+                text-shadow: 0 0 50px rgba(255, 0, 0, 1), 0 0 80px rgba(139, 0, 0, 0.6), 3px 3px 20px rgba(0,0,0,0.9);
+            }
+        }
+        
+        .villains-hero p {
+            font-size: 1.5rem;
+            color: #ff6b6b;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Back Button */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(139, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 0, 0, 0.5);
+            text-decoration: none;
+        }
+        
+        .back-button:hover {
+            background: #8b0000;
+            border-color: #ff0000;
+            transform: translateX(-5px);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+        }
+        
+        /* Villains Grid */
+        .villains-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .section-intro {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-intro h2 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+        }
+        
+        .section-intro p {
+            font-size: 1.2rem;
+            color: #cccccc;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        
+        .villains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .villain-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 2px solid transparent;
+        }
+        
+        .villain-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(139, 0, 0, 0.3);
+            border-color: #8b0000;
+        }
+        
+        .villain-card-image {
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #1a1a1a 0%, #4a0000 100%);
+        }
+        
+        .villain-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .villain-card:hover .villain-card-image img {
+            transform: scale(1.1);
+        }
+        
+        .villain-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(139, 0, 0, 0.95);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .villain-card-content {
+            padding: 2rem;
+        }
+        
+        .villain-card h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+        
+        .villain-card p {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .villain-link {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #8b0000 0%, #4a0000 100%);
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
+        }
+        
+        .villain-link:hover {
+            background: linear-gradient(135deg, #a00000 0%, #6a0000 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 0, 0, 0.5);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .villains-hero h1 {
+                font-size: 3rem;
+            }
+            
+            .villains-hero p {
+                font-size: 1.2rem;
+            }
+            
+            .villains-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .section-intro h2 {
+                font-size: 2.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .villains-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .villain-card-image {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html" class="back-button">
+        <span>←</span>
+        <span>Back to Home</span>
+    </a>
+
+    <!-- Hero Section -->
+    <header class="villains-hero">
+        <div class="villains-hero-content">
+            <h1>SPIDER-VERSE VILLAINS</h1>
+            <p>The Most Dangerous Foes in Spider-Man's Rogues Gallery</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="villains-container">
+        <div class="section-intro">
+            <h2>Meet the Enemies</h2>
+            <p>From brilliant masterminds to unstoppable powerhouses, Spider-Man faces some of the most iconic villains in comic book history. Each brings unique threats, complex motivations, and challenges that push the wall-crawler to his limits.</p>
+        </div>
+
+        <!-- Villains Grid -->
+        <div class="villains-grid">
+            <!-- Green Goblin -->
+            <div class="villain-card">
+                <div class="villain-card-image">
+                    <img src="images/green-goblin.jpg" alt="Green Goblin">
+                    <div class="villain-badge">Arch-Nemesis</div>
+                </div>
+                <div class="villain-card-content">
+                    <h3>Green Goblin</h3>
+                    <p>Norman Osborn, a brilliant industrialist driven mad by experimental serum, becomes Spider-Man's most personal and dangerous enemy. Armed with pumpkin bombs, glider, and cunning intellect, the Green Goblin represents chaos and madness incarnate.</p>
+                    <a href="green-goblin.html" class="villain-link">Learn More →</a>
+                </div>
+            </div>
+
+            <!-- Doctor Octopus -->
+            <div class="villain-card">
+                <div class="villain-card-image">
+                    <img src="images/doctor-octopus.jpg" alt="Doctor Octopus">
+                    <div class="villain-badge">Genius</div>
+                </div>
+                <div class="villain-card-content">
+                    <h3>Doctor Octopus</h3>
+                    <p>Dr. Otto Octavius, brilliant scientist with four mechanical tentacles fused to his body, combines genius intellect with devastating physical power. His superiority complex and obsession with proving himself make him one of Spider-Man's most persistent foes.</p>
+                    <a href="doctor-octopus.html" class="villain-link">Learn More →</a>
+                </div>
+            </div>
+
+            <!-- Venom -->
+            <div class="villain-card">
+                <div class="villain-card-image">
+                    <img src="images/venom.jpg" alt="Venom">
+                    <div class="villain-badge">Symbiote</div>
+                </div>
+                <div class="villain-card-content">
+                    <h3>Venom</h3>
+                    <p>Eddie Brock bonded with an alien symbiote rejected by Spider-Man, creating a dark mirror of the hero. With all of Spider-Man's powers plus invisibility and immunity to spider-sense, Venom is both terrifying predator and occasional lethal protector.</p>
+                    <a href="venom.html" class="villain-link">Learn More →</a>
+                </div>
+            </div>
+
+            <!-- Sandman -->
+            <div class="villain-card">
+                <div class="villain-card-image">
+                    <img src="images/sandman.jpg" alt="Sandman">
+                    <div class="villain-badge">Shape-Shifter</div>
+                </div>
+                <div class="villain-card-content">
+                    <h3>Sandman</h3>
+                    <p>Flint Marko, transformed into living sand after nuclear accident, can reshape his body at will and become virtually indestructible. A sympathetic villain driven by desperation to provide for his daughter, making him complex and tragic.</p>
+                    <a href="sandman.html" class="villain-link">Learn More →</a>
+                </div>
+            </div>
+
+            <!-- Lizard -->
+            <div class="villain-card">
+                <div class="villain-card-image">
+                    <img src="images/lizard.jpg" alt="Lizard">
+                    <div class="villain-badge">Transformation</div>
+                </div>
+                <div class="villain-card-content">
+                    <h3>Lizard</h3>
+                    <p>Dr. Curt Connors, whose attempt to regrow his lost arm transformed him into reptilian monster. The internal battle between good man and savage beast creates one of Spider-Man's most psychologically complex and tragic villains.</p>
+                    <a href="lizard.html" class="villain-link">Learn More →</a>
+                </div>
+            </div>
+
+            <!-- Electro -->
+            <div class="villain-card">
+                <div class="villain-card-image">
+                    <img src="images/electro.jpg" alt="Electro">
+                    <div class="villain-badge">Living Lightning</div>
+                </div>
+                <div class="villain-card-content">
+                    <h3>Electro</h3>
+                    <p>Max Dillon, electrical lineman who gained ability to generate and control massive amounts of electricity. A bitter nobody given ultimate power, proving that abilities amplify character flaws rather than fix them.</p>
+                    <a href="electro.html" class="villain-link">Learn More →</a>
+                </div>
+            </div>
+
+            <!-- Mysterio -->
+            <div class="villain-card">
+                <div class="villain-card-image">
+                    <img src="images/mysterio.jpg" alt="Mysterio">
+                    <div class="villain-badge">Master of Illusion</div>
+                </div>
+                <div class="villain-card-content">
+                    <h3>Mysterio</h3>
+                    <p>Quentin Beck, Hollywood special effects artist who weaponized illusions and psychology to become one of Spider-Man's most dangerous foes. In an age of deepfakes and misinformation, his manipulation of perception feels eerily relevant.</p>
+                    <a href="mysterio.html" class="villain-link">Learn More →</a>
+                </div>
+            </div>
+
+            <!-- Vulture -->
+            <div class="villain-card">
+                <div class="villain-card-image">
+                    <img src="images/vulture.jpg" alt="Vulture">
+                    <div class="villain-badge">Aerial Predator</div>
+                </div>
+                <div class="villain-card-content">
+                    <h3>Vulture</h3>
+                    <p>Adrian Toomes, elderly inventor whose electromagnetic harness grants flight and enhanced vitality. Betrayed by his business partner, this bitter genius proves that age and cunning can be as dangerous as youth and power.</p>
+                    <a href="vulture.html" class="villain-link">Learn More →</a>
+                </div>
+            </div>
+
+            <!-- Kingpin -->
+            <div class="villain-card">
+                <div class="villain-card-image">
+                    <img src="images/kingpin.jpg" alt="Kingpin">
+                    <div class="villain-badge">Crime Lord</div>
+                </div>
+                <div class="villain-card-content">
+                    <h3>Kingpin</h3>
+                    <p>Wilson Fisk, the ultimate crime lord who controls New York's underworld through combination of peak human strength, genius intellect, and vast criminal empire. He represents systemic corruption that can't be defeated through simple punching.</p>
+                    <a href="kingpin.html" class="villain-link">Learn More →</a>
+                </div>
+            </div>
+
+            <!-- Rhino -->
+            <div class="villain-card">
+                <div class="villain-card-image">
+                    <img src="images/rhino.jpg" alt="Rhino">
+                    <div class="villain-badge">Unstoppable Force</div>
+                </div>
+                <div class="villain-card-content">
+                    <h3>Rhino</h3>
+                    <p>Aleksei Sytsevich, Russian thug transformed into living weapon with suit bonded permanently to his body. A working-class tragedy of exploitation, representing desperate people accepting terrible bargains from those in power.</p>
+                    <a href="rhino.html" class="villain-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Spider-Verse Villains</h4>
+                    <p>Explore the complex, dangerous, and often tragic villains who make up Spider-Man's legendary rogues gallery. Each enemy brings unique challenges and unforgettable stories.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="villains.html">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Featured Villains</h4>
+                    <ul>
+                        <li><a href="green-goblin.html">Green Goblin</a></li>
+                        <li><a href="doctor-octopus.html">Doctor Octopus</a></li>
+                        <li><a href="venom.html">Venom</a></li>
+                        <li><a href="mysterio.html">Mysterio</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Verse Fan Site. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        console.log("Villains page loaded");
+        
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.villain-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
+

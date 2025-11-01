@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mysterio - The Master of Illusion</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0e1b29;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Additional styles specific to villain profile page */
+        .villain-hero {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .villain-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .villain-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .villain-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        .villain-badge {
+            display: inline-block;
+            background: rgba(74, 14, 78, 0.95);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(176, 38, 255, 0.6);
+            box-shadow: 0 0 20px rgba(176, 38, 255, 0.4);
+        }
+        
+        .villain-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 5px;
+            animation: mysterioGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes mysterioGlow {
+            0%, 100% {
+                text-shadow: 0 0 30px rgba(176, 38, 255, 0.8), 3px 3px 15px rgba(0,0,0,0.9);
+                color: #00ff00;
+            }
+            50% {
+                text-shadow: 0 0 50px rgba(0, 255, 0, 1), 0 0 80px rgba(176, 38, 255, 0.6), 3px 3px 20px rgba(0,0,0,0.9);
+                color: #b026ff;
+            }
+        }
+        
+        .villain-alias {
+            font-size: 1.8rem;
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(74, 14, 78, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(176, 38, 255, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #4a0e4e;
+            border-color: #00ff00;
+            transform: translateX(-5px);
+            box-shadow: 0 0 20px rgba(176, 38, 255, 0.6);
+        }
+        
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .villain-image-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .villain-image {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .villain-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 255, 0, 0.2) 0%, rgba(176, 38, 255, 0.2) 100%);
+            pointer-events: none;
+            z-index: 1;
+            animation: illusionShimmer 4s ease-in-out infinite;
+        }
+        
+        @keyframes illusionShimmer {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.02); }
+        }
+        
+        .villain-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #4a0e4e;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .profile-section:nth-child(even) {
+            border-left-color: #b026ff;
+        }
+        
+        .section-title-profile {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #0f1729;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+        
+        .profile-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .profile-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #343a40;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .profile-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-section li::before {
+            content: '🎭';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .powers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .power-item {
+            background: linear-gradient(135deg, #4a0e4e 0%, #81007f 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(176, 38, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .power-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 255, 0, 0.1) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .power-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(176, 38, 255, 0.6), 0 0 30px rgba(0, 255, 0, 0.3);
+            border-color: #00ff00;
+        }
+        
+        .power-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #00ff00;
+            position: relative;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .power-item p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+        }
+        
+        .battles-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .battle-card {
+            background: linear-gradient(135deg, #81007f 0%, #4a0e4e 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            border-left: 5px solid #b026ff;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .battle-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 255, 0, 0.1) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .battle-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(176, 38, 255, 0.5);
+        }
+        
+        .battle-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 2px;
+            color: #00ff00;
+            position: relative;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .battle-card p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+            line-height: 1.7;
+        }
+        
+        .illusion-note {
+            background: linear-gradient(135deg, #b026ff 0%, #81007f 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid #00ff00;
+            margin: 1.5rem 0;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+        
+        .illusion-note p {
+            color: #ffffff;
+            margin: 0;
+            font-style: italic;
+            font-weight: 500;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .villain-hero {
+                height: 300px;
+            }
+            
+            .villain-name {
+                font-size: 50px;
+            }
+            
+            .villain-alias {
+                font-size: 1.4rem;
+            }
+            
+            .villain-badge {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .section-title-profile {
+                font-size: 2rem;
+            }
+            
+            .profile-section {
+                padding: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .villain-hero {
+                height: 250px;
+            }
+            
+            .villain-name {
+                font-size: 36px;
+            }
+            
+            .villain-alias {
+                font-size: 1.1rem;
+            }
+            
+            .powers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html#villains" class="back-button">
+        <span>←</span>
+        <span>Back to Villains</span>
+    </a>
+
+    <!-- Villain Hero Section -->
+    <header class="villain-hero">
+        <img src="https://www.xtrafondos.com/wallpapers/mysterio-y-spider-man-fan-art-8333.jpg" alt="Mysterio" class="villain-hero-image">
+        <div class="villain-hero-content">
+            <div class="villain-badge">THE MASTER OF ILLUSION</div>
+            <h1 class="villain-name">MYSTERIO</h1>
+            <p class="villain-alias">Quentin Beck</p>
+        </div>
+    </header>
+
+    <!-- Villain Profile -->
+    <main class="profile-container">
+        <!-- Origin Story Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">📜</span>
+                Origin Story & The Birth of Illusion
+            </h2>
+            <p>Mysterio is one of Spider-Man's most unique and theatrically dangerous villains—a master of illusion who weaponized Hollywood special effects and psychological manipulation to become one of the web-slinger's most memorable foes. Unlike villains with genuine superpowers, Quentin Beck is entirely human, yet his mastery of deception, chemistry, and stagecraft makes him capable of psychological warfare that can break even the strongest heroes. Mysterio represents the ultimate fake—a fraud who convinced the world he was extraordinary through nothing but smoke, mirrors, and sheer audacity.</p>
+            
+            <p><strong>Quentin Beck: The Failed Artist</strong></p>
+            <p>Quentin Beck was born with genuine talent—a brilliant special effects artist and stuntman in Hollywood's golden age of practical effects. Before CGI dominated cinema, artists like Beck created movie magic through ingenuity: miniatures, matte paintings, forced perspective, makeup, pyrotechnics, and optical illusions. Beck wasn't just competent—he was exceptional, one of the best in the business. His work appeared in major films, and industry professionals respected his technical skill.</p>
+            
+            <p>But respect from peers wasn't enough for Quentin Beck. He wanted fame, recognition from the masses, his name in lights. Beck didn't just want to create magic—he wanted to be seen creating it, wanted audiences to know that Quentin Beck was responsible for the spectacular visuals they loved. This ego would become his defining characteristic and ultimate downfall.</p>
+            
+            <p>The problem was that special effects artists work behind the scenes. Their best work is invisible—when effects are perfect, audiences don't notice them. They're absorbed in the story, not thinking about the artist who made the dragon look real or the explosion feel dangerous. The actors get fame, the directors get credit, even the cinematographers get recognition. But the special effects artist? They're footnotes in credits, noticed only when their work fails. For someone as egotistical as Beck, this anonymity was unbearable.</p>
+            
+            <p>Beck tried to transition into directing and acting—roles where he'd be visible, celebrated. But he lacked the charisma for acting and the vision for directing. His screen tests were forgettable, his directorial debut (if he got that far) was panned by critics. Hollywood is cruel to those who reach beyond their talent, and Beck found himself typecast as "just" an effects artist, forever behind the camera rather than in front of it.</p>
+            
+            <p>The rejection festered. Beck became bitter, resentful of less talented people who achieved fame while his genius went unrecognized. He began to see Hollywood as rigged, unfair, refusing to acknowledge true artistry. This resentment combined with Beck's natural theatricality and technical genius would soon create something far more dangerous than any movie monster he'd designed.</p>
+            
+            <div class="illusion-note">
+                <p><strong>The Birth of Mysterio:</strong> Quentin Beck's transformation into Mysterio began with a simple realization: if legitimate fame was impossible, why not create fame through infamy? If Hollywood wouldn't recognize his genius, he'd make the whole world notice him. And he had the perfect set of skills—illusions, special effects, stagecraft, chemistry, and psychology. He could become a supervillain more spectacular than any character he'd brought to life on screen. He would become Mysterio—the master of illusion.</p>
+            </div>
+            
+            <p><strong>Designing the Character</strong></p>
+            <p>Beck approached his villain identity with the same creativity and attention to detail he'd brought to his film work. Everything about Mysterio was deliberately theatrical and designed for maximum psychological impact:</p>
+            
+            <p><strong>The Fishbowl Helmet:</strong> Perhaps the most iconic element—a one-way mirrored dome that completely obscured Beck's face while allowing him perfect vision. The helmet served multiple purposes: it was intimidating and otherworldly, projecting holographic images and fear gas, protecting him from his own chemical weapons, and most importantly, it was memorable. People who encountered Mysterio never forgot that eerie, reflective globe.</p>
+            
+            <p><strong>The Costume:</strong> A theatrical purple and green bodysuit with a dramatic cape that created imposing silhouettes and provided surface area for projecting illusions. The cape's swirling motion added to the mystical appearance, while the costume's bold colors ensured Mysterio stood out visually—essential for someone craving attention.</p>
+            
+            <p><strong>The Smoke and Effects:</strong> Beck used theatrical smoke machines, hidden projectors, holographic technology (advanced for the era), chemical agents, and hypnotics to create environments of pure illusion. Encountering Mysterio meant entering a nightmare where reality became questionable and every sense could be deceived.</p>
+            
+            <p><strong>The Performance:</strong> Most importantly, Beck performed the role of Mysterio with commitment worthy of Method acting. He spoke in cryptic, theatrical language, moved with dramatic flourishes, and created an aura of mystical power. He presented himself as a genuine sorcerer from another dimension, a supernatural threat that required suspension of disbelief—and Beck's performance was so committed that even skeptical opponents sometimes wavered.</p>
+            
+            <p><strong>The Initial Scheme: Framing Spider-Man</strong></p>
+            <p>Mysterio's debut in <em>The Amazing Spider-Man #13</em> (1964) demonstrated his cunning and ambition. Rather than simply robbing banks or committing obvious crimes, Beck hatched an elaborate scheme: he would frame Spider-Man for various crimes while simultaneously appearing to be a hero who could defeat the web-slinger. By creating illusions that made it appear Spider-Man was committing robberies, then confronting "Spider-Man" (actually Beck in costume) and "defeating" him publicly, Mysterio would become famous as the hero who stopped Spider-Man.</p>
+            
+            <p>The plan was brilliant in its manipulation of public perception and media. Beck understood that in the court of public opinion, illusion was as good as reality. If people believed Spider-Man was a criminal and Mysterio was a hero, then that became the truth that mattered. He was creating a narrative, directing a production where he was the star and Spider-Man was the villain—exactly the kind of acclaim Beck had always craved.</p>
+            
+            <p>The scheme ultimately failed because Peter Parker is smarter than Beck anticipated and saw through the illusions. But the attempt established Mysterio as one of Spider-Man's most dangerous foes—not because of physical power, but because of his ability to manipulate perception and create doubt. In a world where Spider-Man's reputation was already shaky (thanks to J. Jonah Jameson), Mysterio's psychological warfare hit where it hurt most.</p>
+            
+            <p><strong>The Career Criminal</strong></p>
+            <p>After his initial defeat, Mysterio became a career criminal, repeatedly clashing with Spider-Man and other heroes. He joined various villain teams (Sinister Six, Frightful Four), committed elaborate heists, and continuously refined his illusion techniques. Each scheme was theatrical, designed to showcase his genius even as he committed crimes.</p>
+            
+            <p>What makes Mysterio fascinating is that he never stopped being an artist—he just redirected his art toward villainy. His crimes were performances, his battles were productions, and every appearance was carefully staged for maximum impact. He brought a filmmaker's eye to being a supervillain, treating each scheme as a chance to demonstrate his creative genius to an audience that could no longer ignore him.</p>
+        </section>
+
+        <!-- Powers & Abilities Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚡</span>
+                Powers, Techniques & Illusion Arsenal
+            </h2>
+            <p style="margin-bottom: 1rem;"><strong>Mysterio has no superhuman powers, but his mastery of illusion, special effects, and psychology makes him extraordinarily dangerous:</strong></p>
+            <div class="powers-grid">
+                <div class="power-item">
+                    <h4>🎭 Master of Illusion</h4>
+                    <p>Beck's greatest skill—creating convincing illusions through combination of practical effects, holographic projections, chemical hypnotics, and psychological manipulation. He can make people see, hear, smell, and feel things that don't exist, creating entire false realities that trap opponents in nightmares of his design.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🎬 Special Effects Mastery</h4>
+                    <p>Expert in practical special effects from his Hollywood career—pyrotechnics, makeup, miniatures, forced perspective, smoke machines, strobe lights, sound effects, and stagecraft. He can create spectacular visual effects that blend seamlessly with his holographic tech, making illusions impossible to distinguish from reality.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🖥️ Advanced Holographic Technology</h4>
+                    <p>Beck developed or acquired cutting-edge holographic projection systems that create three-dimensional images indistinguishable from real objects. These projectors, hidden in his costume, helmet, and environment, can create anything from false walls to dragon monsters to duplicate Mysterios, all photorealistic and interactive.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🧪 Expert Chemist</h4>
+                    <p>Skilled in chemistry, particularly regarding psychoactive compounds. His signature "hallucinogenic gas" causes targets to hallucinate, become suggestible, or experience disorienting sensory distortions. Combined with his visual illusions, the chemical component makes his deceptions nearly impossible to resist without special equipment or strong will.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🧠 Hypnosis & Mind Games</h4>
+                    <p>Trained in hypnosis and psychological manipulation. Using combination of hypnotic suggestion, chemical aids, and sensory manipulation, he can implant false memories, trigger specific responses, or make victims doubt their own perceptions. This psychological warfare breaks opponents mentally before physical confrontation begins.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🎪 Robotics & Animatronics</h4>
+                    <p>Creates sophisticated robots and animatronic creatures that interact with his illusions, adding physical presence to his deceptions. These constructs can attack, grab opponents, or serve as physical anchors for holographic overlays, making the illusions feel tangibly real.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🥋 Skilled Combatant & Stuntman</h4>
+                    <p>Beck's stunt background makes him an accomplished hand-to-hand fighter, gymnast, and physical performer. He's not superhuman, but he's athletic, coordinated, and experienced in stage combat. Combined with his illusions that disorient opponents, he can hold his own in physical confrontations.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🎭 Master of Disguise</h4>
+                    <p>Expert makeup artist capable of creating incredibly convincing disguises. He can impersonate specific people, age himself up or down, or create prosthetics that completely alter his appearance. This skill lets him infiltrate secure locations or manipulate people who would never trust Mysterio.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🌫️ Environmental Manipulation</h4>
+                    <p>Using smoke machines, projectors, sound systems, and chemical dispensers, Mysterio can transform entire areas into his "stage." He can make a warehouse look like a hellish dimension, a street corner appear as an alien world, or create elaborate false scenarios that trap multiple opponents simultaneously.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🧩 Strategic Planning</h4>
+                    <p>While not genius-level intellect like Doctor Octopus, Beck is highly intelligent and an excellent planner. His schemes are elaborate productions requiring coordination of multiple elements. He thinks like a director staging a complex scene, planning contingencies and backup illusions.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🎥 Audio-Visual Expertise</h4>
+                    <p>Master of sound design and audio manipulation. He can ventriloquize voices, create directional sound that seems to come from specific locations, reproduce specific people's voices, and use sonic frequencies that cause discomfort or disorientation. Combined with visual tricks, his audio illusions complete the sensory deception.</p>
+                </div>
+                <div class="power-item">
+                    <h4>🔍 No Superpowers = Vulnerability</h4>
+                    <p><strong>Major Limitation:</strong> Mysterio is entirely human with no superhuman abilities. In direct physical combat against super-strong opponents without time to prepare illusions, he's vulnerable. His illusions can be countered by those with enhanced senses (like Daredevil's radar sense), technological detection, or sufficient willpower. Destroying his equipment leaves him powerless. His greatest weapon—deception—requires setup time and is useless once opponents know his tricks.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personality & Motivations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🧠</span>
+                Personality, Motivations & Theatrical Ego
+            </h2>
+            <p>Mysterio's personality is defined by theatrical egotism, desperate need for recognition, and willingness to manipulate reality itself to achieve fame. He's a frustrated artist who found the wrong outlet for his talents, channeling genius-level creativity into criminal spectacle rather than legitimate art.</p>
+            
+            <p><strong>Core Personality Traits:</strong></p>
+            <ul>
+                <li><strong>Overwhelming Egotism:</strong> Beck's defining trait is his massive ego. He genuinely believes he's a genius artist whose talents were wasted by an industry too blind to recognize brilliance. This ego makes him theatrical, bombastic, and desperate for validation through attention—whether positive or negative.</li>
+                <li><strong>Theatrical Nature:</strong> Everything Beck does has dramatic flair. He doesn't simply commit crimes—he stages productions. He speaks in grandiose language, makes dramatic entrances, and treats every encounter as a performance to be remembered. This theatricality isn't just affectation; it's core to his identity.</li>
+                <li><strong>Desperate for Recognition:</strong> More than wealth, more than power, Beck craves fame and recognition. He wants people to know Quentin Beck's name, to acknowledge his genius, to remember him. This desperation drives him to increasingly elaborate schemes designed to showcase his abilities rather than maximize criminal profit.</li>
+                <li><strong>Manipulative & Deceptive:</strong> Beck is a natural manipulator who sees people as audience members to be deceived. He has no compunctions about psychological torture, gaslighting, or destroying people's mental stability if it serves his plans. The suffering he causes through his mind games rarely bothers him—it's all part of the performance.</li>
+                <li><strong>Bitter Resentment:</strong> Beneath the theatrical confidence lies deep bitterness about his failed Hollywood career. Beck resents actors, directors, and anyone who achieved the fame he believes he deserved. This resentment manifests as contempt for "legitimate" heroes and society's definitions of heroism.</li>
+                <li><strong>Creative Genius:</strong> For all his faults, Beck possesses genuine creative brilliance. His illusions require not just technical skill but artistic vision—the ability to understand what will frighten, confuse, or captivate an audience. He's essentially a dark artist using psychology as his canvas.</li>
+                <li><strong>Lack of Genuine Morality:</strong> Beck has no real moral code beyond self-interest. He'll work with anyone, betray anyone, and harm anyone if it advances his goals. His theatricality might suggest honor or principles, but these are just parts of his performance—discarded when inconvenient.</li>
+                <li><strong>Obsession with Spider-Man:</strong> Spider-Man represents everything Beck hates—someone who gets recognition (even if mixed) while wearing a mask, someone praised as a hero despite operating outside the law, someone who repeatedly defeats Beck's carefully planned productions. Destroying Spider-Man became personal, an artistic challenge and a way to prove his superiority.</li>
+            </ul>
+            
+            <div class="illusion-note">
+                <p><strong>The Paradox of Mysterio:</strong> Beck's tragedy is that his greatest strength—his ability to make others believe illusions—extends to himself. He's convinced himself he's a genius deserving of fame, that his criminal career is artistry rather than villainy, that he's the protagonist in a story where heroes like Spider-Man are the villains. He's trapped in his own illusion, unable to see that what he craves (legitimate recognition as an artist) was destroyed by the very methods he uses to pursue it (fraud and violence).</p>
+            </div>
+            
+            <p><strong>Motivations Across His Career:</strong></p>
+            <ul>
+                <li><strong>Initial Scheme:</strong> Motivated by desire for heroic fame. He wanted to be celebrated as the hero who stopped Spider-Man, achieving through fraud the recognition Hollywood denied him. This reveals his warped values—fake heroism was fine as long as it brought real acclaim.</li>
+                <li><strong>Criminal Career:</strong> After the heroic scheme failed, Beck embraced villainy fully. If he couldn't be a beloved hero, he'd be an unforgettable villain. At least as Mysterio he was noticed, feared, and remembered—more than he ever achieved as Quentin Beck, special effects artist.</li>
+                <li><strong>Revenge Against Spider-Man:</strong> Each defeat by Spider-Man fueled Beck's obsession. Spider-Man became his white whale—the opponent who had to be destroyed to validate Beck's genius. Defeating Spider-Man would prove once and for all that Mysterio's illusions were superior to Spider-Man's powers.</li>
+                <li><strong>Challenging Reality Itself:</strong> Some of Beck's most ambitious schemes involved making entire populations question reality—creating city-wide illusions, false alien invasions, or elaborate gaslighting operations that made heroes doubt their sanity. These weren't just crimes; they were philosophical statements about the nature of truth and perception.</li>
+                <li><strong>Legacy & Immortality:</strong> In later years, Beck became concerned with legacy—ensuring Mysterio would be remembered even after his death. This led to schemes to pass on his techniques, elaborate posthumous traps, and attempts to create illusions so spectacular they'd become legendary.</li>
+            </ul>
+            
+            <p><strong>Relationship with Other Villains:</strong></p>
+            <p>Beck's ego makes him difficult to work with, yet he's been part of multiple villain teams:</p>
+            <ul>
+                <li><strong>Sinister Six:</strong> Mysterio has been a recurring member, though his theatrical nature sometimes clashes with more pragmatic members. Doctor Octopus values his abilities but finds his ego tiresome. Beck, meanwhile, resents being subordinate to Doc Ock but values the exposure and resources the team provides.</li>
+                <li><strong>Professional Jealousy:</strong> Beck envies villains with real powers, seeing them as less deserving of fear and respect than him—they're powerful by accident, while he created his abilities through artistry. Yet he also looks down on them as lacking his sophistication and creativity.</li>
+                <li><strong>Manipulation of Others:</strong> Beck frequently manipulates fellow criminals, using illusions to deceive even his allies. This has led to betrayals and retaliatory attacks, as few villains trust him after working with him once.</li>
+                <li><strong>Grudging Respect:</strong> Some villains, particularly other tech-based criminals, respect Beck's technical skills even while finding his personality insufferable. His illusions have saved villain teams multiple times, earning him a place at the table despite his difficult nature.</li>
+            </ul>
+            
+            <p>Mysterio is ultimately a cautionary tale about ego, creativity without ethics, and the corrosive effects of desperate need for validation. He had genuine talent that could have earned legitimate recognition with patience and persistence. Instead, his ego and impatience led him to fraud, and fraud led to violence, until Quentin Beck the artist was completely consumed by Mysterio the villain—an illusion that became more real than the man beneath the fishbowl.</p>
+        </section>
+
+        <!-- World & Operations Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🌆</span>
+                World, Operations & Illusory Chaos
+            </h2>
+            <p>Mysterio operates wherever he can stage his elaborate productions, though New York City provides his primary "theater." His crimes are less about location and more about creating the perfect stage for his illusions—anywhere can become his venue if properly prepared.</p>
+            
+            <p><strong>Operating Environments:</strong></p>
+            <ul>
+                <li><strong>Abandoned Warehouses & Theaters:</strong> Mysterio favors large, enclosed spaces where he can control the environment completely. Abandoned theaters are particularly fitting—he can use existing stage equipment, rigging, and acoustic design while adding his own tech. These locations become elaborate trap-filled fun houses where reality bends to his will.</li>
+                <li><strong>Urban New York:</strong> The city's complexity—countless buildings, underground tunnels, busy streets with distracted crowds—provides perfect cover for his illusions. He can project holograms onto buildings, use urban infrastructure to hide equipment, and stage scenarios where bystanders become unwitting extras in his productions.</li>
+                <li><strong>Hollywood & Film Studios:</strong> Beck maintains connections in the entertainment industry (though most don't know his criminal identity). He's stolen equipment from studios, used sound stages for criminal planning, and occasionally disguised his crimes as film productions, with fake permits and crews that are actually accomplices.</li>
+                <li><strong>High-Tech Facilities:</strong> When targeting advanced technology or scientific resources, Beck infiltrates research facilities, tech companies, and government laboratories. His disguise skills and ability to create false credentials make him surprisingly effective at social engineering his way into secured locations.</li>
+                <li><strong>Public Spaces:</strong> Some of Mysterio's most spectacular crimes occur in public squares, parks, or crowded areas. Mass illusions that terrify hundreds of people simultaneously serve both practical purposes (creating chaos) and feeding Beck's ego (maximum audience for his artistry).</li>
+            </ul>
+            
+            <p><strong>Criminal Methods & Schemes:</strong></p>
+            <ul>
+                <li><strong>Psychological Warfare:</strong> Beck's specialty—using illusions to break opponents mentally. He creates scenarios that exploit personal fears, false memories that make heroes question themselves, or elaborate gaslighting operations that drive targets toward breakdowns. The mental scarring from his attacks can last longer than physical injuries.</li>
+                <li><strong>Heists & Robberies:</strong> While his methods are unconventional, Beck commits traditional crimes. He uses illusions to create false walls hiding vault locations, holograms to distract security, or elaborate misdirections where authorities chase fake criminals while he escapes with real loot. His heists are as much about proving his cleverness as acquiring wealth.</li>
+                <li><strong>Blackmail & Extortion:</strong> Beck has used his illusions and technological expertise to gather compromising information or create fake evidence for blackmail. He can make it appear that innocent people committed crimes, forcing them to cooperate or pay to avoid false prosecution.</li>
+                <li><strong>Framing & False Flag Operations:</strong> His original scheme of framing Spider-Man set a pattern for future operations. Beck has framed multiple heroes and innocents for crimes they didn't commit, using his illusions to create "evidence" that's compelling even when completely fabricated.</li>
+                <li><strong>Hired Illusionist:</strong> Other criminals have hired Mysterio to provide illusions for their schemes—making money disappear during transport, creating fake crime scenes to confuse investigators, or generating alibis through false testimony supported by "video evidence" (actually holographic recordings).</li>
+                <li><strong>Mass Panic Events:</strong> Some of Beck's most ambitious crimes involve creating citywide panic—fake alien invasions, illusory natural disasters, or false reports of superhero attacks. These create chaos that facilitates other crimes while demonstrating his power over public perception.</li>
+            </ul>
+            
+            <p><strong>Interaction with Law Enforcement:</strong></p>
+            <ul>
+                <li>Police are often helpless against Mysterio's illusions, unable to distinguish real threats from fake ones until after the fact</li>
+                <li>He's impersonated police officers, created false crime scenes, and manipulated evidence to such extent that multiple cases have been thrown out due to "tampered evidence" that was actually Mysterio's illusions</li>
+                <li>Specialized units trained in dealing with illusion-based threats exist but are rarely effective—Beck stays ahead of countermeasures</li>
+                <li>His ability to disappear by disguising himself means catching him in the act doesn't guarantee capture—he might already be among the crowd of bystanders or officers as they search for "Mysterio"</li>
+            </ul>
+            
+            <p><strong>Impact on New York's Reality:</strong></p>
+            <p>Mysterio's attacks have had unusual psychological impact on New York:</p>
+            <ul>
+                <li>Widespread paranoia about whether sensory experiences can be trusted</li>
+                <li>Increase in reported hallucinations and reality-questioning among those exposed to his gases</li>
+                <li>Development of counter-illusion technology in high-security facilities</li>
+                <li>Trauma from experiencing terrifying illusions that felt completely real</li>
+                <li>Philosophical debates about truth, perception, and reality inspired by his crimes</li>
+                <li>Urban legends about "ghost buildings" or impossible events that were likely Mysterio schemes</li>
+            </ul>
+            
+            <p>Mysterio turned New York into his personal stage, demonstrating that in the age of advanced technology and psychological manipulation, reality itself becomes questionable. He proved that the most dangerous weapon isn't a gun or bomb—it's the ability to make people doubt what they see, hear, and remember.</p>
+        </section>
+
+        <!-- Key Battles & Events Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">⚔️</span>
+                Key Battles, Schemes & Defining Moments
+            </h2>
+            <div class="battles-grid">
+                <div class="battle-card">
+                    <h3>First Appearance: The Amazing Spider-Man #13 (1964)</h3>
+                    <p>Created by Stan Lee and Steve Ditko, Mysterio debuted with his elaborate scheme to frame Spider-Man for crimes and appear as the hero who could defeat him. The iconic fishbowl helmet and theatrical costume made him instantly memorable. The story established Beck's core traits—theatrical egotism, mastery of illusion, and sophisticated psychological warfare. Spider-Man defeated him by recognizing the illusions for what they were and outsmarting Beck's elaborate stagecraft, setting the pattern for their future conflicts—intelligence versus deception.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Daredevil: Guardian Devil</h3>
+                    <p>One of Mysterio's most famous storylines outside Spider-Man comics, Kevin Smith's "Guardian Devil" arc revealed Beck's terminal illness (brain cancer and lung cancer) and his desperate attempt at one final grand production. Deciding that making Spider-Man crazy wasn't challenging enough, Beck targeted Daredevil instead, orchestrating an elaborate scheme involving a baby prophesied to be either savior or antichrist. The psychological warfare pushed Matt Murdock to the breaking point, resulting in the death of Karen Page. Beck's final confession—that it was all elaborate revenge for being called "a B-list villain"—emphasized his ego-driven villainy. Though Beck apparently committed suicide at the story's end, the arc elevated Mysterio from Spider-Man rogue to a villain capable of breaking even the most disciplined heroes.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Old Man Logan</h3>
+                    <p>In this dystopian alternate future, Mysterio achieved perhaps his greatest "triumph"—he orchestrated the death of the X-Men through illusion. Beck used his most powerful hallucinogens to make Wolverine perceive his fellow X-Men as supervillains attacking the mansion. Logan slaughtered what he believed were enemies, only for the illusions to fade and reveal he'd murdered his friends and teammates. This psychological trauma broke Wolverine, causing him to abandon his heroic identity for decades. The storyline demonstrated Mysterio's powers at their most terrifying—illusions so convincing they could make a hero murder those he loved. It remains one of comics' most disturbing "what if" scenarios showing Mysterio's potential lethality.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Spider-Man: Far From Home (2019)</h3>
+                    <p>Jake Gyllenhaal portrayed Mysterio in the MCU, giving the character his highest-profile mainstream appearance. This version combined Quentin Beck's theatrical nature with modern technology and timely themes about "fake news" and manipulated media. Beck was a disgruntled former Stark Industries employee who used advanced holographic drones (originally designed by Tony Stark for therapeutic purposes) to create massive, spectacular illusions of "Elemental" attacks. He positioned himself as a hero from another Earth, gaining Spider-Man's trust before betraying him. The film's illusion sequences were visually stunning, particularly the scene where Beck traps Peter in a nightmarish funhouse of projections. Beck's scheme—using Stark tech to become the new Iron Man in public perception—brilliantly updated his original "frame Spider-Man to become a hero" plot for the modern age. Though killed by the end, his posthumous video revealing Spider-Man's identity to the world ensured his legacy of manipulated truth continued.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Gauntlet: Mysterio's Mindscape</h3>
+                    <p>During "The Gauntlet" storyline, Mysterio trapped Spider-Man in an elaborate psychological maze that blended reality and illusion so thoroughly that even readers couldn't always distinguish truth from fiction. The story featured fake deaths, impossible scenarios, and elaborate meta-commentary on superhero narratives. Beck demonstrated that his greatest power wasn't creating false realities but making real heroes doubt genuine reality. Spider-Man escaped only by accepting that some of what he experienced might be illusion and proceeding anyway—essentially learning to function despite uncertainty, which is the only true counter to Mysterio's powers.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Identity Revealed & Legacy Villains</h3>
+                    <p>Several storylines dealt with other individuals adopting the Mysterio identity after Beck's supposed death—Daniel Berkhart (Beck's accomplice), Francis Klum (a teleporter who used Beck's equipment), and others. These legacy villains demonstrated that Mysterio was as much a methodology as a person—anyone with technical skill and theatrical flair could potentially become Mysterio. However, none captured Beck's particular combination of genius, ego, and showmanship. When Beck inevitably returned (death being temporary in comics), he reclaimed his identity with renewed vengeance against those who'd presumed to replace him.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Sinister Six Leadership</h3>
+                    <p>Mysterio has both been a member and occasionally leader of the Sinister Six. His illusions provide strategic advantages—creating false battlefield terrain, disguising team movements, or generating decoy villains that divide hero attention. However, his leadership attempts typically fail because other villains won't follow someone they see as "just" an illusionist with an ego problem. Beck's contribution to the team is valued, but his character prevents him from being truly respected as a leader, perpetuating his cycle of seeking validation.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The Clone Saga Manipulation</h3>
+                    <p>Mysterio had connections to Spider-Man's infamous Clone Saga, using his illusions and manipulations to add layers of deception to an already confusing storyline. While not the mastermind, his involvement demonstrated how his presence automatically made any situation more uncertain—when Mysterio's involved, every revelation might be another layer of illusion, every apparent truth potentially just another lie.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Breaking the Fourth Wall</h3>
+                    <p>Some writers have used Mysterio meta-textually, with Beck's illusions affecting not just characters but the narrative itself—panel layouts becoming unreliable, narration boxes lying, even page structure changing to reflect illusory reality. These experimental stories treat Mysterio as a force that breaks narrative conventions, making readers experience the same uncertainty as characters. It's a sophisticated use of the medium that treats Beck's powers as affecting reality at a fundamental level rather than just sensory deception.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>The "Death" and Resurrection Cycle</h3>
+                    <p>Mysterio has "died" multiple times, only to return—sometimes genuinely resurrected, sometimes revealed to have faked his death through elaborate illusions. The Guardian Devil suicide, for instance, was later revealed to be staged. This cycle became part of his character—even his deaths might be illusions, meaning killing Mysterio never provides closure. Heroes can never be certain they've actually defeated him, which is perhaps his greatest triumph—achieving a form of immortality through uncertainty.</p>
+                </div>
+
+                <div class="battle-card">
+                    <h3>Virtual Reality & Modern Tech</h3>
+                    <p>Recent storylines have updated Mysterio's methods with modern technology—VR headsets, augmented reality apps, deep-fake videos, and social media manipulation. Beck adapted his 1960s special effects approach to 21st-century digital deception, demonstrating that his core concept (manipulating perception through technology) becomes more relevant as technology advances. Modern Mysterio can manipulate millions through viral videos and fake social media accounts, making him potentially more dangerous than ever.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Legacy & Impact Section -->
+        <section class="profile-section">
+            <h2 class="section-title-profile">
+                <span class="section-icon">🏆</span>
+                Legacy, Themes & Cultural Impact
+            </h2>
+            <p>Mysterio, created by Stan Lee and Steve Ditko in 1964, has evolved from a colorful special effects villain into one of Spider-Man's most thematically rich and culturally relevant adversaries. His concept—manipulating reality through technology and deception—has only grown more prescient in the age of deepfakes, misinformation, and "fake news."</p>
+            
+            <p><strong>Thematic Significance:</strong></p>
+            <ul>
+                <li><strong>Truth vs. Perception:</strong> Mysterio's core theme is epistemological—how do we know what's real? His presence raises questions about the reliability of sensory experience and whether objective truth matters when perception can be manipulated. In an era of edited videos and misinformation, this theme resonates powerfully.</li>
+                <li><strong>Fame-Seeking & Ego:</strong> Beck represents the dark side of celebrity culture—someone willing to hurt others for attention and recognition. His character critiques the desperation for fame and validation that characterizes modern influencer culture, showing how the need for recognition can corrupt genuine talent.</li>
+                <li><strong>The Artist as Villain:</strong> Mysterio is a cautionary tale about talent without ethics. He possessed genuine artistic genius that could have brought joy through legitimate entertainment. Instead, his ego and impatience led him to weaponize his art, demonstrating how creativity divorced from morality becomes dangerous.</li>
+                <li><strong>Technology & Deception:</strong> As technology advances, Mysterio becomes proportionally more relevant and dangerous. His 1960s methods (practical effects, makeup, simple holograms) have been updated to VR, deepfakes, and social media manipulation. He embodies anxieties about how technology enables increasingly sophisticated deception.</li>
+                <li><strong>The Fraud Revealed:</strong> Despite his power to deceive, Mysterio is fundamentally a fraud—a man with no real superpowers pretending to be extraordinary through technology and showmanship. Yet this "fraud" is capable of breaking heroes with genuine powers, suggesting that in the information age, those who control perception may be more powerful than those with physical might.</li>
+            </ul>
+            
+            <p><strong>Visual & Cultural Impact:</strong></p>
+            <ul>
+                <li>The fishbowl helmet is one of comics' most iconic and instantly recognizable designs, memorable despite (or because of) its theatrical absurdity</li>
+                <li>His purple and green costume with dramatic cape has influenced countless magician and illusionist villain designs across media</li>
+                <li>Appeared in nearly every Spider-Man animated series, usually with spectacular illusion-based episodes</li>
+                <li>Jake Gyllenhaal's performance in <em>Spider-Man: Far From Home</em> brought mainstream recognition and demonstrated how the character translates to modern blockbuster cinema</li>
+                <li>Action figures and collectibles featuring Mysterio are popular, with the distinctive helmet making him stand out in any collection</li>
+                <li>Video games have embraced his powers—boss battles against Mysterio often feature reality-bending mechanics that challenge players' perceptions of game space</li>
+            </ul>
+            
+            <p><strong>Character Evolution:</strong></p>
+            <ul>
+                <li><strong>Classic Era:</strong> Colorful special effects villain with theatrical personality but relatively straightforward motivations</li>
+                <li><strong>Psychological Depth:</strong> Later stories emphasized his desperate need for recognition and the tragedy of wasted talent, adding sympathetic dimensions</li>
+                <li><strong>Darker Interpretations:</strong> Stories like "Guardian Devil" and "Old Man Logan" showed Mysterio as capable of genuine psychological horror, not just flashy tricks</li>
+                <li><strong>Meta-Textual Uses:</strong> Writers have used him to comment on storytelling itself, with his reality-bending powers affecting narrative structure</li>
+                <li><strong>Modern Relevance:</strong> Contemporary portrayals emphasize his role as master of misinformation, making him eerily relevant to concerns about "fake news," deepfakes, and manipulated media</li>
+            </ul>
+            
+            <p><strong>Influence on Spider-Man Mythology:</strong></p>
+            <ul>
+                <li>Established that Spider-Man villains don't need superpowers to be dangerous—intelligence, technology, and psychology can be equally threatening</li>
+                <li>His psychological warfare tactics forced Spider-Man to question his own perceptions and trust his instincts over his senses</li>
+                <li>Regular Sinister Six member, providing strategic illusions that amplify other villains' effectiveness</li>
+                <li>His attacks on Spider-Man's reputation through false evidence anticipated modern concerns about fake videos and manipulated evidence</li>
+                <li>The concept that defeating him doesn't mean he's actually defeated (might be an illusion or decoy) adds permanent uncertainty to Spider-Man's victories</li>
+            </ul>
+            
+            <p><strong>Cultural Resonance in the Modern Age:</strong></p>
+            <p>Mysterio has become inadvertently more relevant as technology and society evolved:</p>
+            <ul>
+                <li><strong>Deepfakes & Fake Videos:</strong> Technology now exists that can create videos indistinguishable from real footage—essentially real-world Mysterio illusions. His character anticipated this problem by decades.</li>
+                <li><strong>Social Media Manipulation:</strong> The same tactics Mysterio used (creating false narratives, manipulating public perception, strategic misinformation) are now recognized tactics of information warfare and propaganda.</li>
+                <li><strong>VR & AR Technology:</strong> Virtual and augmented reality technologies make Mysterio's illusions increasingly plausible—we're building the tools that would make someone like Beck genuinely terrifying in reality.</li>
+                <li><strong>"Fake News" Discourse:</strong> The erosion of trust in media, widespread misinformation, and difficulty distinguishing truth from fabrication make Mysterio's methodology feel less like science fiction and more like documentary.</li>
+                <li><strong>Influencer Culture:</strong> Beck's desperate pursuit of fame through increasingly elaborate stunts mirrors aspects of modern social media culture, where attention becomes the primary currency.</li>
+            </ul>
+            
+            <p><strong>Why Mysterio Endures:</strong></p>
+            <ul>
+                <li><strong>Unique Power Set:</strong> Illusion-based powers create story possibilities unavailable with strength-based villains—psychological horror, mind games, and reality-questioning narratives</li>
+                <li><strong>Visual Spectacle:</strong> His illusions allow for incredibly creative visual sequences in any medium</li>
+                <li><strong>Thematic Depth:</strong> Questions about truth, perception, and reality give him philosophical weight</li>
+                <li><strong>Adaptability:</strong> His methods update naturally with technological advancement, keeping him relevant across decades</li>
+                <li><strong>Memorable Design:</strong> That fishbowl helmet ensures he's never forgotten</li>
+            </ul>
+            
+            <p>Quentin Beck's tragedy is that he achieved exactly what he wanted—immortality as a memorable villain whose name is known worldwide—but in a form that validated his bitterness rather than his artistry. He became famous as Mysterio the fraud rather than Beck the artist, proving that how you achieve recognition matters as much as achieving it. He's remembered, but for the wrong reasons.</p>
+            
+            <p>In an age where "post-truth" has entered the lexicon and trust in shared reality is eroding, Mysterio stands as a warning: the most dangerous weapon isn't physical force but the ability to make people doubt what's real. He's a villain whose time has come not because he changed, but because the world caught up to him—we're all living in Mysterio's funhouse now, trying to distinguish truth from illusion in a media landscape where the line between them grows ever thinner. That makes Quentin Beck, the frustrated special effects artist from 1964, one of the most relevant villains for the 21st century.</p>
+        </section>
+
+        <!-- Return Button -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html#villains" class="btn btn-primary">← Return to Villains Gallery</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Mysterio</h4>
+                    <p>Quentin Beck, the master of illusion who weaponized Hollywood special effects to become one of Spider-Man's most psychologically dangerous foes—proving that manipulating perception can be more powerful than any superpower.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#movies">Movies</a></li>
+                        <li><a href="index.html#versions">Spider-Verse</a></li>
+                        <li><a href="index.html#villains">Villains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Details</h4>
+                    <p><strong>Real Name:</strong> Quentin Beck</p>
+                    <p><strong>First Appearance:</strong> The Amazing Spider-Man #13 (1964)</p>
+                    <p><strong>Created by:</strong> Stan Lee & Steve Ditko</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Spider-Verse Fan Site. All rights reserved. Spider-Man and all related characters are property of Marvel Entertainment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        console.log("Mysterio page loaded");
+        
+        // Add scroll animation to profile sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+
